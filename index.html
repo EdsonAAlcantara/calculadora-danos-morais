@@ -470,11 +470,10 @@ function gerarPDF(){
       // direita: 4 cargos com linha separadora
       doc.setFillColor(229,240,252);doc.rect(rx,y,hW,SH,"F");doc.setDrawColor(160,195,240);doc.rect(rx,y,hW,SH,"S");
       sf(5.5,"bold",[22,88,155]);
-      const titEsc="A mesma proporção do dano ("+s.pctDoCons.toFixed(1)+"% da renda) equivale a:";
-      const titLines=doc.splitTextToSize(titEsc,hW-4);
-      doc.text(titLines,rx+2,y+5);
-      let ry=y+5+titLines.length*4+2;
-      const cargosEsc=[{key:"juiz",l:"Juiz de 1ª instância"},{key:"desemb",l:"Desembargador"},{key:"promotor",l:"Promotor de Justiça"},{key:"procurador",l:"Procurador do Estado"}];
+      const titEsc="Mesma proporção ("+s.pctDoCons.toFixed(1)+"%) equivale a:";
+      doc.text(doc.splitTextToSize(titEsc,hW-4),rx+2,y+5);
+      let ry=y+11;
+      const cargosEsc=[{key:"juiz",l:"Juiz 1ª inst."},{key:"desemb",l:"Desembargador"},{key:"promotor",l:"Promotor"},{key:"procurador",l:"Procurador"}];
       cargosEsc.forEach((c,ci)=>{
         const sal=mags[c.key];const equiv=Math.round((s.pctDoCons/100)*sal);
         sf(5.5,"normal",[65,78,95]);doc.text(c.l,rx+2,ry);
@@ -482,8 +481,51 @@ function gerarPDF(){
         if(ci<cargosEsc.length-1){doc.setDrawColor(185,210,238);doc.line(rx+2,ry+2,rx+hW-2,ry+2);}
         ry+=6;
       });
-      sf(4.5,"italic",[155,168,182]);doc.text("Fonte: CNJ — Portal de Transparência 2025",rx+2,y+SH-1.5);
+      sf(4.5,"italic",[155,168,182]);doc.text("Fonte: CNJ — Portal Transparência 2025",rx+2,y+SH-1.5);
       y+=SH+2;
+
+      // ── TABELA COMPARATIVA AUTOR × MAGISTRADOS ──
+      y=secH("IMPACTO DO DANO — COMPARAÇÃO PROPORCIONAL",y);
+      sf(5.8,"italic",[70,80,95]);
+      const fraseCmp="Para compreender o impacto real do dano, veja quanto cada servidor teria que perder para sentir a mesma proporção que a parte Autora sentiu:";
+      const fraseLines=doc.splitTextToSize(fraseCmp,tw);
+      doc.text(fraseLines,ml,y);
+      y+=fraseLines.length*3.8+3;
+
+      // cabeçalho
+      const cwCmp=[52,30,36,50];
+      doc.setFillColor(15,52,96);doc.rect(ml,y,tw,5.5,"F");
+      sf(6,"bold",[255,255,255]);
+      let cxc=ml;
+      ["Quem","Renda mensal","Dano equivalente","Impacto"].forEach((h,i)=>{doc.text(h,cxc+1.5,y+3.8);cxc+=cwCmp[i];});
+      y+=5.5;
+
+      // linha da parte autora
+      doc.setFillColor(250,236,231);doc.rect(ml,y,tw,6.5,"F");
+      doc.setDrawColor(216,90,48);doc.line(ml,y,ml,y+6.5);
+      sf(6,"bold",[153,60,29]);
+      cxc=ml;
+      ["PARTE AUTORA",brl(s.salCons),brl(s.totalDesc),s.pctDoCons.toFixed(1)+"% ("+((s.totalDesc/s.salCons).toFixed(2))+" meses)"].forEach((v,i)=>{
+        doc.text(doc.splitTextToSize(v,cwCmp[i]-2),cxc+1.5,y+4.5);cxc+=cwCmp[i];
+      });
+      y+=6.5;
+      doc.setDrawColor(200,210,225);doc.line(ml,y,ml+tw,y);
+
+      // magistrados
+      const cargosAll=[{key:"juiz",l:"Juiz de 1ª instância"},{key:"desemb",l:"Desembargador"},{key:"promotor",l:"Promotor de Justiça"},{key:"procurador",l:"Procurador do Estado"},{key:"deleg",l:"Delegado de Polícia"}];
+      let altC=false;
+      cargosAll.forEach(c=>{
+        const sal=mags[c.key];const equiv=Math.round((s.pctDoCons/100)*sal);
+        if(altC){doc.setFillColor(240,245,252);doc.rect(ml,y,tw,6,"F");}altC=!altC;
+        sf(6,"normal",[35,35,35]);cxc=ml;
+        [c.l,brl(sal),brl(equiv),s.pctDoCons.toFixed(1)+"% da renda"].forEach((v,i)=>{
+          doc.text(doc.splitTextToSize(v,cwCmp[i]-2),cxc+1.5,y+4.2);cxc+=cwCmp[i];
+        });
+        doc.setDrawColor(215,225,238);doc.line(ml,y+6,ml+tw,y+6);
+        y+=6;
+      });
+      sf(4.5,"italic",[150,160,175]);doc.text("Fonte: CNJ — Portal de Transparência 2025  |  Subsídios base 2025",ml,y+3);
+      y+=8;
 
       // ── ARGUMENTO BANCO ──
       doc.setFillColor(254,248,237);doc.rect(ml,y,tw,10,"F");
