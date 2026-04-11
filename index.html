@@ -160,22 +160,49 @@
   <div class="card">
     <div class="sec">Informações do processo</div>
     <div class="grid3">
-      <div><label>Renda líquida da parte Autora (R$)</label><input type="number" id="salario_consumidor" value="1518" min="1" step="50" oninput="calc()"><div class="hint">Salário mínimo 2025: R$ 1.518</div></div>
+      <div><label>Renda líquida da parte Autora (R$)</label><input type="number" id="salario_consumidor" value="" placeholder="Ex: 1518" min="1" step="50" oninput="calc()"><div class="hint">Salário mínimo 2025: R$ 1.518 · Informe a renda líquida mensal da parte Autora</div></div>
       <div><label>Banco réu</label><select id="banco" onchange="calc()">
+        <option value="">Selecione o banco réu...</option>
         <option value="bradesco">Banco Bradesco S.A.</option><option value="bb">Banco do Brasil S.A.</option><option value="caixa">Caixa Econômica Federal</option><option value="pan">Banco Pan S.A.</option><option value="bmg">Banco BMG S.A.</option><option value="santander">Banco Santander (Brasil) S.A.</option><option value="itau">Itaú Unibanco S.A.</option><option value="agibank">Banco Agibank S.A.</option><option value="bradesco_fin">Banco Bradesco Financiamentos S.A.</option><option value="facta">Facta Financeira S.A.</option><option value="itau_consig">Banco Itaú Consignado S.A.</option><option value="mercantil">Banco Mercantil do Brasil S.A.</option><option value="daycoval">Banco Daycoval S.A.</option><option value="aymore">Aymore Crédito Fin. e Invest.</option><option value="crefisa">Crefisa S.A. CFI</option><option value="votorantim">Banco Votorantim S.A.</option><option value="c6">Banco C6 Consignado S.A.</option><option value="banrisul">Banrisul S.A.</option><option value="nubank">Nu Pagamentos S.A.</option>
+        <option value="parati">Parati CFI S.A.</option>
+        <option value="digimais">Banco Digimais S.A.</option>
+        <option value="brb">BRB — Banco de Brasília S.A.</option>
+        <option value="banpara">Banpará — Banco do Estado do Pará S.A.</option>
+        <option value="safra">Banco Safra S.A.</option>
+        <option value="banese">Banese — Banco do Estado de Sergipe S.A.</option>
+        <option value="banestes">Banestes — Banco do Estado do ES S.A.</option>
+        <option value="paranabanco">Paraná Banco S.A.</option>
       </select></div>
       <div><label>Estado da ação</label><select id="estado" onchange="calc()">
-        <option value="mg">Minas Gerais</option><option value="sp">São Paulo</option><option value="rj">Rio de Janeiro</option><option value="rs">Rio Grande do Sul</option><option value="pr">Paraná</option><option value="sc">Santa Catarina</option><option value="ba">Bahia</option><option value="go">Goiás</option><option value="df">Distrito Federal</option>
+        <option value="">Selecione o estado...</option>
+        <option value="ac">Acre</option><option value="al">Alagoas</option><option value="am">Amazonas</option><option value="ap">Amapá</option><option value="ba">Bahia</option><option value="ce">Ceará</option><option value="df">Distrito Federal</option><option value="es">Espírito Santo</option><option value="go">Goiás</option><option value="ma">Maranhão</option><option value="mg">Minas Gerais</option><option value="ms">Mato Grosso do Sul</option><option value="mt">Mato Grosso</option><option value="pa">Pará</option><option value="pb">Paraíba</option><option value="pe">Pernambuco</option><option value="pi">Piauí</option><option value="pr">Paraná</option><option value="rj">Rio de Janeiro</option><option value="rn">Rio Grande do Norte</option><option value="ro">Rondônia</option><option value="rr">Roraima</option><option value="rs">Rio Grande do Sul</option><option value="sc">Santa Catarina</option><option value="se">Sergipe</option><option value="sp">São Paulo</option><option value="to">Tocantins</option>
       </select></div>
     </div>
     <div class="sep"></div>
     <div class="sec">Dados do dano sofrido</div>
-    <div style="margin-bottom:14px"><label>Nº de contratos indevidos</label><input type="number" id="n_contratos" value="1" min="1" max="20" style="width:120px" oninput="renderContratos()"></div>
+    <div style="margin-bottom:14px"><label>Nº de contratos indevidos</label><input type="number" id="n_contratos" value="" placeholder="Ex: 1" min="1" max="20" style="width:120px" oninput="renderContratos()"></div>
+    <div style="margin-bottom:14px">
+      <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;background:var(--bg2);padding:10px 12px;border-radius:8px;border:0.5px solid var(--border);">
+        <input type="checkbox" id="chk-idoso" onchange="toggleIdoso()" style="width:16px;height:16px;margin-top:2px;accent-color:#185FA5;flex-shrink:0">
+        <div>
+          <span style="font-size:13px;font-weight:600;color:var(--text);display:block">A parte Autora é idosa (60 anos ou mais)</span>
+          <span style="font-size:11px;color:var(--text3);display:block;margin-top:2px">Aposentada, pensionista ou beneficiária do INSS — ativa proteção adicional do Estatuto do Idoso (Lei 10.741/2003)</span>
+        </div>
+      </label>
+      <div id="bloco-idoso" style="display:none;margin-top:8px;padding:10px 12px;background:#e6f1fb;border-radius:8px;border-left:3px solid #185FA5;border:0.5px solid #b5d4f4;">
+        <div style="font-size:11px;font-weight:600;color:#0c447c;margin-bottom:8px">Dados específicos para idosos — Cadernos de Saúde Pública (Fiocruz/SciELO, 2020) e IBGE/POF 2017-2018</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+          <div style="background:#fff;border-radius:6px;padding:8px 10px;border:0.5px solid #b5d4f4"><div style="font-size:10px;color:#185FA5;margin-bottom:2px">Comprometimento com medicamentos</div><div style="font-size:15px;font-weight:600;color:#0c447c">23,57%</div><div style="font-size:10px;color:#378add">da aposentadoria/mês</div></div>
+          <div style="background:#fff;border-radius:6px;padding:8px 10px;border:0.5px solid #b5d4f4"><div style="font-size:10px;color:#185FA5;margin-bottom:2px">Já deixaram de comprar remédios</div><div style="font-size:15px;font-weight:600;color:#0c447c">41%</div><div style="font-size:10px;color:#378add">por falta de recursos</div></div>
+          <div style="background:#fff;border-radius:6px;padding:8px 10px;border:0.5px solid #b5d4f4"><div style="font-size:10px;color:#185FA5;margin-bottom:2px">Aposentadoria como única renda</div><div style="font-size:15px;font-weight:600;color:#0c447c">62,4%</div><div style="font-size:10px;color:#378add">dos idosos aposentados</div></div>
+        </div>
+      </div>
+    </div>
     <div id="contratos-wrap"></div>
   </div>
   <div class="valor-pedido-box">
     <div class="sec" style="margin-bottom:8px">Valor do dano moral pretendido (R$)</div>
-    <input type="number" id="valor_pedido" value="10000" min="1" step="500" oninput="calc()">
+    <input type="number" id="valor_pedido" value="" placeholder="Ex: 10000" min="1" step="500" oninput="calc()">
     <div class="hint">Informe o valor que entenda adequado ao caso com base nas circunstâncias concretas (método bifásico).</div>
     <div class="obs">Obs.: Valores sem correção monetária e juros de mora.</div>
   </div>
@@ -186,7 +213,7 @@
 <!-- PAINEL 2 -->
 <div id="inner-banco" class="inner-panel">
   <div class="card" id="banco-dados"></div>
-  <div class="card"><div class="sec">Lucro do banco × valor do dano</div><div id="banco-segundos"></div></div>
+  <div class="card"><div class="sec">Lucro do banco × valor do dano moral pleiteado</div><div id="banco-segundos"></div></div>
 </div>
 
 <!-- PAINEL 3 — RELAÇÃO SALARIAL DIDÁTICA -->
@@ -217,11 +244,12 @@
         <th>Cargo</th>
         <th>Salário base</th>
         <th>Mesma proporção do dano equivale a...</th>
-        <th>% da renda comprometida</th>
+        <th>% da renda</th>
+        <th>Fonte</th>
       </tr></thead>
       <tbody id="rs-tabela"></tbody>
     </table>
-    <p style="font-size:11px;color:#aaa;margin-top:10px">Fonte: CNJ — Portal de Transparência / subsídios base 2025 (teto: R$ 46.366,19).</p>
+    <p style="font-size:11px;color:#aaa;margin-top:10px">Fontes: Magistrados — CNJ Portal de Transparência 2025 (subsídios base, teto R$ 46.366,19) | Servidores — CJF Tabela de Remuneração PJU fevereiro/2025 (Lei 11.416/2006, reajuste 6,13%) | Defensor Público — Lei 13.316/2016 atualizada.</p>
   </div>
 
 </div>
@@ -230,15 +258,63 @@
 <div id="inner-resultado" class="inner-panel">
   <div id="resultado-wrap"></div>
   <div class="card"><div class="sec">Fundamentação gerada</div><div class="fund" id="r_fund"></div></div>
-  <button class="btn-pdf" id="btn-pdf" onclick="gerarPDF()">📄 Exportar relatório em PDF (A4 — 1 folha)</button>
+  <button class="btn-pdf" id="btn-pdf" onclick="gerarPDF()">📄 Exportar relatório técnico em PDF (3 páginas)</button>
   <div class="pdf-status" id="pdf-status"></div>
 </div>
 
 </div>
 <script>
-const BANCOS={bradesco:{nome:"Banco Bradesco S.A.",lucro:24.6e9,recl:773976},bb:{nome:"Banco do Brasil S.A.",lucro:27e9,recl:624378},caixa:{nome:"Caixa Econômica Federal",lucro:16.05e9,recl:602542},pan:{nome:"Banco Pan S.A.",lucro:0.82e9,recl:383338},bmg:{nome:"Banco BMG S.A.",lucro:0.75e9,recl:349782},santander:{nome:"Banco Santander (Brasil) S.A.",lucro:15.6e9,recl:259024},itau:{nome:"Itaú Unibanco S.A.",lucro:46.8e9,recl:204036},agibank:{nome:"Banco Agibank S.A.",lucro:0.65e9,recl:174673},bradesco_fin:{nome:"Banco Bradesco Financiamentos S.A.",lucro:1.2e9,recl:112074},facta:{nome:"Facta Financeira S.A.",lucro:0.45e9,recl:111699},itau_consig:{nome:"Banco Itaú Consignado S.A.",lucro:1.5e9,recl:91607},mercantil:{nome:"Banco Mercantil do Brasil S.A.",lucro:0.4e9,recl:90816},daycoval:{nome:"Banco Daycoval S.A.",lucro:0.9e9,recl:87638},aymore:{nome:"Aymore Crédito Fin. e Invest.",lucro:0.35e9,recl:83842},crefisa:{nome:"Crefisa S.A. CFI",lucro:0.5e9,recl:81766},votorantim:{nome:"Banco Votorantim S.A.",lucro:0.6e9,recl:69080},c6:{nome:"Banco C6 Consignado S.A.",lucro:0.3e9,recl:68935},banrisul:{nome:"Banrisul S.A.",lucro:1.1e9,recl:61382},nubank:{nome:"Nu Pagamentos S.A.",lucro:3.5e9,recl:51836}};
-const MAG={mg:{juiz:38660,desemb:41845,promotor:37500,procurador:38660,deleg:18500},sp:{juiz:39717,desemb:46366,promotor:39717,procurador:39717,deleg:20000},rj:{juiz:38660,desemb:41845,promotor:38000,procurador:38660,deleg:18000},rs:{juiz:38660,desemb:41845,promotor:37500,procurador:38000,deleg:17500},pr:{juiz:38660,desemb:41845,promotor:37500,procurador:38000,deleg:17000},sc:{juiz:38660,desemb:41845,promotor:37500,procurador:38000,deleg:16500},ba:{juiz:38660,desemb:41845,promotor:37000,procurador:38000,deleg:16000},go:{juiz:38660,desemb:41845,promotor:37000,procurador:38000,deleg:16000},df:{juiz:46366,desemb:46366,promotor:46366,procurador:46366,deleg:22000}};
-const CARGOS=[{key:"juiz",label:"Juiz de 1ª instância"},{key:"desemb",label:"Desembargador"},{key:"promotor",label:"Promotor de Justiça"},{key:"procurador",label:"Procurador do Estado"},{key:"deleg",label:"Delegado de Polícia"}];
+const BANCOS={bradesco:{nome:"Banco Bradesco S.A.",lucro:24.6e9,recl:773976},bb:{nome:"Banco do Brasil S.A.",lucro:27e9,recl:624378},caixa:{nome:"Caixa Econômica Federal",lucro:16.05e9,recl:602542},pan:{nome:"Banco Pan S.A.",lucro:0.82e9,recl:383338},bmg:{nome:"Banco BMG S.A.",lucro:0.75e9,recl:349782},santander:{nome:"Banco Santander (Brasil) S.A.",lucro:15.6e9,recl:259024},itau:{nome:"Itaú Unibanco S.A.",lucro:46.8e9,recl:204036},agibank:{nome:"Banco Agibank S.A.",lucro:0.65e9,recl:174673},bradesco_fin:{nome:"Banco Bradesco Financiamentos S.A.",lucro:1.2e9,recl:112074},facta:{nome:"Facta Financeira S.A.",lucro:0.45e9,recl:111699},itau_consig:{nome:"Banco Itaú Consignado S.A.",lucro:1.5e9,recl:91607},mercantil:{nome:"Banco Mercantil do Brasil S.A.",lucro:0.4e9,recl:90816},daycoval:{nome:"Banco Daycoval S.A.",lucro:0.9e9,recl:87638},aymore:{nome:"Aymore Crédito Fin. e Invest.",lucro:0.35e9,recl:83842},crefisa:{nome:"Crefisa S.A. CFI",lucro:0.5e9,recl:81766},votorantim:{nome:"Banco Votorantim S.A.",lucro:0.6e9,recl:69080},c6:{nome:"Banco C6 Consignado S.A.",lucro:0.3e9,recl:68935},banrisul:{nome:"Banrisul S.A.",lucro:1.1e9,recl:61382},nubank:{nome:"Nu Pagamentos S.A.",lucro:3.5e9,recl:51836},
+parati:{nome:"Parati CFI S.A.",lucro:0.12e9,recl:455},
+digimais:{nome:"Banco Digimais S.A.",lucro:0.053e9,recl:291},
+brb:{nome:"BRB — Banco de Brasília S.A.",lucro:0.282e9,recl:1753},
+banpara:{nome:"Banpará — Banco do Estado do Pará S.A.",lucro:0.15e9,recl:163},
+safra:{nome:"Banco Safra S.A.",lucro:1.0e9,recl:566},
+banese:{nome:"Banese — Banco do Estado de Sergipe S.A.",lucro:0.08e9,recl:90},
+banestes:{nome:"Banestes — Banco do Estado do ES S.A.",lucro:0.392e9,recl:93},
+paranabanco:{nome:"Paraná Banco S.A.",lucro:0.12e9,recl:100}};
+const MAG={
+  ac:{juiz:35000,desemb:39000,promotor:34000,procurador:35000,deleg:14000},
+  al:{juiz:37500,desemb:41845,promotor:35000,procurador:37000,deleg:15000},
+  am:{juiz:37500,desemb:41845,promotor:35000,procurador:37000,deleg:15500},
+  ap:{juiz:35000,desemb:39000,promotor:34000,procurador:35000,deleg:14000},
+  ba:{juiz:38660,desemb:41845,promotor:37000,procurador:38000,deleg:16000},
+  ce:{juiz:38660,desemb:41845,promotor:37000,procurador:38000,deleg:15500},
+  df:{juiz:46366,desemb:46366,promotor:46366,procurador:46366,deleg:22000},
+  es:{juiz:38660,desemb:41845,promotor:37500,procurador:38000,deleg:16500},
+  go:{juiz:38660,desemb:41845,promotor:37000,procurador:38000,deleg:16000},
+  ma:{juiz:37500,desemb:41845,promotor:35000,procurador:37000,deleg:15000},
+  mg:{juiz:38660,desemb:41845,promotor:37500,procurador:38660,deleg:18500},
+  ms:{juiz:38660,desemb:41845,promotor:37500,procurador:38000,deleg:16000},
+  mt:{juiz:38660,desemb:41845,promotor:37500,procurador:38000,deleg:16000},
+  pa:{juiz:37500,desemb:41845,promotor:35000,procurador:37000,deleg:15000},
+  pb:{juiz:37500,desemb:41845,promotor:35000,procurador:37000,deleg:15000},
+  pe:{juiz:38660,desemb:41845,promotor:37000,procurador:38000,deleg:16000},
+  pi:{juiz:37500,desemb:41845,promotor:35000,procurador:37000,deleg:14500},
+  pr:{juiz:38660,desemb:41845,promotor:37500,procurador:38000,deleg:17000},
+  rj:{juiz:38660,desemb:41845,promotor:38000,procurador:38660,deleg:18000},
+  rn:{juiz:37500,desemb:41845,promotor:35000,procurador:37000,deleg:15000},
+  ro:{juiz:38660,desemb:41845,promotor:36000,procurador:37500,deleg:15500},
+  rr:{juiz:35000,desemb:39000,promotor:34000,procurador:35000,deleg:14000},
+  rs:{juiz:38660,desemb:41845,promotor:37500,procurador:38000,deleg:17500},
+  sc:{juiz:38660,desemb:41845,promotor:37500,procurador:38000,deleg:16500},
+  se:{juiz:37500,desemb:41845,promotor:35000,procurador:37000,deleg:15000},
+  sp:{juiz:39717,desemb:46366,promotor:39717,procurador:39717,deleg:20000},
+  to:{juiz:38660,desemb:41845,promotor:36000,procurador:37500,deleg:15500}
+};
+const CARGOS=[
+    {key:"juiz",label:"Juiz de 1ª instância",tipo:"mag"},
+    {key:"desemb",label:"Desembargador",tipo:"mag"},
+    {key:"promotor",label:"Promotor de Justiça",tipo:"mag"},
+    {key:"procurador",label:"Procurador do Estado",tipo:"mag"},
+    {key:"defensor",label:"Defensor Público",tipo:"serv"},
+    {key:"analista",label:"Analista Judiciário",tipo:"serv"},
+    {key:"oficial",label:"Oficial de Justiça",tipo:"serv"},
+    {key:"escrivao",label:"Escrivão Judicial",tipo:"serv"},
+    {key:"tecnico",label:"Técnico Judiciário",tipo:"serv"},
+    {key:"contador",label:"Contador Judicial",tipo:"serv"},
+    {key:"deleg",label:"Delegado de Polícia",tipo:"mag"},
+  ];
 const TIPOS={rmc:{badge:"badge-rmc",short:"RMC"},rcc:{badge:"badge-rcc",short:"RCC"},emp:{badge:"badge-emp",short:"Empréstimo Consignado"}};
 let prevN=0,_st={};
 
@@ -250,7 +326,7 @@ function showInner(el,t){document.querySelectorAll(".inner-tab").forEach(x=>x.cl
 function updateBadge(i){const v=document.getElementById("tipo_"+i).value;const t=TIPOS[v];const b=document.getElementById("badge_"+i);if(b){b.className="badge-tipo "+t.badge;b.textContent=t.short;}calc();}
 
 function renderContratos(){
-  const n=Math.min(Math.max(parseInt(document.getElementById("n_contratos").value)||1,1),20);
+  const n=Math.min(Math.max(parseInt(document.getElementById("n_contratos").value)||0,0),20);
   const wrap=document.getElementById("contratos-wrap");
   const old=[];for(let i=0;i<prevN;i++)old.push({tipo:document.getElementById("tipo_"+i)?document.getElementById("tipo_"+i).value:"rmc",vp:document.getElementById("vp_"+i)?document.getElementById("vp_"+i).value:"500",np:document.getElementById("np_"+i)?document.getElementById("np_"+i).value:"6"});
   wrap.innerHTML="";
@@ -258,18 +334,33 @@ function renderContratos(){
     el.innerHTML=`<div class="ctitle">Contrato ${i+1}<span class="badge-tipo ${t.badge}" id="badge_${i}">${t.short}</span></div>
     <div class="grid-contrato">
       <div><label>Tipo</label><select id="tipo_${i}" onchange="updateBadge(${i})"><option value="rmc" ${tipo==="rmc"?"selected":""}>RMC — Reserva de Margem Consignável</option><option value="rcc" ${tipo==="rcc"?"selected":""}>RCC — Reserva de Cartão de Crédito</option><option value="emp" ${tipo==="emp"?"selected":""}>Empréstimo Consignado</option></select></div>
-      <div><label>Valor da parcela (R$)</label><input type="number" id="vp_${i}" value="${vp}" min="1" oninput="calc()"></div>
-      <div><label>Nº de parcelas</label><input type="number" id="np_${i}" value="${np}" min="1" oninput="calc()"></div>
+      <div><label>Valor da parcela (R$)</label><input type="number" id="vp_${i}" value="${vp}" placeholder="0,00" min="1" oninput="calc()"></div>
+      <div><label>Nº de parcelas</label><input type="number" id="np_${i}" value="${np}" placeholder="0" min="1" oninput="calc()"></div>
     </div><div class="contrato-subtotal" id="sub_${i}"></div>`;
     wrap.appendChild(el);}
   prevN=n;calc();
 }
 
-function getContratos(){const n=Math.min(Math.max(parseInt(document.getElementById("n_contratos").value)||1,1),20);const list=[];for(let i=0;i<n;i++){const tipo=document.getElementById("tipo_"+i)?document.getElementById("tipo_"+i).value:"rmc";const vp=parseFloat(document.getElementById("vp_"+i)?document.getElementById("vp_"+i).value:0)||0;const np=parseFloat(document.getElementById("np_"+i)?document.getElementById("np_"+i).value:0)||0;list.push({tipo,vp,np,total:vp*np});}return list;}
+function getContratos(){const n=Math.min(Math.max(parseInt(document.getElementById("n_contratos").value)||0,0),20);const list=[];for(let i=0;i<n;i++){const tipo=document.getElementById("tipo_"+i)?document.getElementById("tipo_"+i).value:"rmc";const vp=parseFloat(document.getElementById("vp_"+i)?document.getElementById("vp_"+i).value:0)||0;const np=parseFloat(document.getElementById("np_"+i)?document.getElementById("np_"+i).value:0)||0;list.push({tipo,vp,np,total:vp*np});}return list;}
 
 function calc(){
-  const salCons=parseFloat(document.getElementById("salario_consumidor").value)||1518;
+  const salCons=parseFloat(document.getElementById("salario_consumidor").value)||0;
   const bancoKey=document.getElementById("banco").value,estadoKey=document.getElementById("estado").value;
+  if(!bancoKey||!estadoKey||salCons===0){
+    // Limpar métricas se campos não preenchidos
+    document.getElementById("metricas-dano").innerHTML="";
+    document.getElementById("impacto-consumidor").innerHTML="";
+    if(document.getElementById("banco-dados"))document.getElementById("banco-dados").innerHTML="";
+    if(document.getElementById("banco-segundos"))document.getElementById("banco-segundos").innerHTML="";
+    if(document.getElementById("rs-arg1-metricas"))document.getElementById("rs-arg1-metricas").innerHTML="";
+    if(document.getElementById("rs-arg1-frase"))document.getElementById("rs-arg1-frase").innerHTML="";
+    if(document.getElementById("rs-arg2-metricas"))document.getElementById("rs-arg2-metricas").innerHTML="";
+    if(document.getElementById("rs-arg2-frase"))document.getElementById("rs-arg2-frase").innerHTML="";
+    if(document.getElementById("rs-tabela"))document.getElementById("rs-tabela").innerHTML="";
+    if(document.getElementById("resultado-wrap"))document.getElementById("resultado-wrap").innerHTML='<div style="text-align:center;padding:2rem;color:#888;font-size:13px">Preencha todos os campos para ver o resultado.</div>';
+    if(document.getElementById("r_fund"))document.getElementById("r_fund").textContent="Preencha os dados do caso para gerar a fundamentação.";
+    return;
+  }
   const banco=BANCOS[bancoKey],mags=MAG[estadoKey];
   const contratos=getContratos();
   const valorPedido=parseFloat(document.getElementById("valor_pedido").value)||0;
@@ -281,7 +372,9 @@ function calc(){
   const nC=contratos.length;
   const estadoNome=document.getElementById("estado").options[document.getElementById("estado").selectedIndex].text;
   const juizEquiv=(pctDoCons/100)*mags.juiz;
-  _st={salCons,banco,mags,contratos,valorPedido,totalDesc,pctDoCons,lucroSeg,seg2,nC,estadoNome,juizEquiv};
+  const isIdoso = document.getElementById('chk-idoso') ? document.getElementById('chk-idoso').checked : false;
+  const estado=document.getElementById('estado').value;
+  _st={salCons,banco,mags,contratos,valorPedido,totalDesc,pctDoCons,lucroSeg,seg2,nC,estadoNome,juizEquiv,isIdoso,estado};
 
   // painel 1
   document.getElementById("metricas-dano").innerHTML=`
@@ -301,9 +394,19 @@ function calc(){
       <div class="mcard"><div class="lbl">Condenação / lucro anual</div><div class="val">${pctStr(valorPedido,banco.lucro)}</div></div>
     </div>`;
   document.getElementById("banco-segundos").innerHTML=`
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-      <div style="text-align:center;padding:20px;background:#f5f6f8;border-radius:12px"><div class="big-number">${fmtSeg(seg2)}</div><div class="big-number-label">para o banco recuperar a condenação</div></div>
-      <div style="text-align:center;padding:20px;background:#f5f6f8;border-radius:12px"><div class="big-number">${pctStr(valorPedido,banco.lucro)}</div><div class="big-number-label">do lucro anual representa a condenação</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px">
+      <div style="text-align:center;padding:18px 12px;background:#e6f1fb;border-radius:12px;border:0.5px solid rgba(24,95,165,.2)">
+        <div class="big-number" style="color:#185FA5">${brl(valorPedido)}</div>
+        <div class="big-number-label">valor do dano moral pleiteado</div>
+      </div>
+      <div style="text-align:center;padding:18px 12px;background:#f5f6f8;border-radius:12px">
+        <div class="big-number">${fmtSeg(seg2)}</div>
+        <div class="big-number-label">para o banco recuperar a condenação</div>
+      </div>
+      <div style="text-align:center;padding:18px 12px;background:#f5f6f8;border-radius:12px">
+        <div class="big-number">${pctStr(valorPedido,banco.lucro)}</div>
+        <div class="big-number-label">do lucro anual representa a condenação</div>
+      </div>
     </div>
     <div class="highlight-box">O banco lucra <strong>${brl(lucroSeg)} por segundo</strong>. A condenação deve ser suficientemente significativa para inibir a reiteração da conduta.</div>`;
 
@@ -326,8 +429,11 @@ function calc(){
 
   let rows="";
   CARGOS.forEach(c=>{
-    const sal=mags[c.key];const equiv=(pctDoCons/100)*sal;
-    rows+=`<tr><td class="cargo">${c.label}</td><td>${brl(sal)}</td><td class="equiv">${brl(equiv)}</td><td style="font-size:12px;color:var(--text3)">${(totalDesc/sal*100).toFixed(2)}% do salário</td></tr>`;
+    const sal=c.tipo==="mag" ? mags[c.key] : SERVIDORES[c.key];
+    const equiv=(pctDoCons/100)*sal;
+    const pctDano=(totalDesc/sal*100).toFixed(2);
+    const fonte=c.tipo==="mag"?"CNJ 2025":"CJF fev/2025";
+    rows+=`<tr><td class="cargo">${c.label}</td><td>${brl(sal)}</td><td class="equiv">${brl(equiv)}</td><td style="font-size:11px;color:var(--text3)">${pctDano}% do salário</td><td style="font-size:10px;color:var(--text3)">${fonte}</td></tr>`;
   });
   document.getElementById("rs-tabela").innerHTML=rows;
 
@@ -347,11 +453,30 @@ function calc(){
   document.getElementById("r_fund").textContent=gerarFund();
 }
 
+const SERVIDORES={analista:22301,tecnico:13592,oficial:22301,escrivao:22301,defensor:35462,contador:22301};
+const CUSTO_PROCESSO={ac:4000,al:3200,am:3590,ap:4500,ba:2813,ce:2697,df:3793,es:2361,go:2143,ma:2951,mg:2233,ms:2778,mt:3077,pa:3065,pb:2794,pe:2667,pi:3269,pr:1765,rj:2847,rn:2903,ro:3600,rr:4941,rs:2286,sc:1908,se:3333,sp:1924,to:3409};
+
+function toggleIdoso(){
+  const on=document.getElementById('chk-idoso').checked;
+  document.getElementById('bloco-idoso').style.display=on?'block':'none';
+  calc();
+}
+
 function gerarFund(){
   const s=_st;if(!s.banco)return "";
   const banco=s.banco,mags=s.mags;
   let det="";s.contratos.forEach((c,i)=>{const t=TIPOS[c.tipo];det+=`\n   • Contrato ${i+1} [${t.short}]: ${c.np} parcela(s) de ${brl(c.vp)} = ${brl(c.total)}`;});
-  return `FUNDAMENTAÇÃO — QUANTUM DOS DANOS MORAIS\n\nA parte Autora, com renda líquida de ${brl(s.salCons)}, teve descontado(s) indevidamente ${s.nC} contrato(s):\n${det}\nTotal descontado: ${brl(s.totalDesc)}.\n\nI — DA CONFIGURAÇÃO DO DANO MORAL\nO valor indevidamente descontado representa ${s.pctDoCons.toFixed(1)}% da renda líquida da parte Autora, equivalendo a ${(s.totalDesc/s.salCons).toFixed(2)} meses de renda. A subtração compulsória de parcela tão significativa do orçamento familiar ultrapassa o mero dissabor cotidiano, caracterizando dano moral passível de indenização.\n\nII — DO QUANTUM — MÉTODO BIFÁSICO\nO valor de ${brl(s.valorPedido)} foi fixado com observância do método bifásico: na 1ª fase, consideraram-se os precedentes do tribunal para casos de desconto indevido em benefício consignado; na 2ª fase, ponderaram-se as circunstâncias concretas — extensão do dano, capacidade econômica do réu e grau de reprovabilidade da conduta. O valor ora informado não inclui correção monetária nem juros de mora.\n\nIII — DA CAPACIDADE ECONÔMICA DO RÉU\nO ${banco.nome} auferiu lucro líquido de ${brl(banco.lucro)} em 2025 (Fonte: Balanço Anual CVM), equivalendo a ${brl(s.lucroSeg)} por segundo de operação. O valor pretendido (${brl(s.valorPedido)}) representa ${pctStr(s.valorPedido,banco.lucro)} do lucro anual, sendo recuperado em ${fmtSeg(s.seg2)}. A condenação deve ser economicamente significativa para inibir a reiteração da conduta.\n\nIV — DA PROPORCIONALIDADE\nO dano sofrido (${brl(s.totalDesc)}) representa ${s.pctDoCons.toFixed(1)}% da renda da parte Autora. A mesma proporção equivale a ${brl(s.juizEquiv)} do salário base de um juiz de 1ª instância no ${s.estadoNome} (Fonte: CNJ — Portal de Transparência 2025).\n\nV — DA REITERAÇÃO DA CONDUTA\nO ${banco.nome} registrou ${banco.recl.toLocaleString("pt-BR")} reclamações no Banco Central em 2024 (Fonte: Ranking de Reclamações BACEN 2024), evidenciando prática sistêmica que reforça a necessidade de condenação com caráter pedagógico.\n\nRequer-se a fixação dos danos morais em ${brl(s.valorPedido)}, sem prejuízo da correção monetária e dos juros de mora devidos na forma da lei.`;
+  const gastAlim=328.74;
+  const mesesAlim=(s.totalDesc/gastAlim).toFixed(1);
+  const pctMensalRenda=s.salCons>0?((s.contratos[0]?.vp||0)/s.salCons*100).toFixed(1):"—";
+
+  let topV_idoso="";
+  if(s.isIdoso){
+    const medMed=(s.salCons*0.2357).toFixed(2);
+    topV_idoso=`\n\nAGRAVANTE — CONDIÇÃO DE IDOSA (Lei 10.741/2003)\nA parte Autora, sendo idosa (60 anos ou mais), tem sua vulnerabilidade econômica agravada. Segundo os Cadernos de Saúde Pública (Fiocruz/SciELO, 2020), idosos aposentados comprometem em média 23,57% da aposentadoria com medicamentos de uso contínuo (equivalente a R$ ${medMed} no presente caso), e 41% já deixaram de adquirir medicamentos por falta de recursos. A condição de idosa atrai a proteção especial do Estatuto do Idoso (Lei 10.741/2003), que veda qualquer forma de discriminação, negligência ou abuso em detrimento do idoso.`;
+  }
+
+  return `FUNDAMENTAÇÃO — QUANTUM DOS DANOS MORAIS\n\nA parte Autora, com renda líquida de ${brl(s.salCons)}, teve descontado(s) indevidamente ${s.nC} contrato(s):\n${det}\nTotal descontado: ${brl(s.totalDesc)}.\n\nI — DA CONFIGURAÇÃO DO DANO MORAL\nO valor indevidamente descontado representa ${s.pctDoCons.toFixed(1)}% da renda líquida da parte Autora, equivalendo a ${(s.totalDesc/s.salCons).toFixed(2)} meses de renda. A subtração compulsória de parcela tão significativa do orçamento familiar ultrapassa o mero dissabor cotidiano, caracterizando dano moral passível de indenização.\n\nII — DO QUANTUM — MÉTODO BIFÁSICO\nO valor de ${brl(s.valorPedido)} foi fixado com observância do método bifásico: na 1ª fase, consideraram-se os precedentes do tribunal; na 2ª fase, ponderaram-se as circunstâncias concretas — extensão do dano, capacidade econômica do réu e grau de reprovabilidade da conduta.\n\nIII — DA CAPACIDADE ECONÔMICA DO RÉU\nO ${banco.nome} auferiu lucro líquido de ${brl(banco.lucro)} em 2025 (Fonte: Balanço Anual CVM 2025), equivalendo a ${brl(s.lucroSeg)} por segundo. O valor pretendido representa ${pctStr(s.valorPedido,banco.lucro)} do lucro anual, sendo recuperado em ${fmtSeg(s.seg2)}.\n\nIV — DA PROPORCIONALIDADE\nO dano sofrido (${s.pctDoCons.toFixed(1)}% da renda) equivale proporcionalmente a ${brl(s.juizEquiv)} do salário base de um juiz de 1ª instância no ${s.estadoNome} (Fonte: CNJ — Portal de Transparência 2025).\n\nV — DO DANO COMO SUPERIOR AO MERO DISSABOR E DA AUSÊNCIA DE VALOR ÍNFIMO\n\n1. Comprometimento do mínimo existencial (Fonte: IBGE — POF 2017-2018)\nSegundo o IBGE (Pesquisa de Orçamentos Familiares 2017-2018 — edição mais recente disponível, aguardando publicação da POF 2024-2025), famílias com rendimento de até 2 salários mínimos comprometem 61,2% do orçamento com alimentação (22%) e habitação (39,2%). Somados transporte e saúde, o comprometimento alcança 72,2% da renda em despesas que não podem ser suprimidas. O desconto indevido praticado pelo réu incidiu sobre parcela da renda já integralmente comprometida com necessidades vitais, configurando violação ao mínimo existencial.${topV_idoso}\n\n2. Ausência de valor ínfimo para a parte Autora (Fonte: IBGE — POF 2017-2018)\nO valor indevidamente descontado — ${brl(s.totalDesc)} no total — não configura quantia ínfima para a realidade econômica da parte Autora. Representa ${s.pctDoCons.toFixed(1)}% da renda líquida mensal. O gasto médio mensal com alimentação de famílias nessa faixa de renda é de R$ 328,74 (IBGE/POF 2017-2018), o que significa que o total descontado equivale a ${mesesAlim} meses de gastos alimentares dessa família. Para quem opera no limite do mínimo existencial, nenhum desconto indevido nessa magnitude pode ser classificado como ínfimo sob qualquer critério razoável.\n\n3. Reiteração sistêmica da conduta (Fonte: Banco Central do Brasil — Ranking de Reclamações 2024)\nO ${banco.nome} registrou ${banco.recl.toLocaleString("pt-BR")} reclamações no Banco Central em 2024 (Fonte: Ranking de Reclamações BACEN 2024), evidenciando prática sistêmica que reforça a necessidade de condenação com caráter pedagógico, nos termos do art. 944 do Código Civil.\n\n4. Custo imposto ao erário público (Fonte: CNJ — Justiça em Números 2024)\nO presente processo representa um custo estimado de ${brl(CUSTO_PROCESSO[_st.estado]||2850)} ao Estado de ${s.estadoNome}, conforme dados do CNJ (Relatório Justiça em Números 2024, ano-base 2023). Esse ônus é consequência direta e exclusiva da conduta ilícita do réu.\n\nCONCLUSÃO: O conjunto de dados acima, todos extraídos de fontes oficiais, demonstra que o dano ultrapassa o mero dissabor cotidiano, que o valor descontado não é ínfimo para a realidade da parte Autora, e que a conduta do réu é sistêmica. Requer-se a fixação dos danos morais em ${brl(s.valorPedido)}, acrescidos de correção monetária e juros de mora.\n\nFONTES: IBGE — POF 2017-2018 (edição mais recente; POF 2024-2025 em campo, resultados ainda não publicados) | Cadernos de Saúde Pública — Fiocruz/SciELO (2020) | Banco Central do Brasil — Ranking de Reclamações 2024 | Balanço Anual CVM 2025 | CNJ — Justiça em Números 2024 (ano-base 2023) | Lei 10.741/2003 — Estatuto do Idoso`;
 }
 
 function gerarPDF(){
@@ -363,225 +488,254 @@ function gerarPDF(){
     try{
       const {jsPDF}=window.jspdf;
       const doc=new jsPDF({orientation:"portrait",unit:"mm",format:"a4"});
-      const W=210,ml=11,mr=11,tw=W-ml-mr;
+      const W=210,ml=12,mr=12,tw=W-ml-mr;
       const hoje=new Date().toLocaleDateString("pt-BR");
       const s=_st,banco=s.banco,mags=s.mags;
 
+      function brlK(v){if(v>=1e9)return "R$ "+(v/1e9).toFixed(1).replace(".",",")+" bi";if(v>=1e6)return "R$ "+(v/1e6).toFixed(0)+" mi";return brl(v);}
       const sf=(sz,st,cor)=>{doc.setFontSize(sz);doc.setFont("helvetica",st||"normal");doc.setTextColor(...(cor||[35,35,35]));};
+      const secH=(txt,yy)=>{doc.setFillColor(237,243,251);doc.rect(ml,yy,tw,5.5,"F");doc.setFillColor(22,88,155);doc.rect(ml,yy,2.5,5.5,"F");sf(6.5,"bold",[22,88,155]);doc.text(txt,ml+5,yy+3.8);return yy+7;};
+      const rodape=(pg,total)=>{doc.setFillColor(238,242,248);doc.rect(0,285,210,12,"F");doc.setDrawColor(22,88,155);doc.line(0,285,210,285);sf(5,"normal",[90,100,115]);doc.text("Desenvolvido por Edson Alcântara | Ferramenta de apoio técnico-jurídico | Valores baseados em fontes oficiais públicas, sujeitos a alteração sem aviso prévio",W/2,288,{align:"center"});doc.text("Não constitui opinião jurídica nem garantia de resultado judicial | Responsabilidade de uso exclusiva do profissional",W/2,292,{align:"center"});sf(5,"normal",[130,140,155]);doc.text(`Página ${pg} de ${total} | Emitido em: ${hoje}`,W/2,293,{align:"center"});};
 
-      function brlK(v){
-        if(v>=1e9) return "R$ "+(v/1e9).toFixed(1).replace(".",",")+" bi";
-        if(v>=1e6) return "R$ "+(v/1e6).toFixed(0)+" mi";
-        return brl(v);
-      }
-
-      // ── CABEÇALHO ──
-      doc.setFillColor(15,52,96);doc.rect(0,0,210,20,"F");
-      doc.setFillColor(22,88,155);doc.rect(0,17,210,3,"F");
+      // ══════════════════════════════════════════════
+      // PÁGINA 1 — IDENTIFICAÇÃO DO CASO
+      // ══════════════════════════════════════════════
+      doc.setFillColor(15,52,96);doc.rect(0,0,210,22,"F");
+      doc.setFillColor(22,88,155);doc.rect(0,19,210,3,"F");
       sf(13,"bold",[255,255,255]);doc.text("CALCULADORA DE DANOS MORAIS",W/2,9,{align:"center"});
-      sf(6.5,"normal",[150,195,255]);doc.text("Crédito Consignado  ·  Fundamentação Jurídica  ·  "+hoje,W/2,15,{align:"center"});
-      let y=24;
+      sf(6.5,"normal",[150,195,255]);doc.text("Crédito Consignado  ·  Relatório Técnico de Apoio Jurídico  ·  "+hoje,W/2,15,{align:"center"});
+      sf(5,"normal",[120,170,230]);doc.text("Documento elaborado com base em fontes oficiais — IBGE, Banco Central do Brasil, CVM e CNJ",W/2,20,{align:"center"});
+      let y=26;
 
-      // ── BLOCO TOPO 3 COLUNAS ──
-      // altura fixa 26mm
-      const BH=26, col=tw/3, c1=ml, c2=ml+col, c3=ml+col*2;
-      doc.setFillColor(246,249,252);doc.rect(ml,y,tw,BH,"F");
-      doc.setDrawColor(210,220,235);doc.rect(ml,y,tw,BH,"S");
-      doc.setDrawColor(210,220,235);doc.line(c2,y,c2,y+BH);doc.line(c3,y,c3,y+BH);
-
-      // col 1 — parte autora
+      y=secH("IDENTIFICAÇÃO DO CASO",y);
+      const col=tw/3,c1=ml,c2=ml+col,c3=ml+col*2;
+      doc.setFillColor(246,249,252);doc.rect(ml,y,tw,28,"F");doc.setDrawColor(210,220,235);doc.rect(ml,y,tw,28,"S");
+      doc.line(c2,y,c2,y+28);doc.line(c3,y,c3,y+28);
       sf(5.5,"bold",[22,88,155]);doc.text("PARTE AUTORA",c1+2,y+4.5);
-      sf(5,"normal",[120,130,145]);doc.text("Renda líquida:",c1+2,y+9.5);
-      sf(7.5,"bold",[35,35,35]);doc.text(brl(s.salCons),c1+2,y+14);
-      sf(5,"normal",[120,130,145]);doc.text("Estado:",c1+2,y+18.5);
-      sf(6,"normal",[35,35,35]);doc.text(s.estadoNome,c1+2,y+22.5);
-
-      // col 2 — banco
+      sf(5,"normal",[120,130,145]);doc.text("Renda líquida:",c1+2,y+9.5);sf(7.5,"bold",[35,35,35]);doc.text(brl(s.salCons),c1+2,y+14);
+      sf(5,"normal",[120,130,145]);doc.text("Estado:",c1+2,y+19);sf(6,"normal",[35,35,35]);doc.text(s.estadoNome,c1+2,y+23);
+      if(s.isIdoso){sf(5.5,"bold",[153,60,29]);doc.text("IDOSA (60+ anos) — Lei 10.741/2003",c1+2,y+27);}
       sf(5.5,"bold",[22,88,155]);doc.text("BANCO RÉU",c2+2,y+4.5);
-      sf(5,"normal",[120,130,145]);doc.text("Instituição:",c2+2,y+9.5);
-      const nomeLines=doc.splitTextToSize(banco.nome,col-5);
-      sf(6,"normal",[35,35,35]);doc.text(nomeLines[0],c2+2,y+13.5);
-      sf(5,"normal",[120,130,145]);doc.text("Lucro anual (2025):",c2+2,y+18.5);
-      sf(7.5,"bold",[35,35,35]);doc.text(brlK(banco.lucro),c2+2,y+23);
-
-      // col 3 — dano sofrido
+      sf(5,"normal",[120,130,145]);doc.text("Instituição:",c2+2,y+9.5);sf(6,"normal",[35,35,35]);doc.text(doc.splitTextToSize(banco.nome,col-4)[0],c2+2,y+13.5);
+      sf(5,"normal",[120,130,145]);doc.text("Lucro anual (2025):",c2+2,y+18.5);sf(7.5,"bold",[35,35,35]);doc.text(brlK(banco.lucro),c2+2,y+23);
       sf(5.5,"bold",[22,88,155]);doc.text("DANO SOFRIDO",c3+2,y+4.5);
-      sf(5,"normal",[120,130,145]);doc.text("Total descontado:",c3+2,y+9.5);
-      sf(8,"bold",[216,90,48]);doc.text(brl(s.totalDesc),c3+2,y+14.5);
-      sf(5,"normal",[120,130,145]);doc.text("Impacto na renda:",c3+2,y+19);
-      sf(5.5,"normal",[35,35,35]);doc.text(s.pctDoCons.toFixed(1)+"% ("+((s.totalDesc/s.salCons).toFixed(2))+" meses)",c3+2,y+23);
-      y+=BH+3;
+      sf(5,"normal",[120,130,145]);doc.text("Total descontado:",c3+2,y+9.5);sf(8,"bold",[216,90,48]);doc.text(brl(s.totalDesc),c3+2,y+14.5);
+      sf(5,"normal",[120,130,145]);doc.text("Impacto na renda:",c3+2,y+19);sf(5.5,"normal",[35,35,35]);doc.text(s.pctDoCons.toFixed(1)+"% ("+( s.totalDesc/s.salCons).toFixed(2)+" meses)",c3+2,y+23);
+      y+=31;
 
-      // ── SEC HELPER ──
-      const secH=(txt,yy)=>{
-        doc.setFillColor(237,243,251);doc.rect(ml,yy,tw,5.5,"F");
-        doc.setFillColor(22,88,155);doc.rect(ml,yy,2.5,5.5,"F");
-        sf(6.5,"bold",[22,88,155]);doc.text(txt,ml+5,yy+3.8);
-        return yy+7;
-      };
-
-      // ── CONTRATOS ──
       y=secH("CONTRATOS INDEVIDOS",y);
       const cw=[52,22,14,24,20,24,12];
-      doc.setFillColor(22,88,155);doc.rect(ml,y,tw,5,"F");
-      sf(5.5,"bold",[255,255,255]);
-      let cx=ml;
-      ["Tipo de contrato","Parcela","Qtd.","Subtotal","% Renda","% Lucro Banco",""].forEach((h,i)=>{doc.text(h,cx+1,y+3.4);cx+=cw[i];});
-      y+=5;let alt=false;
-      s.contratos.forEach((c)=>{
-        const t=TIPOS[c.tipo];
-        if(alt){doc.setFillColor(247,250,253);doc.rect(ml,y,tw,5,"F");}alt=!alt;
+      doc.setFillColor(22,88,155);doc.rect(ml,y,tw,5,"F");sf(5.5,"bold",[255,255,255]);
+      let cx=ml;["Tipo de contrato","Parcela","Qtd.","Subtotal","% Renda","% Lucro Banco",""].forEach((h,i)=>{doc.text(h,cx+1,y+3.4);cx+=cw[i];});y+=5;
+      let alt=false;
+      s.contratos.forEach(c=>{
+        const t=TIPOS[c.tipo];if(alt){doc.setFillColor(247,250,253);doc.rect(ml,y,tw,5,"F");}alt=!alt;
         sf(6,"normal",[40,40,40]);cx=ml;
         const tn={rmc:"RMC — Margem Consignável",rcc:"RCC — Cartão Consignado",emp:"Empréstimo Consignado"};
         const pctR=s.salCons>0?((c.total/s.salCons)*100).toFixed(1)+"%":"—";
         const lucroP=banco.lucro>0?((c.total/banco.lucro)*100).toFixed(6)+"%":"—";
-        [tn[c.tipo]||t.short,brl(c.vp),String(c.np),brl(c.total),pctR,lucroP,""].forEach((v,i)=>{
-          doc.text(doc.splitTextToSize(String(v),cw[i]-1.5),cx+1,y+3.4);cx+=cw[i];
-        });y+=5;
+        [tn[c.tipo]||t.short,brl(c.vp),String(c.np),brl(c.total),pctR,lucroP,""].forEach((v,i)=>{doc.text(doc.splitTextToSize(String(v),cw[i]-1.5),cx+1,y+3.4);cx+=cw[i];});y+=5;
       });
-      doc.setDrawColor(190,205,225);doc.line(ml,y,ml+tw,y);
-      sf(6,"bold",[40,40,40]);doc.text("TOTAL",ml+1,y+4);
-      sf(7,"bold",[216,90,48]);doc.text(brl(s.totalDesc),ml+cw[0]+cw[1]+cw[2]+1,y+4);
-      y+=7;
+      doc.setDrawColor(190,205,225);doc.line(ml,y,ml+tw,y);sf(6,"bold",[40,40,40]);doc.text("TOTAL",ml+1,y+4);sf(7,"bold",[216,90,48]);doc.text(brl(s.totalDesc),ml+cw[0]+cw[1]+cw[2]+1,y+4);y+=8;
 
-      // ── CAPACIDADE + ESCALA lado a lado ──
-      // calcular altura necessária para cada coluna
-      const hW=(tw-3)/2, bx=ml, rx=ml+hW+3;
-
-      // esquerda: 4 itens, cada um com label+valor+fonte opcional
-      // altura: 4mm topo + 4 itens * (label 3.5 + valor 4.5 + gap 2) = 4 + 40 = 44mm (margem extra)
-      const SH=44;
-      y=secH("CAPACIDADE ECONÔMICA DO RÉU  ·  ESCALA DE QUEM JULGA",y);
-
+      // Análise econômica p1
+      const hW=(tw-3)/2,bx=ml,rx=ml+hW+3,SH=42;
+      y=secH("ANÁLISE ECONÔMICA — CAPACIDADE DO RÉU",y);
       doc.setFillColor(247,249,252);doc.rect(bx,y,hW,SH,"F");doc.setDrawColor(210,220,235);doc.rect(bx,y,hW,SH,"S");
       let by=y+4;
-      [
-        ["Lucro líquido anual (2025)",brlK(banco.lucro),"Fonte: Balanço Anual CVM 2025"],
-        ["Lucro por segundo",brl(s.lucroSeg),""],
-        ["Condenação / lucro anual",pctStr(s.valorPedido,banco.lucro),""],
-        ["Reclamações BACEN 2024",banco.recl.toLocaleString("pt-BR")+" ocorrências","Fonte: Banco Central do Brasil 2024"],
-      ].forEach(([k,v,fonte])=>{
-        sf(5,"normal",[120,130,145]);doc.text(k+":",bx+2,by);
-        sf(6.5,"bold",[35,35,35]);doc.text(v,bx+2,by+3.8);
-        if(fonte){sf(4.5,"italic",[160,170,185]);doc.text(fonte,bx+2,by+7);by+=11;}
-        else{by+=9;}
+      [["Lucro líquido anual (2025)",brlK(banco.lucro),"Fonte: Balanço Anual CVM 2025"],["Lucro por segundo",brl(s.lucroSeg),""],["Condenação / lucro anual",pctStr(s.valorPedido,banco.lucro),""],["Reclamações BACEN 2024",banco.recl.toLocaleString("pt-BR")+" ocorrências","Fonte: Banco Central do Brasil 2024"]].forEach(([k,v,fonte])=>{
+        sf(5,"normal",[120,130,145]);doc.text(k+":",bx+2,by);sf(6.5,"bold",[35,35,35]);doc.text(v,bx+2,by+3.8);
+        if(fonte){sf(4.5,"italic",[160,170,185]);doc.text(fonte,bx+2,by+7);by+=11;}else{by+=9;}
       });
-
-      // direita: 4 cargos com linha separadora
       doc.setFillColor(229,240,252);doc.rect(rx,y,hW,SH,"F");doc.setDrawColor(160,195,240);doc.rect(rx,y,hW,SH,"S");
-      sf(5.5,"bold",[22,88,155]);
-      const titEsc="Mesma proporção ("+s.pctDoCons.toFixed(1)+"%) equivale a:";
-      doc.text(doc.splitTextToSize(titEsc,hW-4),rx+2,y+5);
+      sf(5.5,"bold",[22,88,155]);doc.text("Mesma proporção ("+s.pctDoCons.toFixed(1)+"%) equivale a:",rx+2,y+5,{maxWidth:hW-4});
       let ry=y+11;
-      const cargosEsc=[{key:"juiz",l:"Juiz 1ª inst."},{key:"desemb",l:"Desembargador"},{key:"promotor",l:"Promotor"},{key:"procurador",l:"Procurador"}];
-      cargosEsc.forEach((c,ci)=>{
+      [{key:"juiz",l:"Juiz 1ª instância"},{key:"desemb",l:"Desembargador"},{key:"promotor",l:"Promotor de Justiça"},{key:"procurador",l:"Procurador do Estado"}].forEach((c,ci)=>{
         const sal=mags[c.key];const equiv=Math.round((s.pctDoCons/100)*sal);
-        sf(5.5,"normal",[65,78,95]);doc.text(c.l,rx+2,ry);
-        sf(6,"bold",[22,88,155]);doc.text(brl(equiv),rx+hW-2,ry,{align:"right"});
-        if(ci<cargosEsc.length-1){doc.setDrawColor(185,210,238);doc.line(rx+2,ry+2,rx+hW-2,ry+2);}
-        ry+=6;
+        sf(5.5,"normal",[65,78,95]);doc.text(c.l,rx+2,ry);sf(6,"bold",[22,88,155]);doc.text(brl(equiv),rx+hW-2,ry,{align:"right"});
+        if(ci<3){doc.setDrawColor(185,210,238);doc.line(rx+2,ry+2,rx+hW-2,ry+2);}ry+=6;
       });
-      sf(4.5,"italic",[155,168,182]);doc.text("Fonte: CNJ — Portal Transparência 2025",rx+2,y+SH-1.5);
+      sf(4.5,"italic",[155,168,182]);doc.text("Fonte: CNJ — Portal de Transparência 2025",rx+2,y+SH-1.5);
       y+=SH+2;
 
-      // ── TABELA COMPARATIVA AUTOR × MAGISTRADOS ──
-      y=secH("IMPACTO DO DANO — COMPARAÇÃO PROPORCIONAL",y);
-      sf(5.8,"italic",[70,80,95]);
-      const fraseCmp="Para compreender o impacto real do dano, veja quanto cada servidor teria que perder para sentir a mesma proporção que a parte Autora sentiu:";
-      const fraseLines=doc.splitTextToSize(fraseCmp,tw);
-      doc.text(fraseLines,ml,y);
-      y+=fraseLines.length*3.8+3;
-
-      // cabeçalho
-      const cwCmp=[52,30,36,50];
-      doc.setFillColor(15,52,96);doc.rect(ml,y,tw,5.5,"F");
-      sf(6,"bold",[255,255,255]);
-      let cxc=ml;
-      ["Quem","Renda mensal","Dano equivalente","Impacto"].forEach((h,i)=>{doc.text(h,cxc+1.5,y+3.8);cxc+=cwCmp[i];});
-      y+=5.5;
-
-      // linha da parte autora
-      doc.setFillColor(250,236,231);doc.rect(ml,y,tw,6.5,"F");
-      doc.setDrawColor(216,90,48);doc.line(ml,y,ml,y+6.5);
-      sf(6,"bold",[153,60,29]);
-      cxc=ml;
-      ["PARTE AUTORA",brl(s.salCons),brl(s.totalDesc),s.pctDoCons.toFixed(1)+"% ("+((s.totalDesc/s.salCons).toFixed(2))+" meses)"].forEach((v,i)=>{
-        doc.text(doc.splitTextToSize(v,cwCmp[i]-2),cxc+1.5,y+4.5);cxc+=cwCmp[i];
-      });
-      y+=6.5;
-      doc.setDrawColor(200,210,225);doc.line(ml,y,ml+tw,y);
-
-      // magistrados
-      const cargosAll=[{key:"juiz",l:"Juiz de 1ª instância"},{key:"desemb",l:"Desembargador"},{key:"promotor",l:"Promotor de Justiça"},{key:"procurador",l:"Procurador do Estado"},{key:"deleg",l:"Delegado de Polícia"}];
-      let altC=false;
-      cargosAll.forEach(c=>{
-        const sal=mags[c.key];const equiv=Math.round((s.pctDoCons/100)*sal);
-        if(altC){doc.setFillColor(240,245,252);doc.rect(ml,y,tw,6,"F");}altC=!altC;
-        sf(6,"normal",[35,35,35]);cxc=ml;
-        [c.l,brl(sal),brl(equiv),s.pctDoCons.toFixed(1)+"% da renda"].forEach((v,i)=>{
-          doc.text(doc.splitTextToSize(v,cwCmp[i]-2),cxc+1.5,y+4.2);cxc+=cwCmp[i];
-        });
-        doc.setDrawColor(215,225,238);doc.line(ml,y+6,ml+tw,y+6);
-        y+=6;
-      });
-      sf(4.5,"italic",[150,160,175]);doc.text("Fonte: CNJ — Portal de Transparência 2025  |  Subsídios base 2025",ml,y+3);
-      y+=8;
-
-      // ── ARGUMENTO BANCO ──
-      doc.setFillColor(254,248,237);doc.rect(ml,y,tw,10,"F");
-      doc.setDrawColor(186,117,23);doc.line(ml,y,ml,y+10);
-      sf(5.5,"normal",[99,56,6]);
+      // Argumento banco
       const a2=`Para o ${banco.nome}, que lucra ${brl(s.lucroSeg)}/segundo, o valor de ${brl(s.valorPedido)} é recuperado em apenas ${fmtSeg(s.seg2)}. Uma condenação recuperada tão rapidamente não cumpre função pedagógica nem inibitória.`;
-      // alerta severo
-      const isSevero = s.pctDoCons > 100;
-      const a2lines=doc.splitTextToSize(a2,tw-5);
-      const a2H=Math.max(10,a2lines.length*3.8+4);
-      doc.setFillColor(254,248,237);doc.rect(ml,y,tw,a2H,"F");
-      doc.setDrawColor(186,117,23);doc.line(ml,y,ml,y+a2H);
-      doc.text(a2lines,ml+3,y+4);
-      y+=a2H+2;
-      // alerta severo no PDF
-      if(isSevero){
-        doc.setFillColor(250,236,231);doc.rect(ml,y,tw,8,"F");
-        doc.setDrawColor(216,90,48);doc.line(ml,y,ml,y+8);
-        sf(6,"bold",[153,60,29]);
-        doc.text("ATENÇÃO: O dano representa "+s.pctDoCons.toFixed(1)+"% da renda mensal ("+((s.totalDesc/s.salCons).toFixed(1))+" meses) — comprometimento severo do orçamento familiar.",ml+3,y+5,{maxWidth:tw-5});
-        y+=10;
-      }
+      const a2H=Math.max(10,doc.splitTextToSize(a2,tw-5).length*3.8+4);
+      doc.setFillColor(254,248,237);doc.rect(ml,y,tw,a2H,"F");doc.setDrawColor(186,117,23);doc.line(ml,y,ml,y+a2H);
+      sf(5.5,"normal",[99,56,6]);doc.text(doc.splitTextToSize(a2,tw-5),ml+3,y+4);y+=a2H+2;
 
-      // ── VALOR DESTAQUE ──
+      // Valor destaque
       doc.setFillColor(15,52,96);doc.rect(ml,y,tw,16,"F");
       sf(6,"normal",[140,185,245]);doc.text("VALOR DO DANO MORAL PRETENDIDO",ml+4,y+5);
       sf(13,"bold",[255,255,255]);doc.text(brl(s.valorPedido),W/2,y+12,{align:"center"});
-      const subline=`${(s.valorPedido/1518).toFixed(0)} salários mínimos  ·  ${fmtSeg(s.seg2)} de lucro do banco  ·  ${pctStr(s.valorPedido,banco.lucro)} do lucro anual`;
-      sf(5,"normal",[120,170,230]);doc.text(subline,W/2,y+15.5,{align:"center"});
-      y+=18;
+      sf(5,"normal",[120,170,230]);doc.text(`${(s.valorPedido/1518).toFixed(0)} salários mínimos  ·  ${fmtSeg(s.seg2)} de lucro do banco  ·  ${pctStr(s.valorPedido,banco.lucro)} do lucro anual`,W/2,y+15.5,{align:"center"});
+      y+=19;
 
-      // ── FUNDAMENTAÇÃO ──
-      y=secH("FUNDAMENTAÇÃO — SÍNTESE",y);
-      const fundH=Math.max(10,281-y);
-      doc.setFillColor(252,253,254);doc.rect(ml,y,tw,fundH,"F");doc.setDrawColor(218,225,235);doc.rect(ml,y,tw,fundH,"S");
-      sf(5.8,"normal",[50,55,65]);
-      const fund=`I — DANO MORAL: O valor indevidamente descontado (${brl(s.totalDesc)}) representa ${s.pctDoCons.toFixed(1)}% da renda líquida da parte Autora (${(s.totalDesc/s.salCons).toFixed(2)} meses), ultrapassando o mero dissabor e caracterizando dano moral passível de indenização.\n\nII — MÉTODO BIFÁSICO: O valor de ${brl(s.valorPedido)} observa o método bifásico — precedentes do tribunal (1ª fase) e circunstâncias do caso: extensão do dano, capacidade econômica do réu e grau de reprovabilidade da conduta (2ª fase). Sem correção monetária nem juros de mora.\n\nIII — CAPACIDADE DO RÉU: O ${banco.nome} lucrou ${brlK(banco.lucro)} em 2025 (${brl(s.lucroSeg)}/segundo — Fonte: Balanço CVM). O valor pretendido representa ${pctStr(s.valorPedido,banco.lucro)} do lucro anual, recuperado em ${fmtSeg(s.seg2)}. A condenação deve ser economicamente significativa para desestimular a reiteração da conduta.\n\nIV — PROPORCIONALIDADE: O dano (${s.pctDoCons.toFixed(1)}% da renda) equivale proporcionalmente a ${brl(s.juizEquiv)} do salário de um juiz de 1ª instância no ${s.estadoNome} (Fonte: CNJ 2025). Requer-se a fixação em ${brl(s.valorPedido)}, acrescidos de correção monetária e juros de mora.`;
-      const fl=doc.splitTextToSize(fund,tw-4);
-      let fy=y+3.5;fl.forEach(l=>{if(fy<y+fundH-2){doc.text(l,ml+2,fy);fy+=3.6;}});
+      // Tabela comparativa
+      y=secH("IMPACTO DO DANO — COMPARAÇÃO PROPORCIONAL",y);
+      sf(5.8,"italic",[70,80,95]);
+      const fraseCmp="Para compreender o impacto real do dano, veja quanto cada servidor teria que perder para sentir a mesma proporção que a parte Autora sentiu:";
+      const fraseLines=doc.splitTextToSize(fraseCmp,tw);doc.text(fraseLines,ml,y);y+=fraseLines.length*3.8+3;
+      const cwCmp=[52,30,36,50];
+      doc.setFillColor(15,52,96);doc.rect(ml,y,tw,5.5,"F");sf(6,"bold",[255,255,255]);
+      let cxc=ml;["Quem","Renda mensal","Dano equivalente","Impacto"].forEach((h,i)=>{doc.text(h,cxc+1.5,y+3.8);cxc+=cwCmp[i];});y+=5.5;
+      doc.setFillColor(250,236,231);doc.rect(ml,y,tw,6.5,"F");doc.setDrawColor(216,90,48);doc.line(ml,y,ml,y+6.5);
+      sf(6,"bold",[153,60,29]);cxc=ml;
+      ["PARTE AUTORA",brl(s.salCons),brl(s.totalDesc),s.pctDoCons.toFixed(1)+"% ("+( s.totalDesc/s.salCons).toFixed(2)+" meses)"].forEach((v,i)=>{doc.text(doc.splitTextToSize(v,cwCmp[i]-2),cxc+1.5,y+4.5);cxc+=cwCmp[i];});y+=6.5;
+      doc.setDrawColor(200,210,225);doc.line(ml,y,ml+tw,y);
+      let altC=false;
+      cargosAll.forEach(c=>{
+        const sal=c.t==="mag"?mags[c.key]:SERVIDORES[c.key];const equiv=Math.round((s.pctDoCons/100)*sal);
+        if(altC){doc.setFillColor(240,245,252);doc.rect(ml,y,tw,6,"F");}altC=!altC;
+        sf(6,"normal",[35,35,35]);cxc=ml;
+        [c.l,brl(sal),brl(equiv),s.pctDoCons.toFixed(1)+"% da renda"].forEach((v,i)=>{doc.text(doc.splitTextToSize(v,cwCmp[i]-2),cxc+1.5,y+4.2);cxc+=cwCmp[i];});
+        doc.setDrawColor(215,225,238);doc.line(ml,y+6,ml+tw,y+6);y+=6;
+      });
+      sf(4.5,"italic",[150,160,175]);doc.text("Fonte: CNJ — Portal de Transparência 2025  |  Subsídios base 2025",ml,y+3);y+=7;
+      rodape(1,3);
 
-      // ── RODAPÉ ──
-      doc.setFillColor(238,242,248);doc.rect(0,282,210,15,"F");
-      doc.setDrawColor(22,88,155);doc.line(0,282,210,282);
-      sf(5,"normal",[90,100,115]);doc.text("Documento de apoio técnico — não substitui análise jurídica profissional  |  Valores sem correção monetária e juros de mora",W/2,286,{align:"center"});
-      sf(4.8,"normal",[130,140,155]);doc.text("Fontes: Balanço Anual CVM 2025  |  Banco Central do Brasil — Ranking de Reclamações 2024  |  CNJ — Portal de Transparência 2025",W/2,290,{align:"center"});
-      sf(4.8,"normal",[150,158,170]);doc.text("Emitido em: "+hoje+"  |  calculadora-danos-morais.netlify.app",W/2,294,{align:"center"});
+      // ══════════════════════════════════════════════
+      // PÁGINA 2 — FUNDAMENTAÇÃO ESTRUTURADA
+      // ══════════════════════════════════════════════
+      doc.addPage();
+      doc.setFillColor(15,52,96);doc.rect(0,0,210,14,"F");
+      sf(9,"bold",[255,255,255]);doc.text("FUNDAMENTAÇÃO JURÍDICA — QUANTUM DOS DANOS MORAIS",W/2,9,{align:"center"});
+      y=18;
 
-      doc.save("danos-morais-"+hoje.replace(/\//g,"-")+".pdf");
-      status.textContent="✓ PDF gerado com sucesso!";
+      const topicoH=(num,titulo,yy)=>{
+        doc.setFillColor(22,88,155);doc.rect(ml,yy,tw,6,"F");
+        sf(5.5,"bold",[160,200,255]);doc.text(num,ml+2,yy+4);
+        sf(6.5,"bold",[255,255,255]);doc.text(titulo,ml+22,yy+4);
+        return yy+8;
+      };
+
+      y=topicoH("I","Da configuração do dano moral",y);
+      sf(5.8,"normal",[45,45,45]);
+      let txt=`O valor indevidamente descontado (${brl(s.totalDesc)}) representa ${s.pctDoCons.toFixed(1)}% da renda líquida da parte Autora (${(s.totalDesc/s.salCons).toFixed(2)} meses de renda), ultrapassando o mero dissabor cotidiano e caracterizando dano moral passível de indenização.`;
+      doc.text(doc.splitTextToSize(txt,tw),ml,y);y+=doc.splitTextToSize(txt,tw).length*3.6+4;
+
+      y=topicoH("II","Do quantum — método bifásico",y);
+      txt=`O valor de ${brl(s.valorPedido)} foi fixado com observância do método bifásico: na 1ª fase, consideraram-se os precedentes do tribunal para casos de desconto indevido em benefício consignado; na 2ª fase, ponderaram-se as circunstâncias concretas — extensão do dano, capacidade econômica do réu e grau de reprovabilidade da conduta. Valores sem correção monetária nem juros de mora.`;
+      doc.text(doc.splitTextToSize(txt,tw),ml,y);y+=doc.splitTextToSize(txt,tw).length*3.6+4;
+
+      y=topicoH("III","Da capacidade econômica do réu",y);
+      txt=`O ${banco.nome} auferiu lucro líquido de ${brlK(banco.lucro)} em 2025 (${brl(s.lucroSeg)}/segundo — Fonte: Balanço Anual CVM 2025). O valor pretendido representa ${pctStr(s.valorPedido,banco.lucro)} do lucro anual, recuperado em ${fmtSeg(s.seg2)}. A condenação deve ser economicamente significativa para desestimular a reiteração da conduta.`;
+      doc.text(doc.splitTextToSize(txt,tw),ml,y);y+=doc.splitTextToSize(txt,tw).length*3.6+4;
+
+      y=topicoH("IV","Da proporcionalidade",y);
+      txt=`O dano sofrido (${s.pctDoCons.toFixed(1)}% da renda) equivale proporcionalmente a ${brl(s.juizEquiv)} do salário base de um juiz de 1ª instância no ${s.estadoNome} (Fonte: CNJ — Portal de Transparência 2025). A fixação do quantum em patamar proporcional ao impacto real na vida do consumidor é imperativo do princípio da razoabilidade.`;
+      doc.text(doc.splitTextToSize(txt,tw),ml,y);y+=doc.splitTextToSize(txt,tw).length*3.6+4;
+
+      y=topicoH("V","Do dano como superior ao mero dissabor e da ausência de valor ínfimo",y);
+
+      // V.1
+      sf(6,"bold",[22,88,155]);doc.text("1. Comprometimento do mínimo existencial",ml,y);y+=5;
+      sf(5.8,"normal",[45,45,45]);
+      txt=`Segundo o IBGE (Pesquisa de Orçamentos Familiares 2017-2018 — edição mais recente disponível, aguardando publicação da POF 2024-2025), famílias com rendimento de até 2 salários mínimos comprometem 61,2% do orçamento com alimentação (22%) e habitação (39,2%). Somados transporte e saúde, o comprometimento alcança 72,2% da renda em despesas que não podem ser suprimidas. O desconto indevido incidiu sobre parcela da renda já comprometida com necessidades vitais, configurando violação ao mínimo existencial.`;
+      doc.text(doc.splitTextToSize(txt,tw),ml,y);y+=doc.splitTextToSize(txt,tw).length*3.6+3;
+
+      // Agravante idoso
+      if(s.isIdoso){
+        doc.setFillColor(254,248,237);doc.rect(ml,y,tw,20,"F");doc.setDrawColor(186,117,23);doc.line(ml,y,ml,y+20);
+        sf(5.5,"bold",[99,56,6]);doc.text("Agravante — Condição de Idosa (Estatuto do Idoso · Lei 10.741/2003)",ml+3,y+4);
+        sf(5.5,"normal",[99,56,6]);
+        const medMed=(s.salCons*0.2357).toFixed(2);
+        txt=`Idosos aposentados comprometem em média 23,57% da aposentadoria com medicamentos de uso contínuo (equivalente a R$ ${medMed}/mês no presente caso). 41% já deixaram de adquirir medicamentos por insuficiência de recursos (Cadernos de Saúde Pública — Fiocruz/SciELO, 2020). 62,4% têm a aposentadoria como única fonte de renda. A condição de idosa agrava a vulnerabilidade e atrai a proteção especial da Lei 10.741/2003.`;
+        doc.text(doc.splitTextToSize(txt,tw-5),ml+3,y+9);y+=22;
+      }
+
+      // V.2
+      sf(6,"bold",[22,88,155]);doc.text("2. Ausência de valor ínfimo para a parte Autora",ml,y);y+=5;
+      sf(5.8,"normal",[45,45,45]);
+      const gastAlim=328.74;const mesesAlim=(s.totalDesc/gastAlim).toFixed(1);
+      txt=`O valor indevidamente descontado (${brl(s.totalDesc)}) não configura quantia ínfima para a realidade econômica da parte Autora. Representa ${s.pctDoCons.toFixed(1)}% da renda líquida mensal. O gasto médio mensal com alimentação de famílias nessa faixa de renda é de R$ 328,74 (IBGE/POF 2017-2018), o que significa que o total descontado equivale a ${mesesAlim} meses de gastos alimentares dessa família. Para quem opera no limite do mínimo existencial, nenhum desconto indevido nessa magnitude pode ser classificado como ínfimo.`;
+      doc.text(doc.splitTextToSize(txt,tw),ml,y);y+=doc.splitTextToSize(txt,tw).length*3.6+3;
+
+      // V.3
+      sf(6,"bold",[22,88,155]);doc.text("3. Reiteração sistêmica da conduta",ml,y);y+=5;
+      sf(5.8,"normal",[45,45,45]);
+      txt=`O ${banco.nome} registrou ${banco.recl.toLocaleString("pt-BR")} reclamações no Banco Central em 2024 (Fonte: Ranking BACEN 2024), evidenciando prática sistêmica que reforça a necessidade de condenação com caráter pedagógico e inibitório, nos termos do art. 944 do Código Civil.`;
+      doc.text(doc.splitTextToSize(txt,tw),ml,y);y+=doc.splitTextToSize(txt,tw).length*3.6+3;
+
+      // V.4
+      sf(6,"bold",[22,88,155]);doc.text("4. Custo imposto ao erário público",ml,y);y+=5;
+      sf(5.8,"normal",[45,45,45]);
+      const custoProcesso=CUSTO_PROCESSO[document.getElementById('estado').value]||2850;
+      txt=`O presente processo representa um custo estimado de ${brl(custoProcesso)} ao Estado de ${s.estadoNome}, conforme dados do CNJ (Relatório Justiça em Números 2024, ano-base 2023). Esse ônus ao erário é consequência direta e exclusiva da conduta ilícita do réu.`;
+      doc.text(doc.splitTextToSize(txt,tw),ml,y);y+=doc.splitTextToSize(txt,tw).length*3.6+4;
+
+      // Conclusão
+      doc.setFillColor(15,52,96);doc.rect(ml,y,tw,22,"F");
+      sf(6,"bold",[150,195,255]);doc.text("CONCLUSÃO",ml+3,y+5);
+      sf(5.8,"normal",[220,235,255]);
+      txt=`O conjunto de dados acima, todos extraídos de fontes oficiais, demonstra que: (i) o dano sofrido ultrapassa o mero dissabor cotidiano, atingindo o mínimo existencial da parte Autora; (ii) o valor indevidamente descontado não é ínfimo para a realidade econômica de quem o sofreu; e (iii) a conduta do réu é sistêmica, reiterada e gera ônus ao próprio Estado. Requer-se a fixação dos danos morais em ${brl(s.valorPedido)}, acrescidos de correção monetária e juros de mora na forma da lei.`;
+      doc.text(doc.splitTextToSize(txt,tw-4),ml+2,y+10);y+=24;
+      rodape(2,3);
+
+      // ══════════════════════════════════════════════
+      // PÁGINA 3 — FONTES OFICIAIS
+      // ══════════════════════════════════════════════
+      doc.addPage();
+      doc.setFillColor(15,52,96);doc.rect(0,0,210,14,"F");
+      sf(9,"bold",[255,255,255]);doc.text("FONTES OFICIAIS UTILIZADAS NESTE RELATÓRIO",W/2,9,{align:"center"});
+      y=20;
+
+      const fonte=(titulo,corpo,yy)=>{
+        doc.setFillColor(237,243,251);doc.rect(ml,yy,tw,6,"F");doc.setFillColor(22,88,155);doc.rect(ml,yy,2.5,6,"F");
+        sf(6.5,"bold",[22,88,155]);doc.text(titulo,ml+5,yy+4);
+        const lines=doc.splitTextToSize(corpo,tw-4);
+        sf(5.8,"normal",[50,55,65]);doc.text(lines,ml+2,yy+9);
+        return yy+9+lines.length*3.6+5;
+      };
+
+      y=fonte("IBGE — Pesquisa de Orçamentos Familiares (POF) 2017-2018",
+        "Institulo Brasileiro de Geografia e Estatística. Pesquisa de Orçamentos Familiares 2017-2018: Perfil das Despesas no Brasil. Rio de Janeiro: IBGE, 2019. Dados utilizados: comprometimento do orçamento de famílias com rendimento de até 2 salários mínimos — alimentação (22%), habitação (39,2%), total necessidades vitais (72,2%); gasto médio mensal com alimentação (R$ 328,74); comprometimento com remédios (4,2%). NOTA: Edição mais recente disponível. A POF 2024-2025 encontra-se em campo desde novembro de 2024, com resultados ainda não publicados pelo IBGE.",y);
+
+      if(s.isIdoso){
+        y=fonte("Cadernos de Saúde Pública — Fiocruz/SciELO (2020) — dados específicos para idosos",
+          "Estudo publicado nos Cadernos de Saúde Pública (Fiocruz/SciELO, 2020) com base em entrevistas com idosos aposentados. Dados utilizados: comprometimento médio da aposentadoria com medicamentos de uso contínuo (23,57%); percentual de idosos que já deixaram de adquirir medicamentos por falta de recursos (41%); idosos com aposentadoria como única fonte de renda (62,4%); valor médio da aposentadoria na amostra (1,53 salário mínimo).",y);
+      }
+
+      y=fonte("Banco Central do Brasil — Ranking de Reclamações 2024",
+        `Banco Central do Brasil. Ranking de Reclamações — Bancos e Financeiras. 4º trimestre de 2024. Disponível em: https://www.bcb.gov.br/meubc/rankingreclamacoes. Dado utilizado: número de reclamações procedentes do ${banco.nome} no período de referência (${banco.recl.toLocaleString("pt-BR")} ocorrências).`,y);
+
+      y=fonte("Balanço Anual CVM 2025 — Resultado do exercício da instituição financeira ré",
+        `Comissão de Valores Mobiliários (CVM). Demonstrações Financeiras Anuais — ${banco.nome}. Exercício 2025. Dado utilizado: lucro líquido anual (${brlK(banco.lucro)}), equivalente a ${brl(s.lucroSeg)} por segundo de operação.`,y);
+
+      y=fonte("CNJ — Relatório Justiça em Números 2024 (ano-base 2023)",
+        `Conselho Nacional de Justiça. Relatório Justiça em Números 2024 — ano-base 2023. Brasília: CNJ, 2024. Dados utilizados: (i) subsídios base dos magistrados estaduais — Portal de Transparência CNJ 2025; (ii) custo médio estimado por processo baixado no ${doc.splitTextToSize(s.estadoNome,80)[0]} (${brl(custoProcesso)}), calculado com base na despesa total do tribunal dividida pelos processos baixados no ano.`,y);
+
+      y=fonte("Lei 10.741/2003 — Estatuto do Idoso",
+        "Brasil. Lei n. 10.741, de 1º de outubro de 2003 (Estatuto do Idoso). Dispõe sobre o estatuto do idoso e dá outras providências. Aplicável quando a parte Autora possui 60 anos ou mais, conferindo proteção especial e vedando qualquer forma de discriminação, negligência, crueldade ou violência praticada contra o idoso.",y);
+
+      // Nota metodológica
+      doc.setFillColor(245,247,250);doc.rect(ml,y,tw,28,"F");doc.setDrawColor(200,210,225);doc.rect(ml,y,tw,28,"S");
+      // Disclaimer
+      doc.setFillColor(15,52,96);doc.rect(ml,y,tw,14,"F");
+      sf(6,"bold",[150,195,255]);doc.text("DESENVOLVIDO POR EDSON ALCÂNTARA",ml+3,y+4.5);
+      sf(5.5,"normal",[200,220,255]);
+      const discl="Ferramenta de apoio técnico-jurídico. Os valores são estimativas baseadas em fontes públicas oficiais, podendo ser alterados ou atualizados sem aviso prévio, e não constituem opinião jurídica nem garantia de resultado judicial. Responsabilidade de uso exclusiva do profissional.";
+      doc.text(doc.splitTextToSize(discl,tw-6),ml+3,y+9);
+      y+=16;
+      sf(6,"bold",[70,80,95]);doc.text("NOTA METODOLÓGICA",ml+3,y+5);
+      sf(5.5,"normal",[80,90,105]);
+      const nota="Este relatório foi gerado pela Calculadora de Danos Morais — Crédito Consignado, ferramenta de apoio técnico-jurídico para parametrização de pedidos de indenização. Os valores calculados baseiam-se exclusivamente em dados de fontes oficiais, conforme referenciado em cada tópico. O relatório constitui documento de apoio técnico e não substitui a análise jurídica profissional do advogado responsável pelo caso. Os dados financeiros do banco réu referem-se ao exercício de 2025 (Balanço CVM). Os dados de reclamações referem-se ao 4º trimestre de 2024 (BACEN). Os dados de custos judiciais referem-se ao ano-base 2023 (CNJ Justiça em Números 2024). Os dados socioeconômicos referem-se à POF 2017-2018 (IBGE).";
+      doc.text(doc.splitTextToSize(nota,tw-4),ml+2,y+10);
+
+      rodape(3,3);
+
+      doc.save("relatorio-danos-morais-"+hoje.replace(/\//g,"-")+".pdf");
+      status.textContent="✓ Relatório PDF gerado com sucesso! (3 páginas)";
     }catch(e){status.textContent="Erro: "+e.message;console.error(e);}
-    finally{btn.disabled=false;btn.textContent="📄 Exportar relatório em PDF (A4 — 1 folha)";}
+    finally{btn.disabled=false;btn.textContent="📄 Exportar relatório em PDF (3 páginas)";}
   },300);
 }
 
 renderContratos();
 </script>
+  <div style="margin:24px 0 8px 0;padding:12px 16px;background:#f5f6f8;border-radius:8px;border:.5px solid rgba(0,0,0,0.08);text-align:center">
+    <p style="font-size:11px;color:#888;line-height:1.6;margin:0"><strong style="color:#555">Desenvolvido por Edson Alcântara.</strong> Ferramenta de apoio técnico-jurídico. Os valores são estimativas baseadas em fontes públicas oficiais, podendo ser alterados ou atualizados sem aviso prévio, e não constituem opinião jurídica nem garantia de resultado judicial. Responsabilidade de uso exclusiva do profissional.</p>
+  </div>
 </div><!-- /tela-calculadora -->
 
 <script>
@@ -669,6 +823,9 @@ window.addEventListener("DOMContentLoaded", ()=>{
       enviarParaSheets({ evento:"retorno", ...dadosUsuario, dataHora: new Date().toLocaleString("pt-BR") });
     }catch(e){ localStorage.removeItem("calc_usuario"); }
   }
+  // Configurar botão PDF rastreado
+  const btnPDF = document.getElementById("btn-pdf");
+  if(btnPDF) btnPDF.setAttribute("onclick","gerarPDFRastreado()");
 });
 
 // Rastrear cada cálculo
@@ -689,11 +846,7 @@ function gerarPDFRastreado(){
   enviarParaSheets({ evento:"pdf_baixado", ...dadosUsuario, dataHora: new Date().toLocaleString("pt-BR") });
 }
 
-// Substituir botão PDF pelo rastreado
-window.addEventListener("DOMContentLoaded", ()=>{
-  const btnPDF = document.getElementById("btn-pdf");
-  if(btnPDF) btnPDF.setAttribute("onclick","gerarPDFRastreado()");
-});
+
 </script>
 
 </body>
