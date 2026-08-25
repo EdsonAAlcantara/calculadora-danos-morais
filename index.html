@@ -130,6 +130,9 @@
       <input class="cad-input" type="text" id="cad-outro" placeholder="Digite sua profissão...">
     </div>
 
+    <!-- honeypot: usuário real nunca vê nem preenche; bot que preencher é rejeitado no servidor -->
+    <input type="text" id="cad-site" name="website" style="position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;opacity:0" tabindex="-1" autocomplete="off" aria-hidden="true">
+
     <div class="cad-erro" id="cad-erro"></div>
     <button class="cad-btn" id="cad-btn" onclick="fazerCadastro()">Acessar a calculadora →</button>
     <p class="cad-rodape">Seus dados são usados apenas para controle de acesso.<br>Não há cobrança nem envio de spam.</p>
@@ -794,7 +797,7 @@ async function enviarParaSheets(dados){
 }
 
 async function fazerCadastro(){
-  const email = document.getElementById("cad-email").value.trim();
+  const email = document.getElementById("cad-email").value.trim().toLowerCase();
   const profSel = document.getElementById("cad-profissao").value;
   const profOutro = document.getElementById("cad-outro").value.trim();
   const prof = profSel === "outro" ? profOutro : profSel;
@@ -812,8 +815,8 @@ async function fazerCadastro(){
   const geo = await getGeoIP();
   dadosUsuario = { email, profissao: prof, ...geo, dataHora: new Date().toLocaleString("pt-BR") };
 
-  // Registrar cadastro no Sheets
-  await enviarParaSheets({ evento:"cadastro", ...dadosUsuario });
+  // Registrar cadastro no Sheets (hp = honeypot; servidor rejeita se preenchido)
+  await enviarParaSheets({ evento:"cadastro", ...dadosUsuario, hp: document.getElementById("cad-site").value });
 
   // Salvar sessão no localStorage para não pedir de novo
   localStorage.setItem("calc_usuario", JSON.stringify(dadosUsuario));
@@ -842,15 +845,22 @@ window.addEventListener("DOMContentLoaded", ()=>{
   if(btnPDF) btnPDF.setAttribute("onclick","gerarPDFRastreado()");
 });
 
-// Rastrear cada cálculo
+// Rastrear cada cálculo: envolve o calc() global, então TODOS os pontos de
+// chamada (inputs, selects, contratos renderizados dinamicamente) são contados.
+// Só conta quando o cálculo é completo (banco + estado + renda preenchidos),
+// para não inflar com trocas de aba ou formulário vazio.
 const _calcOriginal = window.calc;
-function rastrearCalc(){
-  if(typeof calc === "function") calc();
+window.calc = function(){
+  _calcOriginal();
+  const sal = parseFloat(document.getElementById("salario_consumidor").value)||0;
+  const banco = document.getElementById("banco").value;
+  const estado = document.getElementById("estado").value;
+  if(!sal || !banco || !estado) return;
   contadorCalcSessao++;
   if(contadorCalcSessao === 1 || contadorCalcSessao % 5 === 0){
     enviarParaSheets({ evento:"calculo", ...dadosUsuario, qtdCalcSessao: contadorCalcSessao, dataHora: new Date().toLocaleString("pt-BR") });
   }
-}
+};
 
 // Rastrear download de PDF
 const _gerarPDFOriginal = window.gerarPDF;
