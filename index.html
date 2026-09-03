@@ -851,7 +851,7 @@ function gerarPDF(){
 
       function brlK(v){if(v>=1e9)return "R$ "+(v/1e9).toFixed(1).replace(".",",")+" bi";if(v>=1e6)return "R$ "+(v/1e6).toFixed(0)+" mi";return brl(v);}
       const sf=(sz,st,cor)=>{doc.setFontSize(sz);doc.setFont("helvetica",st||"normal");doc.setTextColor(...(cor||[35,35,35]));};
-      const secH=(txt,yy)=>{doc.setFillColor(237,243,251);doc.rect(ml,yy,tw,5.5,"F");doc.setFillColor(22,88,155);doc.rect(ml,yy,2.5,5.5,"F");sf(6.5,"bold",[22,88,155]);doc.text(txt,ml+5,yy+3.8);return yy+7;};
+      const secH=(txt,yy)=>{doc.setFillColor(237,243,251);doc.rect(ml,yy,tw,5.5,"F");doc.setFillColor(22,88,155);doc.rect(ml,yy,2.5,5.5,"F");sf(6.5,"bold",[22,88,155]);doc.text(txt,ml+5,yy+3.8);return yy+6.5;};
       const rodape=(pg,total)=>{doc.setFillColor(238,242,248);doc.rect(0,285,210,12,"F");doc.setDrawColor(26,43,74);doc.line(0,285,210,285);sf(5,"normal",[90,100,115]);doc.text("DASH Consultoria · consultoriadash.com.br | Ferramenta de apoio técnico-jurídico | Valores baseados em fontes oficiais públicas, sujeitos a alteração sem aviso prévio",W/2,288.5,{align:"center"});doc.text("Não constitui opinião jurídica nem garantia de resultado judicial | Responsabilidade de uso exclusiva do profissional",W/2,292,{align:"center"});sf(5,"normal",[130,140,155]);doc.text(`Página ${pg} de ${total} | Emitido em: ${hoje}`,W/2,295.5,{align:"center"});};
 
       // ── Controle de quebra de pagina ──────────────────────────────────
@@ -884,17 +884,17 @@ function gerarPDF(){
       // Paragrafo medido: quebra pagina antes de escrever se nao couber.
       // A fonte precisa estar setada pelo chamador — splitTextToSize mede
       // com o tamanho corrente.
-      const paragrafo=(txt,yy,gap)=>{const g=gap||4;const L=doc.splitTextToSize(txt,tw);yy=cabe(L.length*3.6+g,yy);doc.text(L,ml,yy);return yy+L.length*3.6+g;};
+      const paragrafo=(txt,yy,gap)=>{const g=gap||2.5;const L=doc.splitTextToSize(txt,tw);yy=cabe(L.length*3.6+g,yy);doc.text(L,ml,yy);return yy+L.length*3.6+g;};
 
       // ══════════════════════════════════════════════
       // SEÇÃO — IDENTIFICAÇÃO DO CASO
       // ══════════════════════════════════════════════
-      doc.setFillColor(15,52,96);doc.rect(0,0,210,22,"F");
-      doc.setFillColor(22,88,155);doc.rect(0,19,210,3,"F");
+      doc.setFillColor(15,52,96);doc.rect(0,0,210,23,"F");
+      doc.setFillColor(22,88,155);doc.rect(0,20,210,3,"F");
       sf(13,"bold",[255,255,255]);doc.text("CALCULADORA DE DANOS MORAIS",W/2,9,{align:"center"});
       sf(6.5,"normal",[150,195,255]);doc.text("Crédito Consignado  ·  Relatório Técnico de Apoio Jurídico  ·  "+hoje,W/2,15,{align:"center"});
-      sf(5,"normal",[120,170,230]);doc.text("Documento elaborado com base em fontes oficiais — IBGE, Banco Central do Brasil, CVM e CNJ",W/2,20,{align:"center"});
-      let y=26;
+      sf(5,"normal",[178,212,252]);doc.text("Documento elaborado com base em fontes oficiais — IBGE, Banco Central do Brasil, CVM e CNJ",W/2,18.9,{align:"center"});
+      let y=27;
 
       y=secH("IDENTIFICAÇÃO DO CASO",y);
       const col=tw/3,c1=ml,c2=ml+col,c3=ml+col*2;
@@ -1001,7 +1001,7 @@ function gerarPDF(){
         sf(5.5,"bold",[160,200,255]);doc.text(num,ml+2,yy+4);
         sf(6.5,"bold",[255,255,255]);doc.text(titulo,ml+22,yy+4);
         sf(5.8,"normal",[45,45,45]);
-        return yy+8;
+        return yy+7;
       };
 
       y=topicoH("I","Da configuração do dano moral",y);
@@ -1028,7 +1028,7 @@ function gerarPDF(){
       sf(6,"bold",[22,88,155]);doc.text("1. Comprometimento do mínimo existencial",ml,y);y+=5;
       sf(5.8,"normal",[45,45,45]);
       txt=`Segundo o IBGE (Pesquisa de Orçamentos Familiares 2017-2018 — edição mais recente disponível, aguardando publicação da POF 2024-2025), famílias com rendimento de até 2 salários mínimos comprometem 61,2% do orçamento com alimentação (22%) e habitação (39,2%). Somados transporte e saúde, o comprometimento alcança 72,2% da renda em despesas que não podem ser suprimidas. O desconto indevido incidiu sobre parcela da renda já comprometida com necessidades vitais, configurando violação ao mínimo existencial.`;
-      y=paragrafo(txt,y,3);
+      y=paragrafo(txt,y,2);
 
       // Agravante idoso
       if(s.isIdoso){
@@ -1047,14 +1047,14 @@ function gerarPDF(){
       sf(5.8,"normal",[45,45,45]);
       const gastAlim=328.74;const mesesAlim=(s.totalDesc/gastAlim).toFixed(1);
       txt=`O valor indevidamente descontado (${brl(s.totalDesc)}) não configura quantia ínfima para a realidade econômica da parte Autora. Representa ${s.pctDoCons.toFixed(1)}% da renda líquida mensal. O gasto médio mensal com alimentação de famílias nessa faixa de renda é de R$ 328,74 (IBGE/POF 2017-2018), o que significa que o total descontado equivale a ${mesesAlim} meses de gastos alimentares dessa família. Para quem opera no limite do mínimo existencial, nenhum desconto indevido nessa magnitude pode ser classificado como ínfimo.`;
-      y=paragrafo(txt,y,3);
+      y=paragrafo(txt,y,2);
 
       // V.3
       y=cabe(22,y);
       sf(6,"bold",[22,88,155]);doc.text("3. Reiteração sistêmica da conduta",ml,y);y+=5;
       sf(5.8,"normal",[45,45,45]);
       txt=`O ${banco.nome} registrou ${banco.recl.toLocaleString("pt-BR")} reclamações no Banco Central em 2024 (Fonte: Ranking BACEN 2024), evidenciando prática sistêmica que reforça a necessidade de condenação com caráter pedagógico e inibitório, nos termos do art. 944 do Código Civil.`;
-      y=paragrafo(txt,y,3);
+      y=paragrafo(txt,y,2);
 
       // V.4
       y=cabe(22,y);
@@ -1086,9 +1086,9 @@ function gerarPDF(){
         doc.setFillColor(237,243,251);doc.rect(ml,yy,tw,6,"F");doc.setFillColor(22,88,155);doc.rect(ml,yy,2.5,6,"F");
         sf(6.5,"bold",[22,88,155]);doc.text(titulo,ml+5,yy+4);
         sf(5.8,"normal",[50,55,65]);
-        yy+=9;
+        yy+=8.5;
         lines.forEach(ln=>{yy=cabe(3.6,yy);doc.text(ln,ml+2,yy);yy+=3.6;});
-        return yy+5;
+        return yy+2.5;
       };
 
       y=fonte("IBGE — Pesquisa de Orçamentos Familiares (POF) 2017-2018",
