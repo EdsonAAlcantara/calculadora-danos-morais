@@ -13,3 +13,8 @@ _projeto.json
 # Painel de admin com a lista de usuarios: dado pessoal, mesmo motivo do CSV.
 painel-admin.html
 _painel-dados.json
+
+# Relatorios gerados pela propria ferramenta durante testes. O repositorio e'
+# publico: um PDF de teste commitado por engano vai para o GitHub Pages com os
+# dados do caso que foi usado para gera-lo.
+relatorio-danos-morais-*.pdf
