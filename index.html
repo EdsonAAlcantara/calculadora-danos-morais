@@ -870,13 +870,24 @@ function gerarPDF(){
       };
       // cabe(altura,y): devolve y se o bloco couber, senao o y da pagina nova.
       const cabe=(h,yy)=>(yy+h<=LIM?yy:contHdr());
+      // Abre secao. minBloco = altura do primeiro bloco da secao, para a
+      // faixa nunca ficar orfa no pe da pagina.
+      const secaoNova=(titulo,yy,minBloco)=>{
+        hdrAtual=titulo;
+        if(yy<=20){yy=0;}                      // pagina ja esta em branco
+        else if(yy+18+(minBloco||30)>LIM){doc.addPage();yy=0;}
+        else{yy+=5;}                           // continua na mesma pagina
+        doc.setFillColor(15,52,96);doc.rect(0,yy,210,14,"F");
+        sf(9,"bold",[255,255,255]);doc.text(titulo,W/2,yy+9,{align:"center"});
+        return yy+18;
+      };
       // Paragrafo medido: quebra pagina antes de escrever se nao couber.
       // A fonte precisa estar setada pelo chamador — splitTextToSize mede
       // com o tamanho corrente.
       const paragrafo=(txt,yy,gap)=>{const g=gap||4;const L=doc.splitTextToSize(txt,tw);yy=cabe(L.length*3.6+g,yy);doc.text(L,ml,yy);return yy+L.length*3.6+g;};
 
       // ══════════════════════════════════════════════
-      // PÁGINA 1 — IDENTIFICAÇÃO DO CASO
+      // SEÇÃO — IDENTIFICAÇÃO DO CASO
       // ══════════════════════════════════════════════
       doc.setFillColor(15,52,96);doc.rect(0,0,210,22,"F");
       doc.setFillColor(22,88,155);doc.rect(0,19,210,3,"F");
@@ -980,13 +991,9 @@ function gerarPDF(){
       sf(4.5,"italic",[150,160,175]);doc.text("Fonte: CNJ — Portal de Transparência 2025  |  Subsídios base 2025",ml,y+3);y+=7;
 
       // ══════════════════════════════════════════════
-      // PÁGINA 2 — FUNDAMENTAÇÃO ESTRUTURADA
+      // SEÇÃO — FUNDAMENTAÇÃO ESTRUTURADA
       // ══════════════════════════════════════════════
-      doc.addPage();
-      hdrAtual="FUNDAMENTAÇÃO JURÍDICA — QUANTUM DOS DANOS MORAIS";
-      doc.setFillColor(15,52,96);doc.rect(0,0,210,14,"F");
-      sf(9,"bold",[255,255,255]);doc.text(hdrAtual,W/2,9,{align:"center"});
-      y=18;
+      y=secaoNova("FUNDAMENTAÇÃO JURÍDICA — QUANTUM DOS DANOS MORAIS",y,32);
 
       const topicoH=(num,titulo,yy)=>{
         yy=cabe(26,yy);
@@ -1066,24 +1073,22 @@ function gerarPDF(){
       doc.text(doc.splitTextToSize(txt,tw-4),ml+2,y+10);y+=24;
 
       // ══════════════════════════════════════════════
-      // PÁGINA 3 — FONTES OFICIAIS
+      // SEÇÃO — FONTES OFICIAIS
       // ══════════════════════════════════════════════
-      doc.addPage();
-      hdrAtual="FONTES OFICIAIS UTILIZADAS NESTE RELATÓRIO";
-      doc.setFillColor(15,52,96);doc.rect(0,0,210,14,"F");
-      sf(9,"bold",[255,255,255]);doc.text(hdrAtual,W/2,9,{align:"center"});
-      y=20;
+      y=secaoNova("FONTES OFICIAIS UTILIZADAS NESTE RELATÓRIO",y,22);
 
       const fonte=(titulo,corpo,yy)=>{
         // Mede com a fonte do corpo (5.8), nao com a do titulo (6.5):
         // medir maior gerava linhas a mais e sobra de espaco.
         sf(5.8,"normal",[50,55,65]);
         const lines=doc.splitTextToSize(corpo,tw-4);
-        yy=cabe(9+lines.length*3.6+5,yy);
+        yy=cabe(9+2*3.6,yy);            // titulo + 2 linhas: nunca titulo orfao
         doc.setFillColor(237,243,251);doc.rect(ml,yy,tw,6,"F");doc.setFillColor(22,88,155);doc.rect(ml,yy,2.5,6,"F");
         sf(6.5,"bold",[22,88,155]);doc.text(titulo,ml+5,yy+4);
-        sf(5.8,"normal",[50,55,65]);doc.text(lines,ml+2,yy+9);
-        return yy+9+lines.length*3.6+5;
+        sf(5.8,"normal",[50,55,65]);
+        yy+=9;
+        lines.forEach(ln=>{yy=cabe(3.6,yy);doc.text(ln,ml+2,yy);yy+=3.6;});
+        return yy+5;
       };
 
       y=fonte("IBGE — Pesquisa de Orçamentos Familiares (POF) 2017-2018",
@@ -1111,16 +1116,18 @@ function gerarPDF(){
       sf(5.5,"normal",[80,90,105]);
       const nota="Este relatório foi gerado pela Calculadora de Danos Morais — Crédito Consignado, ferramenta de apoio técnico-jurídico para parametrização de pedidos de indenização. Os valores calculados baseiam-se exclusivamente em dados de fontes oficiais, conforme referenciado em cada tópico. O relatório constitui documento de apoio técnico e não substitui a análise jurídica profissional do advogado responsável pelo caso. Os dados financeiros do banco réu referem-se ao exercício de 2025 (Balanço CVM). Os dados de reclamações referem-se ao 4º trimestre de 2024 (BACEN). Os dados de custos judiciais referem-se ao ano-base 2023 (CNJ Justiça em Números 2024). Os dados socioeconômicos referem-se à POF 2017-2018 (IBGE).";
       const notaL=doc.splitTextToSize(nota,tw-4);
-      const blocoH=16+10+notaL.length*3.3;
-      y=cabe(blocoH+2,y);
-      doc.setFillColor(245,247,250);doc.rect(ml,y,tw,blocoH,"F");doc.setDrawColor(200,210,225);doc.rect(ml,y,tw,blocoH,"S");
-      // Disclaimer
+      const notaH=10+notaL.length*3.3+3;
+      // Disclaimer e nota sao dois blocos independentes: juntos exigiam ~51mm
+      // e, quando nao cabiam, empurravam essa altura toda de branco.
+      y=cabe(16,y);
       doc.setFillColor(15,52,96);doc.rect(ml,y,tw,14,"F");
       sf(6,"bold",[150,195,255]);doc.text("DASH CONSULTORIA · consultoriadash.com.br",ml+3,y+4.5);
       sf(5.5,"normal",[200,220,255]);
       const discl="Ferramenta de apoio técnico-jurídico. Os valores são estimativas baseadas em fontes públicas oficiais, podendo ser alterados ou atualizados sem aviso prévio, e não constituem opinião jurídica nem garantia de resultado judicial. Responsabilidade de uso exclusiva do profissional.";
       doc.text(doc.splitTextToSize(discl,tw-6),ml+3,y+9);
       y+=16;
+      y=cabe(notaH,y);
+      doc.setFillColor(245,247,250);doc.rect(ml,y,tw,notaH,"F");doc.setDrawColor(200,210,225);doc.rect(ml,y,tw,notaH,"S");
       sf(6,"bold",[70,80,95]);doc.text("NOTA METODOLÓGICA",ml+3,y+5);
       sf(5.5,"normal",[80,90,105]);doc.text(notaL,ml+2,y+10);
 
