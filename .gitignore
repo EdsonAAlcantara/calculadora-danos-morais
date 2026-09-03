@@ -1,0 +1,15 @@
+# ---- Dados pessoais: NUNCA versionar ----
+# Este repositorio e' PUBLICO (GitHub Pages). Os CSV exportados da planilha
+# tem e-mail, profissao, cidade, estado e IP de centenas de advogados. Um
+# commit publicado nao se apaga de verdade: fica no historico, nos forks e
+# nos espelhos. O CSV mora aqui porque e' de onde o painel e' gerado, e por
+# isso a trava mora aqui junto.
+*.csv
+*.CSV
+
+# Ficha do painel pessoal de projetos do Edson — nao pertence ao produto.
+_projeto.json
+
+# Painel de admin com a lista de usuarios: dado pessoal, mesmo motivo do CSV.
+painel-admin.html
+_painel-dados.json

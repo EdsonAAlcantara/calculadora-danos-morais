@@ -275,6 +275,10 @@
         escala salarial da magistratura, e leve a fundamentação pronta em PDF.
         <strong>Gratuita, sem cobrança e sem limite de uso.</strong></p>
 
+      <label class="cad-label" for="cad-nome">Nome completo</label>
+      <input class="cad-input" type="text" id="cad-nome" placeholder="Nome e sobrenome"
+             autocomplete="name" autocapitalize="words">
+
       <label class="cad-label" for="cad-email">E-mail</label>
       <input class="cad-input" type="email" id="cad-email" placeholder="seu@email.com.br" autocomplete="email">
 
@@ -289,6 +293,46 @@
       <div id="campo-outro">
         <input class="cad-input" type="text" id="cad-outro" placeholder="Digite sua profissão...">
       </div>
+
+      <!-- Estado num SELECT, nunca em campo livre. Até 03/09/2026 o estado vinha
+           da geolocalização por IP, que falhava em 38 por cento dos cadastros e
+           alternava “São Paulo” com “Sao Paulo” — o mesmo estado virava dois no
+           ranking. Lista fechada resolve na origem: não há o que normalizar depois. -->
+      <label class="cad-label" for="cad-estado">Estado</label>
+      <select class="cad-select" id="cad-estado">
+        <option value="">Selecione o estado...</option>
+        <option>Acre</option>
+        <option>Alagoas</option>
+        <option>Amapá</option>
+        <option>Amazonas</option>
+        <option>Bahia</option>
+        <option>Ceará</option>
+        <option>Distrito Federal</option>
+        <option>Espírito Santo</option>
+        <option>Goiás</option>
+        <option>Maranhão</option>
+        <option>Mato Grosso</option>
+        <option>Mato Grosso do Sul</option>
+        <option>Minas Gerais</option>
+        <option>Pará</option>
+        <option>Paraíba</option>
+        <option>Paraná</option>
+        <option>Pernambuco</option>
+        <option>Piauí</option>
+        <option>Rio de Janeiro</option>
+        <option>Rio Grande do Norte</option>
+        <option>Rio Grande do Sul</option>
+        <option>Rondônia</option>
+        <option>Roraima</option>
+        <option>Santa Catarina</option>
+        <option>São Paulo</option>
+        <option>Sergipe</option>
+        <option>Tocantins</option>
+      </select>
+
+      <label class="cad-label" for="cad-cidade">Cidade</label>
+      <input class="cad-input" type="text" id="cad-cidade" placeholder="Sua cidade"
+             autocomplete="address-level2" autocapitalize="words">
 
       <!-- honeypot: usuário real nunca vê nem preenche; bot que preencher é rejeitado no servidor -->
       <input type="text" id="cad-site" name="website" style="position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;opacity:0" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -331,7 +375,7 @@
       <button onclick="fecharTermos()" aria-label="Fechar">&times;</button>
     </div>
     <div class="modal-corpo">
-      <p style="color:var(--text3);font-size:12.5px">Versão 1.0 — 03/09/2026</p>
+      <p style="color:var(--text3);font-size:12.5px">Versão 1.1 — 03/09/2026</p>
 
       <h3>1. O que é esta ferramenta</h3>
       <p>A <b>Calculadora de Danos Morais</b> é uma ferramenta de <b>apoio técnico</b> da DASH
@@ -348,9 +392,10 @@
 
       <h3>3. Dados que coletamos</h3>
       <ul>
-        <li><b>E-mail e profissão</b>, informados por você no acesso.</li>
-        <li><b>Endereço IP e localização aproximada</b> (cidade, estado, país), obtidos
-        automaticamente por serviço de geolocalização por IP.</li>
+        <li><b>Nome completo, e-mail, profissão, cidade e estado</b>, informados por você
+        no acesso. Todos são obrigatórios.</li>
+        <li><b>Endereço IP</b>, registrado automaticamente para prevenir uso abusivo
+        automatizado.</li>
         <li><b>Eventos de uso</b>: data e hora de acesso, de cálculo concluído e de download
         de PDF.</li>
       </ul>
@@ -388,18 +433,23 @@
       para <a href="mailto:contato@consultoriadash.com.br">contato@consultoriadash.com.br</a>:
       respondemos e executamos o pedido.</p>
 
-      <h3>9. Fontes dos valores</h3>
+      <h3>9. Sobre a sua cidade e estado</h3>
+      <p>Até 03/09/2026 a localização era estimada pelo seu endereço IP. Ela falhava em
+      boa parte dos acessos e às vezes errava o estado. Agora é <b>você quem informa</b>,
+      e o IP não é mais usado para isso.</p>
+
+      <h3>10. Fontes dos valores</h3>
       <p>Salário mínimo: Decreto 12.797/2025 (R$ 1.621,00 desde 01/01/2026). Subsídios da
       magistratura: CNJ — Portal da Transparência. Servidores: tabelas CJF. Lucro dos bancos:
       balanços anuais publicados. As fontes são citadas nas telas e no PDF, e podem ser
       alteradas ou atualizadas sem aviso.</p>
 
-      <h3>10. Quem é o responsável</h3>
+      <h3>11. Quem é o responsável</h3>
       <p><b>DASH Serviços Auxiliares Administrativos LTDA</b> — CNPJ 59.382.756/0001-95<br>
       Avenida Afonso Pena, 3351, Sala 1102 · Bairro Serra · Belo Horizonte/MG · CEP 30.130-008<br>
       <a href="mailto:contato@consultoriadash.com.br">contato@consultoriadash.com.br</a></p>
 
-      <h3>11. Alterações</h3>
+      <h3>12. Alterações</h3>
       <p>Estes Termos podem mudar. A versão vigente é sempre a exibida nesta página, com a
       data no topo.</p>
     </div>
@@ -1087,7 +1137,12 @@ const SHEETS_URL = "https://script.google.com/macros/s/AKfycbzzwtM5qkSsGexj-4b1H
 
 // Versao dos Termos aceita no cadastro. Sobe junto com o texto do modal --
 // consentimento sem versao nao diz A QUE a pessoa consentiu.
-const TERMOS_VERSAO = "1.0-2026-09-03";
+// 1.1 (03/09/2026): o formulario passou a exigir nome completo, cidade e
+// estado, e o item 3 dos Termos foi reescrito para listar isso. Versao nova
+// porque MUDOU O QUE SE COLETA -- consentimento e' a uma versao especifica,
+// e manter o numero antigo faria a linha gravada apontar para um texto que
+// nao existe mais.
+const TERMOS_VERSAO = "1.1-2026-09-03";
 // "consent_sim_1.0" / "consent_nao_1.0" — o consentimento cabe no nome do
 // evento porque a coluna Evento é a única que o Apps Script grava hoje.
 const eventoConsent = sim => (sim ? "consent_sim_" : "consent_nao_") + TERMOS_VERSAO.split("-")[0];
@@ -1141,6 +1196,16 @@ function validarEmail(email){
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+// Nome completo = pelo menos dois blocos de letras. Nao tenta julgar se e' um
+// nome "de verdade": isso e' impossivel e so' produziria falso negativo em nome
+// curto, nome composto e sobrenome de uma letra. Exige o minimo que separa
+// "Joao" de "Joao Silva", que e' o que foi pedido.
+function validarNome(v){
+  const n = (v || "").replace(/\s+/g, " ").trim();
+  return n.length >= 5 && n.length <= 120 &&
+         /^\p{L}[\p{L}'.-]*(?:\s+\p{L}[\p{L}'.-]*)+$/u.test(n);
+}
+
 // Geolocalização é METADADO: serve à métrica, não ao usuário. Antes esta
 // chamada era aguardada sem prazo — e como ela vai a um terceiro (ipapi.co) que
 // já falhava em ~43% das vezes, bastava o serviço ficar lento para o botão
@@ -1180,6 +1245,9 @@ async function enviarParaSheets(dados){
 }
 
 async function fazerCadastro(){
+  const nome = document.getElementById("cad-nome").value.replace(/\s+/g, " ").trim();
+  const estado = document.getElementById("cad-estado").value;
+  const cidade = document.getElementById("cad-cidade").value.replace(/\s+/g, " ").trim();
   const email = document.getElementById("cad-email").value.trim().toLowerCase();
   const profSel = document.getElementById("cad-profissao").value;
   const profOutro = document.getElementById("cad-outro").value.trim();
@@ -1187,9 +1255,12 @@ async function fazerCadastro(){
   const erro = document.getElementById("cad-erro");
   const btn = document.getElementById("cad-btn");
 
+  if(!validarNome(nome)){ erro.textContent = "Informe nome e sobrenome."; return; }
   if(!validarEmail(email)){ erro.textContent = "Informe um e-mail válido."; return; }
   if(!prof){ erro.textContent = "Selecione ou informe sua profissão."; return; }
   if(profSel === "outro" && !profOutro){ erro.textContent = "Digite sua profissão."; return; }
+  if(!estado){ erro.textContent = "Selecione o seu estado."; return; }
+  if(cidade.length < 2){ erro.textContent = "Informe a sua cidade."; return; }
   // Termos travam o acesso; marketing NAO. Se a segunda caixa bloqueasse, o
   // consentimento deixaria de ser livre e nao valeria nada.
   if(!document.getElementById("cad-termos").checked){
@@ -1202,7 +1273,9 @@ async function fazerCadastro(){
 
   const geo = await getGeoIP();
   const marketing = document.getElementById("cad-marketing").checked;
-  dadosUsuario = { email, profissao: prof, ...geo, dataHora: new Date().toLocaleString("pt-BR") };
+  dadosUsuario = { email, nome, profissao: prof, ...geo,
+                   cidade, estado,          // declarados vencem o geoIP, sempre
+                   dataHora: new Date().toLocaleString("pt-BR") };
   // Consentimento registrado com VERSAO e MOMENTO. Sem os dois, ele nao prova
   // nada depois: "aceitou" sem dizer o que e quando nao e' consentimento.
   Object.assign(dadosUsuario, { termos: TERMOS_VERSAO, marketing: marketing ? "sim" : "nao",
