@@ -3,20 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora de Danos Morais — Crédito Consignado</title>
+<title>Calculadora de Danos Morais — DASH Consultoria</title>
+
+<!-- Compartilhamento. O canal de divulgação desta ferramenta é link mandado a
+     mão — WhatsApp de grupo de advogados, story, comentário. Sem estas tags o
+     link chega como texto pelado e não parece produto de ninguém.
+     ⚠️ As URLs absolutas apontam para o GitHub Pages. Se um dia a calculadora
+     ganhar subdomínio próprio (calculadora.consultoriadash.com.br, como o
+     leitor.), TROCAR as três aqui — og:url errado quebra a prévia. -->
+<meta name="description" content="Calcule o quantum do dano moral em ações de crédito consignado: comparação com o lucro do banco réu, escala salarial da magistratura e fundamentação pronta em PDF. Ferramenta gratuita da DASH Consultoria.">
+<meta name="author" content="DASH Consultoria">
+<meta name="theme-color" content="#1a2b4a">
+<link rel="canonical" href="https://edsonaalcantara.github.io/calculadora-danos-morais/">
+<link rel="icon" type="image/png" href="img/dash-simbolo.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="DASH Consultoria">
+<meta property="og:title" content="Quanto vale o dano moral do seu cliente?">
+<meta property="og:description" content="Quantum, lucro do banco réu e escala salarial da magistratura — com a fundamentação pronta em PDF. Ferramenta gratuita para advogados.">
+<meta property="og:url" content="https://edsonaalcantara.github.io/calculadora-danos-morais/">
+<meta property="og:image" content="https://edsonaalcantara.github.io/calculadora-danos-morais/img/share-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Quanto vale o dano moral do seu cliente?">
+<meta name="twitter:description" content="Quantum, lucro do banco réu e escala salarial da magistratura — com a fundamentação pronta em PDF. Gratuita.">
+<meta name="twitter:image" content="https://edsonaalcantara.github.io/calculadora-danos-morais/img/share-card.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg:#ffffff; --bg2:#f5f6f8; --bg3:#eef0f3;
-    --text:#1a1a1a; --text2:#555; --text3:#888;
-    --border:rgba(0,0,0,0.10); --border2:rgba(0,0,0,0.18);
-    --blue:#185FA5; --blue-bg:#e6f1fb; --blue-text:#0c447c;
-    --danger:#D85A30; --danger-bg:#faece7; --danger-text:#993c1d;
-    --success:#1D9E75; --success-bg:#e1f5ee; --success-text:#085041;
-    --warn:#BA7517; --warn-bg:#faeeda; --warn-text:#633806;
+    /* Identidade DASH — os valores vêm de public/operador.html do Leitor de
+       HISCON, não são inventados. Se a paleta da casa mudar, muda aqui junto.
+       Navy #1a2b4a · ouro #b8860b · papel #f4f4f6 · vermelho #b02a37.
+       REGRA DA MARCA: o ouro é sempre FIO, nunca bloco de fundo. */
+    --navy:#1a2b4a; --gold:#b8860b;
+    --bg:#ffffff; --bg2:#f7f7f9; --bg3:#ececed;
+    --text:#1c1c22; --text2:#4a5568; --text3:#7b8496;
+    --border:#dcdce3; --border2:#c6c6d0;
+    --blue:#1a2b4a; --blue-bg:#eef0f5; --blue-text:#1a2b4a;
+    --danger:#b02a37; --danger-bg:#f9ecee; --danger-text:#7d1d26;
+    --success:#1a7f4b; --success-bg:#eef7f0; --success-text:#0f5230;
+    --warn:#8a6410; --warn-bg:#faf3e2; --warn-text:#5c4109;
     --radius:8px; --radius-lg:12px;
   }
+  /* Georgia nos títulos é a voz das peças estáticas e do laudo; o corpo fica
+     em sans do sistema, que é o que se lê em formulário. */
+  h1, h2, .titulo-hero h1, .rs-title, .cad-logo h1 { font-family:Georgia,"Times New Roman",serif; font-weight:400; }
   body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:#f0f2f5; color:var(--text); min-height:100vh; padding:1.5rem 1rem 3rem; }
   .container { max-width:860px; margin:0 auto; }
   .card { background:var(--bg); border:0.5px solid var(--border); border-radius:var(--radius-lg); padding:1.25rem; margin-bottom:1rem; }
@@ -32,11 +65,16 @@
   .titulo-hero { text-align:center; padding:2rem 1rem 1.5rem; background:var(--bg); border-radius:var(--radius-lg); margin-bottom:1rem; border:0.5px solid var(--border); }
   .titulo-hero h1 { font-size:24px; font-weight:600; color:var(--text); letter-spacing:-0.4px; margin-bottom:5px; }
   .titulo-hero .sub { font-size:12px; color:var(--text3); text-transform:uppercase; letter-spacing:0.5px; }
-  .titulo-hero .linha { display:inline-block; width:40px; height:2.5px; background:var(--blue); border-radius:2px; margin-top:10px; }
+  .titulo-hero .linha { display:inline-block; width:64px; height:3px; background:var(--gold); border-radius:2px; margin-top:10px; }
   .inner-tabs { display:flex; gap:6px; flex-wrap:wrap; justify-content:center; padding-top:1rem; margin-top:1rem; border-top:0.5px solid var(--border); }
+  /* Quando as abas abrem o cartao, nao ha' o que separar acima: o filete
+     ficava boiando. Defeito antigo, que so' apareceu depois que o resto
+     do desenho ficou limpo. */
+  .card > .inner-tabs:first-child { border-top:0; margin-top:0; padding-top:0; }
   .inner-tab { padding:7px 16px; border:0.5px solid var(--border2); border-radius:var(--radius); cursor:pointer; font-size:13px; background:var(--bg); color:var(--text2); transition:all .15s; }
   .inner-tab:hover { background:var(--bg2); }
-  .inner-tab.active { background:var(--blue-bg); color:var(--blue-text); border-color:var(--blue); font-weight:600; }
+  .inner-tab.active { background:var(--blue-bg); color:var(--blue-text); border-color:var(--navy);
+                      box-shadow:inset 0 -3px 0 var(--gold); font-weight:700; }
   .inner-panel { display:none; } .inner-panel.active { display:block; }
   .mcard { background:var(--bg2); border-radius:var(--radius); padding:12px; }
   .mcard .lbl { font-size:11px; color:var(--text3); margin-bottom:3px; }
@@ -54,7 +92,7 @@
   .contrato-subtotal strong { color:var(--danger); }
   .grid-contrato { display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:12px; }
   .valor-pedido-box { background:var(--bg2); border:0.5px solid var(--border2); border-radius:var(--radius-lg); padding:1.25rem; margin-bottom:1rem; }
-  .highlight-box { border-left:3px solid var(--blue); padding:10px 14px; background:var(--bg2); border-radius:0 var(--radius) var(--radius) 0; margin:8px 0; font-size:13px; line-height:1.75; color:var(--text2); }
+  .highlight-box { border-left:3px solid var(--gold); padding:10px 14px; background:var(--bg2); border-radius:0 var(--radius) var(--radius) 0; margin:8px 0; font-size:13px; line-height:1.75; color:var(--text2); }
   .highlight-box.warn { border-left-color:var(--warn); }
   .result-hero { background:var(--blue-bg); border:0.5px solid rgba(24,95,165,0.3); border-radius:var(--radius-lg); padding:1.5rem; margin-bottom:1rem; text-align:center; }
   .result-hero .lbl { font-size:13px; color:var(--blue-text); margin-bottom:4px; }
@@ -62,7 +100,7 @@
   .result-hero .sub { font-size:13px; color:var(--blue-text); margin-top:4px; opacity:.8; }
   .bar-lbl { display:flex; justify-content:space-between; font-size:12px; color:var(--text2); margin-bottom:3px; }
   .bar { height:10px; background:var(--bg3); border-radius:5px; overflow:hidden; margin-bottom:8px; }
-  .bar-fill { height:100%; border-radius:5px; background:var(--blue); }
+  .bar-fill { height:100%; border-radius:5px; background:var(--navy); }
   .big-number { font-size:32px; font-weight:600; color:var(--blue); }
   .big-number-label { font-size:11px; color:var(--text2); margin-top:4px; }
   /* relação salarial */
@@ -85,62 +123,289 @@
   }
 
   /* TELA CADASTRO */
-  #tela-cadastro{position:fixed;inset:0;background:#f0f2f5;z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;}
+  #tela-cadastro{position:fixed;inset:0;background:var(--bg2);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1.5rem 1rem;overflow-y:auto;}
+  /* O cartao cresceu com a marca e as duas caixas de consentimento e passou
+     de 740px. Sem overflow-y, numa tela baixa (notebook pequeno, celular
+     deitado) o botao de acessar fica fora do alcance e NAO ha' como rolar --
+     a ferramenta simplesmente nao abre. O margin:auto mantem centralizado
+     quando cabe e vira topo quando nao cabe. */
+  .cad-card{margin:auto;}
   #tela-calculadora{display:none;}
-  .cad-card{background:#fff;border-radius:16px;border:0.5px solid rgba(0,0,0,0.10);padding:2.5rem 2rem;max-width:460px;width:100%;box-shadow:0 4px 32px rgba(0,0,0,0.09);}
-  .cad-logo{text-align:center;margin-bottom:1.5rem;}
-  .cad-logo h1{font-size:20px;font-weight:700;color:#1a1a1a;letter-spacing:-0.3px;margin-bottom:4px;}
-  .cad-logo p{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.6px;}
-  .cad-logo .linha{display:inline-block;width:36px;height:2.5px;background:#185FA5;border-radius:2px;margin-top:8px;}
+  .cad-card{background:#fff;border-radius:14px;border:1px solid var(--border);max-width:470px;width:100%;
+            box-shadow:0 6px 34px rgba(26,43,74,.13);overflow:hidden;}
+  /* Faixa navy no topo: o lockup da marca e' BRANCO (feito para fundo
+     escuro) e sumia sobre o cartao. Em vez de pedir outra arte, o cartao
+     ganha o fundo que a arte pede -- e de quebra passa a parecer peca da
+     casa em vez de formulario solto. */
+  .cad-topo{background:var(--navy);padding:22px 2rem 20px;text-align:center;}
+  .cad-topo img{display:block;margin:0 auto 14px;opacity:.95;}
+  .cad-corpo{padding:1.75rem 2rem 2rem;}
+  .cad-logo{text-align:center;}
+  .cad-logo h1{font-size:23px;font-weight:400;color:#fff;letter-spacing:0;margin-bottom:5px;}
+  .cad-logo p{font-size:11px;color:#9aa8bf;text-transform:uppercase;letter-spacing:.11em;}
+  .cad-logo .linha{display:inline-block;width:56px;height:3px;background:var(--gold);margin-top:12px;}
   .cad-desc{font-size:13px;color:#555;line-height:1.7;margin-bottom:16px;}
   .cad-label{display:block;font-size:12px;font-weight:600;color:#555;margin-bottom:5px;margin-top:14px;}
   .cad-input,.cad-select{width:100%;padding:10px 12px;font-size:14px;font-family:inherit;border:0.5px solid rgba(0,0,0,0.18);border-radius:8px;background:#fff;color:#1a1a1a;outline:none;transition:border-color .15s;}
-  .cad-input:focus,.cad-select:focus{border-color:#185FA5;box-shadow:0 0 0 3px rgba(24,95,165,0.10);}
+  .cad-input:focus,.cad-select:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(26,43,74,0.12);}
   #campo-outro{display:none;margin-top:8px;}
-  .cad-btn{width:100%;padding:13px;background:#185FA5;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;margin-top:1.5rem;transition:opacity .15s;}
+  .cad-btn{width:100%;padding:14px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;margin-top:1.5rem;transition:opacity .15s;}
   .cad-btn:hover{opacity:.88;}
   .cad-btn:disabled{opacity:.5;cursor:not-allowed;}
-  .cad-erro{font-size:12px;color:#D85A30;margin-top:6px;min-height:16px;}
+  .cad-erro{font-size:12px;color:var(--danger);margin-top:6px;min-height:16px;}
   .cad-rodape{font-size:11px;color:#bbb;text-align:center;margin-top:1.25rem;line-height:1.6;}
+  /* ══ MOLDURA DASH ═══════════════════════════════════════════════════════
+     Cabeçalho, rodapé e bloco de indicação. Copiam a landing do Leitor de
+     HISCON de propósito: são produtos da mesma prateleira, e quem conhece um
+     tem de reconhecer o outro no primeiro olhar. */
+  .dash-hdr { background:var(--navy); color:#fff; padding:12px 18px; display:flex;
+              align-items:center; gap:11px; }
+  .dash-hdr a.marca { display:flex; transition:opacity .15s; }
+  .dash-hdr a.marca:hover { opacity:.72; }
+  .dash-hdr img { display:block; }
+  .dash-hdr b { font-size:15px; font-weight:700; letter-spacing:.01em; }
+  .dash-hdr b span { color:#f0c14b; font-weight:400; }
+  .dash-hdr small { display:block; color:#9aa8bf; font-size:10.5px;
+                    letter-spacing:.12em; text-transform:uppercase; }
+
+  .dash-rd { background:var(--navy); color:#9aa8bf; padding:34px 18px 26px;
+             font-size:13px; line-height:1.65; margin-top:2.5rem; }
+  .dash-rd-wrap { max-width:860px; margin:0 auto; display:grid;
+                  grid-template-columns:auto repeat(3,1fr); gap:26px; }
+  .dash-rd a { color:#f0c14b; text-decoration:none; }
+  .dash-rd a:hover { text-decoration:underline; }
+  .dash-rd b { color:#fff; display:block; margin-bottom:7px; font-size:12.5px;
+               letter-spacing:.07em; text-transform:uppercase; }
+  .dash-rd span { display:block; }
+  .dash-rd-marca img { display:block; opacity:.92; }
+  .dash-rd-fim { max-width:860px; margin:24px auto 0; padding-top:16px;
+                 border-top:1px solid rgba(255,255,255,.13); font-size:12px; }
+
+  /* Indicação do Leitor de HISCON. Fica DEPOIS do resultado, nunca antes: o
+     advogado veio calcular, e produto empurrado na frente da tarefa irrita. */
+  .promo { border:1px solid var(--border); border-left:3px solid var(--gold);
+           border-radius:0 var(--radius-lg) var(--radius-lg) 0; background:var(--bg2);
+           padding:18px 20px; margin-top:1rem; }
+  .promo .chapeu { font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+                   color:var(--gold); font-weight:700; margin-bottom:8px; }
+  .promo h3 { font-family:Georgia,serif; font-weight:400; font-size:19px;
+              margin-bottom:7px; line-height:1.3; }
+  .promo p { font-size:13.5px; color:var(--text2); line-height:1.6; margin-bottom:12px; }
+  .promo a.cta { display:inline-block; background:var(--navy); color:#fff;
+                 text-decoration:none; font-size:13.5px; font-weight:700;
+                 padding:10px 18px; border-radius:var(--radius); }
+  .promo a.cta:hover { opacity:.88; }
+
+  /* Consentimento. Duas caixas SEPARADAS e visualmente diferentes: a primeira
+     é condição de uso, a segunda é opcional e não pode parecer obrigatória --
+     consentimento embutido em aceite de termos não é consentimento livre. */
+  .cad-consent { margin-top:16px; font-size:12.5px; line-height:1.55; color:var(--text2); }
+  .cad-consent label { display:flex; gap:9px; align-items:flex-start; font-size:12.5px;
+                       color:var(--text2); cursor:pointer; margin:0; }
+  .cad-consent input { margin-top:2px; width:16px; height:16px; flex:none; accent-color:var(--navy); }
+  .cad-consent .opt { margin-top:11px; padding-top:11px; border-top:1px solid var(--border); }
+  .cad-consent a { color:var(--navy); font-weight:600; }
+
+  /* Termos em modal: a pessoa lê sem perder o que já digitou. */
+  .modal { position:fixed; inset:0; background:rgba(12,16,26,.62); z-index:10000;
+           display:none; align-items:center; justify-content:center; padding:18px; }
+  .modal.on { display:flex; }
+  .modal-cx { background:#fff; border-radius:14px; max-width:680px; width:100%;
+              max-height:86vh; display:flex; flex-direction:column; }
+  .modal-top { padding:18px 22px; border-bottom:1px solid var(--border);
+               display:flex; justify-content:space-between; align-items:center; }
+  .modal-top h2 { font-size:19px; }
+  .modal-top button { background:none; border:0; font-size:26px; line-height:1;
+                      cursor:pointer; color:var(--text3); }
+  .modal-corpo { padding:20px 22px 26px; overflow-y:auto; font-size:13.5px;
+                 line-height:1.72; color:var(--text2); }
+  .modal-corpo h3 { font-family:Georgia,serif; font-weight:400; font-size:16px;
+                    color:var(--text); margin:18px 0 7px; }
+  .modal-corpo h3:first-child { margin-top:0; }
+  .modal-corpo p, .modal-corpo li { margin-bottom:9px; }
+  .modal-corpo ul { padding-left:20px; }
+
+  @media (max-width:760px) {
+    .dash-rd-wrap { grid-template-columns:1fr; gap:20px; }
+    .dash-hdr b { font-size:14px; }
+  }
+  /* Convite de opt-in para quem JA' usa. Faixa discreta, nunca modal: essas
+     pessoas se cadastraram sob a promessa de "apenas controle de acesso", e
+     bloquear uma ferramenta gratuita que ja' funciona para pedir marketing
+     seria cobrar pedagio depois da estrada pronta. */
+  .optin { background:#fff; border:1px solid var(--border); border-left:3px solid var(--gold);
+           border-radius:0 var(--radius) var(--radius) 0; padding:13px 16px; margin-bottom:1rem;
+           display:flex; gap:14px; align-items:center; flex-wrap:wrap; font-size:13px;
+           color:var(--text2); }
+  .optin p { flex:1; min-width:220px; line-height:1.55; margin:0; }
+  .optin b { color:var(--text); }
+  .optin button { border:1px solid var(--border2); background:#fff; color:var(--text2);
+                  border-radius:var(--radius); padding:8px 15px; font-size:13px;
+                  font-family:inherit; cursor:pointer; }
+  .optin button.sim { background:var(--navy); color:#fff; border-color:var(--navy); font-weight:700; }
+  .optin button:hover { opacity:.85; }
 </style>
 </head>
 <body>
 <!-- TELA DE CADASTRO -->
 <div id="tela-cadastro">
   <div class="cad-card">
-    <div class="cad-logo">
-      <h1>Calculadora de Danos Morais</h1>
-      <p>Crédito Consignado &nbsp;·&nbsp; Fundamentação Jurídica</p>
-      <div class="linha"></div>
+    <div class="cad-topo">
+      <div class="cad-logo">
+        <img src="img/dash-lockup.png" alt="DASH Consultoria" width="98">
+        <h1>Calculadora de Danos Morais</h1>
+        <p>Crédito Consignado &nbsp;·&nbsp; Fundamentação Jurídica</p>
+        <div class="linha"></div>
+      </div>
     </div>
-    <p class="cad-desc">Para acessar a calculadora, informe seus dados abaixo. O acesso é <strong>gratuito e imediato</strong>.</p>
+    <div class="cad-corpo">
+      <p class="cad-desc">Calcule o quantum, compare com o lucro do banco réu e com a
+        escala salarial da magistratura, e leve a fundamentação pronta em PDF.
+        <strong>Gratuita, sem cobrança e sem limite de uso.</strong></p>
 
-    <label class="cad-label" for="cad-email">E-mail</label>
-    <input class="cad-input" type="email" id="cad-email" placeholder="seu@email.com.br" autocomplete="email">
+      <label class="cad-label" for="cad-email">E-mail</label>
+      <input class="cad-input" type="email" id="cad-email" placeholder="seu@email.com.br" autocomplete="email">
 
-    <label class="cad-label" for="cad-profissao">Profissão</label>
-    <select class="cad-select" id="cad-profissao" onchange="toggleOutro()">
-      <option value="">Selecione sua profissão...</option>
-      <option value="Advogado(a)">Advogado(a)</option>
-      <option value="Estagiário(a) de Direito">Estagiário(a) de Direito</option>
-      <option value="Estudante de Direito">Estudante de Direito</option>
-      <option value="outro">Outra profissão...</option>
-    </select>
-    <div id="campo-outro">
-      <input class="cad-input" type="text" id="cad-outro" placeholder="Digite sua profissão...">
+      <label class="cad-label" for="cad-profissao">Profissão</label>
+      <select class="cad-select" id="cad-profissao" onchange="toggleOutro()">
+        <option value="">Selecione sua profissão...</option>
+        <option value="Advogado(a)">Advogado(a)</option>
+        <option value="Estagiário(a) de Direito">Estagiário(a) de Direito</option>
+        <option value="Estudante de Direito">Estudante de Direito</option>
+        <option value="outro">Outra profissão...</option>
+      </select>
+      <div id="campo-outro">
+        <input class="cad-input" type="text" id="cad-outro" placeholder="Digite sua profissão...">
+      </div>
+
+      <!-- honeypot: usuário real nunca vê nem preenche; bot que preencher é rejeitado no servidor -->
+      <input type="text" id="cad-site" name="website" style="position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;opacity:0" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <!-- O consentimento vem ANTES do botão: aceitar depois de agir não é
+           aceitar. E as duas caixas são separadas de propósito — a de cima é
+           condição de uso, a de baixo é opcional e não pode parecer o contrário. -->
+      <div class="cad-consent">
+        <label>
+          <input type="checkbox" id="cad-termos">
+          <span>Li e aceito os <a href="#" onclick="abrirTermos(event)">Termos de Uso e a
+            Política de Privacidade</a>, e entendo que esta é uma ferramenta de apoio
+            técnico, que não substitui análise jurídica.</span>
+        </label>
+        <div class="opt">
+          <label>
+            <input type="checkbox" id="cad-marketing">
+            <span><b>Quero receber novidades da DASH</b> — ferramentas, atualizações e
+              conteúdo para advocacia bancária. Opcional, e você pode sair quando
+              quiser em um clique.</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="cad-erro" id="cad-erro"></div>
+      <button class="cad-btn" id="cad-btn" onclick="fazerCadastro()">Acessar a calculadora →</button>
     </div>
+  </div>
+</div>
 
-    <!-- honeypot: usuário real nunca vê nem preenche; bot que preencher é rejeitado no servidor -->
-    <input type="text" id="cad-site" name="website" style="position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;opacity:0" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-    <div class="cad-erro" id="cad-erro"></div>
-    <button class="cad-btn" id="cad-btn" onclick="fazerCadastro()">Acessar a calculadora →</button>
-    <p class="cad-rodape">Seus dados são usados apenas para controle de acesso.<br>Não há cobrança nem envio de spam.</p>
+<!-- ══ TERMOS ═══════════════════════════════════════════════════════════════
+     Escritos sobre o que o app REALMENTE coleta: e-mail, profissao, IP e
+     localizacao aproximada (ipapi.co) e eventos de uso, gravados numa planilha
+     Google. Omitir o IP seria a mentira mais facil e a mais cara. -->
+<div class="modal" id="modal-termos" role="dialog" aria-modal="true" aria-labelledby="tm-tit">
+  <div class="modal-cx">
+    <div class="modal-top">
+      <h2 id="tm-tit">Termos de Uso e Privacidade</h2>
+      <button onclick="fecharTermos()" aria-label="Fechar">&times;</button>
+    </div>
+    <div class="modal-corpo">
+      <p style="color:var(--text3);font-size:12.5px">Versão 1.0 — 03/09/2026</p>
+
+      <h3>1. O que é esta ferramenta</h3>
+      <p>A <b>Calculadora de Danos Morais</b> é uma ferramenta de <b>apoio técnico</b> da DASH
+      para profissionais que atuam com crédito consignado. Ela organiza parâmetros públicos —
+      valores descontados, lucro divulgado do banco réu e escalas salariais oficiais — e devolve
+      uma fundamentação para o arbitramento do quantum.</p>
+      <p><b>Ela não é parecer jurídico, não formula tese e não garante resultado.</b> Os números
+      são estimativas a partir de fontes públicas, sujeitas a alteração. A conferência, a
+      adequação ao caso e a responsabilidade pelo uso são exclusivamente do profissional.</p>
+
+      <h3>2. Gratuidade</h3>
+      <p>O uso é <b>gratuito e sem limite</b>. Não há cobrança, plano pago nem versão premium
+      desta calculadora.</p>
+
+      <h3>3. Dados que coletamos</h3>
+      <ul>
+        <li><b>E-mail e profissão</b>, informados por você no acesso.</li>
+        <li><b>Endereço IP e localização aproximada</b> (cidade, estado, país), obtidos
+        automaticamente por serviço de geolocalização por IP.</li>
+        <li><b>Eventos de uso</b>: data e hora de acesso, de cálculo concluído e de download
+        de PDF.</li>
+      </ul>
+      <p><b>Não coletamos os dados que você digita no cálculo.</b> Valores, contratos e
+      informações da parte autora são processados no seu navegador e não chegam até nós.</p>
+
+      <h3>4. Para que usamos</h3>
+      <ul>
+        <li><b>Controle de acesso</b> e prevenção de abuso automatizado.</li>
+        <li><b>Métricas de uso</b> para melhorar a ferramenta.</li>
+        <li><b>Comunicações sobre a DASH</b>, apenas se você marcar a opção específica — ver
+        o item 5.</li>
+      </ul>
+
+      <h3>5. Comunicações de marketing — opcional e reversível</h3>
+      <p>A caixa de novidades é <b>separada e opcional</b>: você pode usar a calculadora sem
+      marcá-la, e nada muda. Se marcar, poderá receber e-mails sobre ferramentas, atualizações
+      e conteúdo da DASH.</p>
+      <p>Para sair, basta o link de descadastro do próprio e-mail ou uma mensagem para
+      <a href="mailto:contato@consultoriadash.com.br">contato@consultoriadash.com.br</a>. O
+      pedido é atendido sem que você precise justificar, e não afeta seu acesso à calculadora.</p>
+
+      <h3>6. Com quem compartilhamos</h3>
+      <p><b>Não vendemos, alugamos nem cedemos seus dados.</b> Eles são tratados apenas pela
+      DASH e pela infraestrutura técnica que ela usa para operar o serviço (hospedagem,
+      planilha de registro e serviço de e-mail).</p>
+
+      <h3>7. Por quanto tempo</h3>
+      <p>O registro de acesso e uso é mantido enquanto o serviço existir, para as finalidades
+      do item 4. Você pode pedir a exclusão a qualquer momento — ver o item 8.</p>
+
+      <h3>8. Seus direitos (LGPD)</h3>
+      <p>A Lei 13.709/2018 garante a você confirmar a existência de tratamento, acessar,
+      corrigir, portar, revogar consentimento e pedir a <b>exclusão</b> dos seus dados. Escreva
+      para <a href="mailto:contato@consultoriadash.com.br">contato@consultoriadash.com.br</a>:
+      respondemos e executamos o pedido.</p>
+
+      <h3>9. Fontes dos valores</h3>
+      <p>Salário mínimo: Decreto 12.797/2025 (R$ 1.621,00 desde 01/01/2026). Subsídios da
+      magistratura: CNJ — Portal da Transparência. Servidores: tabelas CJF. Lucro dos bancos:
+      balanços anuais publicados. As fontes são citadas nas telas e no PDF, e podem ser
+      alteradas ou atualizadas sem aviso.</p>
+
+      <h3>10. Quem é o responsável</h3>
+      <p><b>DASH Serviços Auxiliares Administrativos LTDA</b> — CNPJ 59.382.756/0001-95<br>
+      Avenida Afonso Pena, 3351, Sala 1102 · Bairro Serra · Belo Horizonte/MG · CEP 30.130-008<br>
+      <a href="mailto:contato@consultoriadash.com.br">contato@consultoriadash.com.br</a></p>
+
+      <h3>11. Alterações</h3>
+      <p>Estes Termos podem mudar. A versão vigente é sempre a exibida nesta página, com a
+      data no topo.</p>
+    </div>
   </div>
 </div>
 
 <!-- CALCULADORA -->
 <div id="tela-calculadora">
+<header class="dash-hdr">
+  <a class="marca" href="https://consultoriadash.com.br/" target="_blank" rel="noopener"
+     title="Dash Consultoria — site institucional">
+    <img src="img/dash-simbolo.png" alt="DASH" width="30" height="30">
+  </a>
+  <div>
+    <b>DASH <span>Calculadora de Danos Morais</span></b>
+    <small>Dash Consultoria · Crédito consignado</small>
+  </div>
+</header>
 <div class="container">
 
 <div class="titulo-hero">
@@ -163,7 +428,7 @@
   <div class="card">
     <div class="sec">Informações do processo</div>
     <div class="grid3">
-      <div><label>Renda líquida da parte Autora (R$)</label><input type="number" id="salario_consumidor" value="" placeholder="Ex: 1518" min="1" step="50" oninput="calc()"><div class="hint">Salário mínimo 2025: R$ 1.518 · Informe a renda líquida mensal da parte Autora</div></div>
+      <div><label>Renda líquida da parte Autora (R$)</label><input type="number" id="salario_consumidor" value="" placeholder="Ex: 1621" min="1" step="50" oninput="calc()"><div class="hint">Salário mínimo 2026: R$ 1.621 · Informe a renda líquida mensal da parte Autora</div></div>
       <div><label>Banco réu</label><select id="banco" onchange="calc()">
         <option value="">Selecione o banco réu...</option>
         <option value="bradesco">Banco Bradesco S.A.</option><option value="bb">Banco do Brasil S.A.</option><option value="caixa">Caixa Econômica Federal</option><option value="pan">Banco Pan S.A.</option><option value="bmg">Banco BMG S.A.</option><option value="santander">Banco Santander (Brasil) S.A.</option><option value="itau">Itaú Unibanco S.A.</option><option value="agibank">Banco Agibank S.A.</option><option value="bradesco_fin">Banco Bradesco Financiamentos S.A.</option><option value="facta">Facta Financeira S.A.</option><option value="itau_consig">Banco Itaú Consignado S.A.</option><option value="mercantil">Banco Mercantil do Brasil S.A.</option><option value="daycoval">Banco Daycoval S.A.</option><option value="aymore">Aymore Crédito Fin. e Invest.</option><option value="crefisa">Crefisa S.A. CFI</option><option value="votorantim">Banco Votorantim S.A.</option><option value="c6">Banco C6 Consignado S.A.</option><option value="banrisul">Banrisul S.A.</option><option value="nubank">Nu Pagamentos S.A.</option>
@@ -446,7 +711,7 @@ function calc(){
     <div class="result-hero">
       <div class="lbl">Valor do dano moral pretendido</div>
       <div class="val">${brl(valorPedido)}</div>
-      <div class="sub">${(valorPedido/1518).toFixed(0)} salários mínimos · ${fmtSeg(seg2)} de lucro do ${banco.nome}</div>
+      <div class="sub">${(valorPedido/1621).toFixed(0)} salários mínimos · ${fmtSeg(seg2)} de lucro do ${banco.nome}</div>
     </div>
     <div class="grid4" style="margin-bottom:1rem">
       <div class="mcard"><div class="lbl">Total descontado</div><div class="val danger">${brl(totalDesc)}</div><div class="sub">${pctDoCons.toFixed(1)}% da renda</div></div>
@@ -511,7 +776,7 @@ function gerarPDF(){
       function brlK(v){if(v>=1e9)return "R$ "+(v/1e9).toFixed(1).replace(".",",")+" bi";if(v>=1e6)return "R$ "+(v/1e6).toFixed(0)+" mi";return brl(v);}
       const sf=(sz,st,cor)=>{doc.setFontSize(sz);doc.setFont("helvetica",st||"normal");doc.setTextColor(...(cor||[35,35,35]));};
       const secH=(txt,yy)=>{doc.setFillColor(237,243,251);doc.rect(ml,yy,tw,5.5,"F");doc.setFillColor(22,88,155);doc.rect(ml,yy,2.5,5.5,"F");sf(6.5,"bold",[22,88,155]);doc.text(txt,ml+5,yy+3.8);return yy+7;};
-      const rodape=(pg,total)=>{doc.setFillColor(238,242,248);doc.rect(0,285,210,12,"F");doc.setDrawColor(22,88,155);doc.line(0,285,210,285);sf(5,"normal",[90,100,115]);doc.text("Desenvolvido por Edson Alcântara | Ferramenta de apoio técnico-jurídico | Valores baseados em fontes oficiais públicas, sujeitos a alteração sem aviso prévio",W/2,288,{align:"center"});doc.text("Não constitui opinião jurídica nem garantia de resultado judicial | Responsabilidade de uso exclusiva do profissional",W/2,292,{align:"center"});sf(5,"normal",[130,140,155]);doc.text(`Página ${pg} de ${total} | Emitido em: ${hoje}`,W/2,293,{align:"center"});};
+      const rodape=(pg,total)=>{doc.setFillColor(238,242,248);doc.rect(0,285,210,12,"F");doc.setDrawColor(26,43,74);doc.line(0,285,210,285);sf(5,"normal",[90,100,115]);doc.text("DASH Consultoria · consultoriadash.com.br | Ferramenta de apoio técnico-jurídico | Valores baseados em fontes oficiais públicas, sujeitos a alteração sem aviso prévio",W/2,288,{align:"center"});doc.text("Não constitui opinião jurídica nem garantia de resultado judicial | Responsabilidade de uso exclusiva do profissional",W/2,292,{align:"center"});sf(5,"normal",[130,140,155]);doc.text(`Página ${pg} de ${total} | Emitido em: ${hoje}`,W/2,293,{align:"center"});};
 
       // ══════════════════════════════════════════════
       // PÁGINA 1 — IDENTIFICAÇÃO DO CASO
@@ -584,7 +849,7 @@ function gerarPDF(){
       doc.setFillColor(15,52,96);doc.rect(ml,y,tw,16,"F");
       sf(6,"normal",[140,185,245]);doc.text("VALOR DO DANO MORAL PRETENDIDO",ml+4,y+5);
       sf(13,"bold",[255,255,255]);doc.text(brl(s.valorPedido),W/2,y+12,{align:"center"});
-      sf(5,"normal",[120,170,230]);doc.text(`${(s.valorPedido/1518).toFixed(0)} salários mínimos  ·  ${fmtSeg(s.seg2)} de lucro do banco  ·  ${pctStr(s.valorPedido,banco.lucro)} do lucro anual`,W/2,y+15.5,{align:"center"});
+      sf(5,"normal",[120,170,230]);doc.text(`${(s.valorPedido/1621).toFixed(0)} salários mínimos  ·  ${fmtSeg(s.seg2)} de lucro do banco  ·  ${pctStr(s.valorPedido,banco.lucro)} do lucro anual`,W/2,y+15.5,{align:"center"});
       y+=19;
 
       // Tabela comparativa
@@ -750,16 +1015,102 @@ function gerarPDF(){
 
 renderContratos();
 </script>
-  <div style="margin:24px 0 8px 0;padding:12px 16px;background:#f5f6f8;border-radius:8px;border:.5px solid rgba(0,0,0,0.08);text-align:center">
-    <p style="font-size:11px;color:#888;line-height:1.6;margin:0"><strong style="color:#555">Desenvolvido por Edson Alcântara.</strong> Ferramenta de apoio técnico-jurídico. Os valores são estimativas baseadas em fontes públicas oficiais, podendo ser alterados ou atualizados sem aviso prévio, e não constituem opinião jurídica nem garantia de resultado judicial. Responsabilidade de uso exclusiva do profissional.</p>
-  </div>
+  <div class="container"><div style="margin:24px 0 8px 0;padding:12px 16px;background:var(--bg2);border-radius:8px;border:.5px solid rgba(0,0,0,0.08);text-align:center">
+    <p style="font-size:11px;color:#888;line-height:1.6;margin:0"><strong style="color:#555">Uma ferramenta gratuita da DASH Consultoria.</strong> Ferramenta de apoio técnico-jurídico. Os valores são estimativas baseadas em fontes públicas oficiais, podendo ser alterados ou atualizados sem aviso prévio, e não constituem opinião jurídica nem garantia de resultado judicial. Responsabilidade de uso exclusiva do profissional.</p>
+  </div></div>
+  <!-- Indicacao do Leitor de HISCON. O publico e' o mesmo (advocacia de
+       consignado) e a dor e' vizinha: quem calcula dano moral de RMC ja' teve
+       de ler um HISCON a mao. Fica DEPOIS do disclaimer, no fim da pagina --
+       o advogado veio calcular, nao veio comprar. -->
+  <div class="container"><div class="promo">
+    <div class="chapeu">Outra ferramenta da DASH</div>
+    <h3>O HISCON do seu cliente, lido contrato a contrato.</h3>
+    <p>Se este cálculo nasceu de um RMC, o histórico inteiro provavelmente tem mais.
+      O Leitor de HISCON lê todos os contratos do documento — não por amostragem —
+      e devolve o laudo, o arquivo JSON para usar na sua IA e 15 prompts auxiliares.
+      A primeira análise é grátis.</p>
+    <a class="cta" href="https://leitor.consultoriadash.com.br" target="_blank"
+       rel="noopener">Conhecer o Leitor de HISCON &rarr;</a>
+  </div></div>
 </div><!-- /tela-calculadora -->
+
+<footer class="dash-rd">
+  <div class="dash-rd-wrap">
+    <div class="dash-rd-marca">
+      <a href="https://consultoriadash.com.br/" target="_blank" rel="noopener"
+         title="Dash Consultoria — site institucional">
+        <img src="img/dash-lockup.png" alt="DASH Consultoria" width="118">
+      </a>
+    </div>
+    <div>
+      <b>DASH Serviços Auxiliares Administrativos LTDA</b>
+      <span>CNPJ 59.382.756/0001-95</span>
+      <span>Avenida Afonso Pena, 3351, Sala 1102</span>
+      <span>Bairro Serra · Belo Horizonte / MG · CEP 30.130-008</span>
+    </div>
+    <div>
+      <b>Contato</b>
+      <span><a href="mailto:contato@consultoriadash.com.br">contato@consultoriadash.com.br</a></span>
+      <span><a href="https://www.instagram.com/dashconsultoriabh/" target="_blank" rel="noopener">Instagram · @dashconsultoriabh</a></span>
+      <span><a href="https://consultoriadash.com.br" target="_blank" rel="noopener">consultoriadash.com.br</a></span>
+    </div>
+    <div>
+      <b>Ferramentas</b>
+      <span><a href="https://leitor.consultoriadash.com.br" target="_blank" rel="noopener">Leitor de HISCON do INSS</a></span>
+      <span><a href="#" onclick="abrirTermos(event)">Termos de Uso e Privacidade</a></span>
+    </div>
+  </div>
+  <div class="dash-rd-fim">
+    Ferramenta gratuita de apoio técnico. Não constitui parecer jurídico nem garantia
+    de resultado — a conferência e a tese são do profissional.
+  </div>
+</footer>
 
 <script>
 // ══ CONFIGURAÇÃO ══════════════════════════════════════════
 // Cole aqui a URL do seu Google Apps Script após configurar
 const SHEETS_URL = "https://script.google.com/macros/s/AKfycbzzwtM5qkSsGexj-4b1HP5T21geI3dbPhma12yIQF5E7wZKod0wxqEvOE5AXUFtiBMF0w/exec";
 // ══════════════════════════════════════════════════════════
+
+// Versao dos Termos aceita no cadastro. Sobe junto com o texto do modal --
+// consentimento sem versao nao diz A QUE a pessoa consentiu.
+const TERMOS_VERSAO = "1.0-2026-09-03";
+
+function abrirTermos(e){ if(e) e.preventDefault(); document.getElementById("modal-termos").classList.add("on"); }
+function fecharTermos(){ document.getElementById("modal-termos").classList.remove("on"); }
+document.addEventListener("keydown", e => { if(e.key === "Escape") fecharTermos(); });
+document.addEventListener("click", e => {
+  const m = document.getElementById("modal-termos");
+  if(m && e.target === m) fecharTermos();
+});
+
+// Convite de opt-in para quem ja' usava antes destes Termos. Aparece UMA vez,
+// nao bloqueia nada, e a recusa e' registrada igual ao aceite -- so' assim da'
+// para nao perguntar de novo.
+function mostrarOptin(){
+  if(localStorage.getItem("calc_marketing")) return;
+  const alvo = document.querySelector("#tela-calculadora .container");
+  if(!alvo) return;
+  const cx = document.createElement("div");
+  cx.className = "optin";
+  cx.innerHTML = '<p><b>Quer receber novidades da DASH?</b> Ferramentas, atualizações e '
+    + 'conteúdo para advocacia bancária. Opcional — a calculadora continua gratuita de '
+    + 'qualquer jeito. <a href="#" onclick="abrirTermos(event)" style="color:var(--navy);font-weight:600">Termos</a>.</p>'
+    + '<button class="sim" onclick="responderOptin(true)">Quero receber</button>'
+    + '<button onclick="responderOptin(false)">Agora não</button>';
+  alvo.insertBefore(cx, alvo.firstChild);
+}
+function responderOptin(sim){
+  localStorage.setItem("calc_marketing", sim ? "sim" : "nao");
+  enviarParaSheets({ evento:"consentimento", ...dadosUsuario, marketing: sim ? "sim" : "nao",
+                     termos: TERMOS_VERSAO, consentEm: new Date().toISOString(),
+                     dataHora: new Date().toLocaleString("pt-BR") });
+  const cx = document.querySelector(".optin");
+  if(cx) cx.innerHTML = sim
+    ? '<p>Pronto. Você vai receber as novidades da DASH — e pode sair quando quiser.</p>'
+    : '<p>Combinado, não perguntamos de novo.</p>';
+  if(cx) setTimeout(() => cx.remove(), 4000);
+}
 
 let dadosUsuario = {};
 let contadorCalcSessao = 0;
@@ -774,25 +1125,41 @@ function validarEmail(email){
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+// Geolocalização é METADADO: serve à métrica, não ao usuário. Antes esta
+// chamada era aguardada sem prazo — e como ela vai a um terceiro (ipapi.co) que
+// já falhava em ~43% das vezes, bastava o serviço ficar lento para o botão
+// travar em "Carregando..." e a pessoa NÃO CONSEGUIR ENTRAR numa ferramenta
+// gratuita. Um dado acessório nunca pode bloquear o acesso: agora tem prazo de
+// 2,5s e, vencido, o cadastro segue com "—".
+const GEO_TIMEOUT_MS = 2500;
 async function getGeoIP(){
+  const vazio = { cidade:"—", estado:"—", pais:"—", ip:"—" };
   try{
-    const r = await fetch("https://ipapi.co/json/");
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), GEO_TIMEOUT_MS);
+    const r = await fetch("https://ipapi.co/json/", { signal: ctrl.signal });
+    clearTimeout(t);
+    if(!r.ok) return vazio;
     const d = await r.json();
     return { cidade: d.city||"—", estado: d.region||"—", pais: d.country_name||"—", ip: d.ip||"—" };
   }catch(e){
-    return { cidade:"—", estado:"—", pais:"—", ip:"—" };
+    return vazio;
   }
 }
 
 async function enviarParaSheets(dados){
   if(!SHEETS_URL || SHEETS_URL === "COLE_AQUI_A_URL_DO_APPS_SCRIPT") return;
   try{
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 4000);
     await fetch(SHEETS_URL, {
       method:"POST",
       mode:"no-cors",
       headers:{"Content-Type":"application/json"},
-      body: JSON.stringify(dados)
+      body: JSON.stringify(dados),
+      signal: ctrl.signal
     });
+    clearTimeout(t);
   }catch(e){ console.log("Sheets offline:", e); }
 }
 
@@ -807,13 +1174,23 @@ async function fazerCadastro(){
   if(!validarEmail(email)){ erro.textContent = "Informe um e-mail válido."; return; }
   if(!prof){ erro.textContent = "Selecione ou informe sua profissão."; return; }
   if(profSel === "outro" && !profOutro){ erro.textContent = "Digite sua profissão."; return; }
+  // Termos travam o acesso; marketing NAO. Se a segunda caixa bloqueasse, o
+  // consentimento deixaria de ser livre e nao valeria nada.
+  if(!document.getElementById("cad-termos").checked){
+    erro.textContent = "É preciso aceitar os Termos de Uso para continuar."; return;
+  }
 
   erro.textContent = "";
   btn.disabled = true;
   btn.textContent = "Carregando...";
 
   const geo = await getGeoIP();
+  const marketing = document.getElementById("cad-marketing").checked;
   dadosUsuario = { email, profissao: prof, ...geo, dataHora: new Date().toLocaleString("pt-BR") };
+  // Consentimento registrado com VERSAO e MOMENTO. Sem os dois, ele nao prova
+  // nada depois: "aceitou" sem dizer o que e quando nao e' consentimento.
+  Object.assign(dadosUsuario, { termos: TERMOS_VERSAO, marketing: marketing ? "sim" : "nao",
+                                consentEm: new Date().toISOString() });
 
   // Registrar cadastro no Sheets (hp = honeypot; servidor rejeita se preenchido)
   await enviarParaSheets({ evento:"cadastro", ...dadosUsuario, hp: document.getElementById("cad-site").value });
@@ -838,6 +1215,10 @@ window.addEventListener("DOMContentLoaded", ()=>{
       document.getElementById("tela-calculadora").style.display = "block";
       // Registrar retorno
       enviarParaSheets({ evento:"retorno", ...dadosUsuario, dataHora: new Date().toLocaleString("pt-BR") });
+      // Quem se cadastrou COM a caixa nova ja' respondeu; quem e' anterior a ela
+      // recebe o convite.
+      if(dadosUsuario.marketing) localStorage.setItem("calc_marketing", dadosUsuario.marketing);
+      mostrarOptin();
     }catch(e){ localStorage.removeItem("calc_usuario"); }
   }
   // Configurar botão PDF rastreado
