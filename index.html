@@ -244,6 +244,13 @@
                   font-family:inherit; cursor:pointer; }
   .optin button.sim { background:var(--navy); color:#fff; border-color:var(--navy); font-weight:700; }
   .optin button:hover { opacity:.85; }
+  .selo-gratis { display:inline-block; font-size:11.5px; font-weight:700;
+                 letter-spacing:.15em; text-transform:uppercase; color:#f0c14b;
+                 border:1.5px solid rgba(240,193,75,.55); border-radius:20px;
+                 padding:5px 14px; }
+  .dash-hdr .selo-gratis { font-size:10px; letter-spacing:.12em; padding:3px 10px;
+                           margin-left:auto; flex:none; }
+  @media (max-width:620px){ .dash-hdr .selo-gratis { display:none; } }
 </style>
 </head>
 <body>
@@ -256,6 +263,7 @@
         <h1>Calculadora de Danos Morais</h1>
         <p>Crédito Consignado &nbsp;·&nbsp; Fundamentação Jurídica</p>
         <div class="linha"></div>
+        <div style="margin-top:15px"><span class="selo-gratis">Ferramenta gratuita</span></div>
       </div>
     </div>
     <div class="cad-corpo">
@@ -405,6 +413,7 @@
     <b>DASH <span>Calculadora de Danos Morais</span></b>
     <small>Dash Consultoria · Crédito consignado</small>
   </div>
+  <span class="selo-gratis">Ferramenta gratuita</span>
 </header>
 <div class="container">
 
