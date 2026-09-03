@@ -1084,6 +1084,9 @@ const SHEETS_URL = "https://script.google.com/macros/s/AKfycbzzwtM5qkSsGexj-4b1H
 // Versao dos Termos aceita no cadastro. Sobe junto com o texto do modal --
 // consentimento sem versao nao diz A QUE a pessoa consentiu.
 const TERMOS_VERSAO = "1.0-2026-09-03";
+// "consent_sim_1.0" / "consent_nao_1.0" — o consentimento cabe no nome do
+// evento porque a coluna Evento é a única que o Apps Script grava hoje.
+const eventoConsent = sim => (sim ? "consent_sim_" : "consent_nao_") + TERMOS_VERSAO.split("-")[0];
 
 function abrirTermos(e){ if(e) e.preventDefault(); document.getElementById("modal-termos").classList.add("on"); }
 function fecharTermos(){ document.getElementById("modal-termos").classList.remove("on"); }
@@ -1111,7 +1114,7 @@ function mostrarOptin(){
 }
 function responderOptin(sim){
   localStorage.setItem("calc_marketing", sim ? "sim" : "nao");
-  enviarParaSheets({ evento:"consentimento", ...dadosUsuario, marketing: sim ? "sim" : "nao",
+  enviarParaSheets({ evento: eventoConsent(sim), ...dadosUsuario, marketing: sim ? "sim" : "nao",
                      termos: TERMOS_VERSAO, consentEm: new Date().toISOString(),
                      dataHora: new Date().toLocaleString("pt-BR") });
   const cx = document.querySelector(".optin");
@@ -1203,6 +1206,9 @@ async function fazerCadastro(){
 
   // Registrar cadastro no Sheets (hp = honeypot; servidor rejeita se preenchido)
   await enviarParaSheets({ evento:"cadastro", ...dadosUsuario, hp: document.getElementById("cad-site").value });
+  // Segunda linha, só para o consentimento — ver o bloco acima.
+  await enviarParaSheets({ evento: eventoConsent(marketing), ...dadosUsuario });
+  localStorage.setItem("calc_marketing", marketing ? "sim" : "nao");
 
   // Salvar sessão no localStorage para não pedir de novo
   localStorage.setItem("calc_usuario", JSON.stringify(dadosUsuario));
