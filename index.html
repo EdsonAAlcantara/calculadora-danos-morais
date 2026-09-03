@@ -1130,9 +1130,22 @@ renderContratos();
 </footer>
 
 <script>
-// ══ CONFIGURAÇÃO ══════════════════════════════════════════
-// Cole aqui a URL do seu Google Apps Script após configurar
-const SHEETS_URL = "https://script.google.com/macros/s/AKfycbzzwtM5qkSsGexj-4b1HP5T21geI3dbPhma12yIQF5E7wZKod0wxqEvOE5AXUFtiBMF0w/exec";
+// ══ REGISTRO DE EVENTOS ═══════════════════════════════════
+// 03/09/2026: saiu do Google Apps Script + planilha e passou para o Supabase,
+// pela API do serviço que já roda o Leitor de HISCON.
+//
+// A planilha tinha NOVE colunas fixas montadas por posição: os campos de
+// consentimento (termos, marketing, consentEm) chegavam e eram DESCARTADOS.
+// E qualquer painel fora dela era cópia — cópia não recebe pedido de exclusão.
+//
+// A URL antiga fica registrada aqui porque a planilha continua existindo como
+// arquivo histórico, só leitura:
+//   https://script.google.com/macros/s/AKfycbzzwtM5qkSsGexj-4b1HP5T21geI3dbPhma12yIQF5E7wZKod0wxqEvOE5AXUFtiBMF0w/exec
+//
+// Se este endereço cair, a calculadora CONTINUA funcionando: ela é estática no
+// GitHub Pages e o envio é dispara-e-esquece com prazo de 4s. Perde-se métrica,
+// não o produto.
+const SHEETS_URL = "https://leitor.consultoriadash.com.br/api/calc/evento";
 // ══════════════════════════════════════════════════════════
 
 // Versao dos Termos aceita no cadastro. Sobe junto com o texto do modal --
