@@ -851,7 +851,7 @@ function gerarPDF(){
 
       function brlK(v){if(v>=1e9)return "R$ "+(v/1e9).toFixed(1).replace(".",",")+" bi";if(v>=1e6)return "R$ "+(v/1e6).toFixed(0)+" mi";return brl(v);}
       const sf=(sz,st,cor)=>{doc.setFontSize(sz);doc.setFont("helvetica",st||"normal");doc.setTextColor(...(cor||[35,35,35]));};
-      const secH=(txt,yy)=>{doc.setFillColor(237,243,251);doc.rect(ml,yy,tw,5.5,"F");doc.setFillColor(22,88,155);doc.rect(ml,yy,2.5,5.5,"F");sf(6.5,"bold",[22,88,155]);doc.text(txt,ml+5,yy+3.8);return yy+6.5;};
+      const secH=(txt,yy)=>{doc.setFillColor(237,243,251);doc.rect(ml,yy,tw,5.5,"F");doc.setFillColor(22,88,155);doc.rect(ml,yy,2.5,5.5,"F");sf(6.5,"bold",[22,88,155]);doc.text(txt,ml+5,yy+3.8);return yy+8;};
       const rodape=(pg,total)=>{doc.setFillColor(238,242,248);doc.rect(0,285,210,12,"F");doc.setDrawColor(26,43,74);doc.line(0,285,210,285);sf(5,"normal",[90,100,115]);doc.text("DASH Consultoria · consultoriadash.com.br | Ferramenta de apoio técnico-jurídico | Valores baseados em fontes oficiais públicas, sujeitos a alteração sem aviso prévio",W/2,288.5,{align:"center"});doc.text("Não constitui opinião jurídica nem garantia de resultado judicial | Responsabilidade de uso exclusiva do profissional",W/2,292,{align:"center"});sf(5,"normal",[130,140,155]);doc.text(`Página ${pg} de ${total} | Emitido em: ${hoje}`,W/2,295.5,{align:"center"});};
 
       // ── Controle de quebra de pagina ──────────────────────────────────
@@ -1001,7 +1001,7 @@ function gerarPDF(){
         sf(5.5,"bold",[160,200,255]);doc.text(num,ml+2,yy+4);
         sf(6.5,"bold",[255,255,255]);doc.text(titulo,ml+22,yy+4);
         sf(5.8,"normal",[45,45,45]);
-        return yy+7;
+        return yy+9;
       };
 
       y=topicoH("I","Da configuração do dano moral",y);
