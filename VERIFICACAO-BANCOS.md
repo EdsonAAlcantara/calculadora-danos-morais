@@ -147,12 +147,39 @@ rótulo genérico.
 ⚠️ Para Inbursa e BancoSeguro o grupo econômico **não foi confirmado** — pelo
 lucro próprio são fracos, e o valor de inserir depende do grupo.
 
-### 🟡 Atribuição pela via do BCB, não do RI
+### Atribuição trocada para o RI — 03/09/2026
 
-Banese, Banpará e Nubank **têm RI público**. Os valores acima vieram do BCB, que
-a regra autoriza como fallback — mas para esses três o ideal é trocar a
-atribuição pela publicação da própria instituição numa próxima passada. O número
-não muda (COSIF = contábil = o que a DF deles mostra); muda a citação.
+Banese e Banpará tinham a citação do BCB existindo a fonte primária. Trocada
+pela publicação da própria instituição. **O número não mudou** — o COSIF é o
+contábil, o mesmo da DF deles —, mudou de quem é o documento citado, que é o
+que o réu não pode contestar.
+
+| Banco | Confirmado na própria publicação |
+|---|---|
+| Banese | *"BANESE REGISTRA LUCRO LÍQUIDO DE R$ 151,5 MI EM 2025"* — DFP 2025 |
+| Banpará | *"resultado líquido de R$ 200.857 mil em 2025"* — DFP 2025, p. 23 |
+
+Os dois batem com o COSIF na casa decimal, o que é mais uma validação do método.
+
+### ⚠️ Nubank: o site não publica a DF da entidade que está na base
+
+A base nomeia **Nu Pagamentos S.A.** (a instituição de pagamento, CNPJ
+18.236.120). O site do Nubank publica em *Transparência → Relatórios
+Financeiros* **apenas as Demonstrações Contábeis da Nu Financeira S.A. CFI** —
+não as da Nu Pagamentos.
+
+Como a instituição não publica a DF dessa entidade, o BCB permanece como fonte,
+que é exatamente a hipótese que a regra do fallback prevê.
+
+🔴 **Decisão pendente:** qual entidade deve ser a ré?
+
+| Entidade | Lucro 2025 (COSIF) | DF no site |
+|---|---|---|
+| Nu Pagamentos S.A. — IP (na base hoje) | R$ 12,687 bi | não |
+| Nu Financeira S.A. CFI (quem empresta) | R$ 11,290 bi | sim |
+
+Em ação de consignado quem concede o crédito é a **Nu Financeira**. Se a ré for
+ela, há DF publicada e a citação passa a ser institucional.
 
 ---
 
