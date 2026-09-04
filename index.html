@@ -500,18 +500,8 @@
     <div class="grid3">
       <div><label>Renda líquida da parte Autora (R$)</label><input type="number" id="salario_consumidor" value="" placeholder="" min="1" step="50" oninput="calc()"><div class="hint"><span id="hint-salmin"></span> · Informe a renda líquida mensal da parte Autora</div></div>
       <div><label>Banco réu</label><select id="banco" onchange="calc()">
-        <option value="">Selecione o banco réu...</option>
-        <option value="bradesco">Banco Bradesco S.A.</option><option value="bb">Banco do Brasil S.A.</option><option value="caixa">Caixa Econômica Federal</option><option value="pan">Banco Pan S.A.</option><option value="bmg">Banco BMG S.A.</option><option value="santander">Banco Santander (Brasil) S.A.</option><option value="itau">Itaú Unibanco S.A.</option><option value="agibank">Banco Agibank S.A.</option><option value="bradesco_fin">Banco Bradesco Financiamentos S.A.</option><option value="facta">Facta Financeira S.A.</option><option value="itau_consig">Banco Itaú Consignado S.A.</option><option value="mercantil">Banco Mercantil do Brasil S.A.</option><option value="daycoval">Banco Daycoval S.A.</option><option value="aymore">Aymore Crédito Fin. e Invest.</option><option value="crefisa">Crefisa S.A. CFI</option><option value="votorantim">Banco Votorantim S.A.</option><option value="c6">Banco C6 Consignado S.A.</option><option value="banrisul">Banrisul S.A.</option><option value="nubank">Nu Pagamentos S.A.</option>
-        <option value="parati">Parati CFI S.A.</option>
-        <option value="digimais">Banco Digimais S.A.</option>
-        <option value="brb">BRB — Banco de Brasília S.A.</option>
-        <option value="banpara">Banpará — Banco do Estado do Pará S.A.</option>
-        <option value="safra">Banco Safra S.A.</option>
-        <option value="banese">Banese — Banco do Estado de Sergipe S.A.</option>
-        <option value="banestes">Banestes — Banco do Estado do ES S.A.</option>
-        <option value="paranabanco">Paraná Banco S.A.</option>
-        <option value="bnpparibas">Banco BNP Paribas Brasil S.A.</option>
-      </select></div>
+          <option value="">Selecione o banco réu...</option>
+        </select></div>
       <div><label>Estado da ação</label><select id="estado" onchange="calc()">
         <option value="">Selecione o estado...</option>
         <option value="ac">Acre</option><option value="al">Alagoas</option><option value="am">Amazonas</option><option value="ap">Amapá</option><option value="ba">Bahia</option><option value="ce">Ceará</option><option value="df">Distrito Federal</option><option value="es">Espírito Santo</option><option value="go">Goiás</option><option value="ma">Maranhão</option><option value="mg">Minas Gerais</option><option value="ms">Mato Grosso do Sul</option><option value="mt">Mato Grosso</option><option value="pa">Pará</option><option value="pb">Paraíba</option><option value="pe">Pernambuco</option><option value="pi">Piauí</option><option value="pr">Paraná</option><option value="rj">Rio de Janeiro</option><option value="rn">Rio Grande do Norte</option><option value="ro">Rondônia</option><option value="rr">Roraima</option><option value="rs">Rio Grande do Sul</option><option value="sc">Santa Catarina</option><option value="se">Sergipe</option><option value="sp">São Paulo</option><option value="to">Tocantins</option>
@@ -609,7 +599,7 @@
 const SALARIO_MINIMO = 1621;
 const SALARIO_MINIMO_ANO = 2026;
 
-const BANCOS={bradesco:{nome:"Banco Bradesco S.A.",lucro:24.652e9,recl:773976,met:"lucro líquido recorrente",doc:"Relatório de Análise Econômica e Financeira 4T25"},bb:{nome:"Banco do Brasil S.A.",lucro:20.685e9,recl:624378,met:"lucro líquido ajustado",doc:"Sumário do Resultado 4T25"},caixa:{nome:"Caixa Econômica Federal",lucro:16.05e9,recl:602542},pan:{nome:"Banco Pan S.A.",lucro:0.82e9,recl:383338},bmg:{nome:"Banco BMG S.A.",lucro:0.75e9,recl:349782},santander:{nome:"Banco Santander (Brasil) S.A.",lucro:15.615e9,recl:259024,met:"lucro líquido gerencial",doc:"Demonstrações Financeiras BRGAAP 4T25"},itau:{nome:"Itaú Unibanco S.A.",lucro:46.8e9,recl:204036,ent:"Itaú Unibanco Holding S.A.",met:"resultado recorrente gerencial",doc:"informativo Ações Itaú em Foco, 4T25, nº 89"},agibank:{nome:"Banco Agibank S.A.",lucro:0.65e9,recl:174673},bradesco_fin:{nome:"Banco Bradesco Financiamentos S.A.",lucro:1.2e9,recl:112074},facta:{nome:"Facta Financeira S.A.",lucro:0.45e9,recl:111699},itau_consig:{nome:"Banco Itaú Consignado S.A.",lucro:1.5e9,recl:91607},mercantil:{nome:"Banco Mercantil do Brasil S.A.",lucro:0.4e9,recl:90816},daycoval:{nome:"Banco Daycoval S.A.",lucro:0.9e9,recl:87638},aymore:{nome:"Aymore Crédito Fin. e Invest.",lucro:0.35e9,recl:83842},crefisa:{nome:"Crefisa S.A. CFI",lucro:0.5e9,recl:81766},votorantim:{nome:"Banco Votorantim S.A.",lucro:0.6e9,recl:69080},c6:{nome:"Banco C6 Consignado S.A.",lucro:0.3e9,recl:68935},banrisul:{nome:"Banrisul S.A.",lucro:1.1e9,recl:61382},nubank:{nome:"Nu Pagamentos S.A.",lucro:3.5e9,recl:51836},
+const BANCOS={bradesco:{nome:"Banco Bradesco S.A.",lucro:24.652e9,recl:773976,met:"lucro líquido recorrente",doc:"Relatório de Análise Econômica e Financeira 4T25"},bb:{nome:"Banco do Brasil S.A.",lucro:20.685e9,recl:624378,met:"lucro líquido ajustado",doc:"Sumário do Resultado 4T25"},caixa:{nome:"Caixa Econômica Federal",lucro:16.05e9,recl:602542},pan:{nome:"Banco Pan S.A.",lucro:0.82e9,recl:383338},bmg:{nome:"Banco BMG S.A.",lucro:0.75e9,recl:349782},santander:{nome:"Banco Santander (Brasil) S.A.",lucro:15.615e9,recl:259024,met:"lucro líquido gerencial",doc:"Demonstrações Financeiras BRGAAP 4T25"},itau:{nome:"Itaú Unibanco S.A.",lucro:46.8e9,recl:204036,ent:"Itaú Unibanco Holding S.A.",met:"resultado recorrente gerencial",doc:"informativo Ações Itaú em Foco, 4T25, nº 89"},agibank:{nome:"Banco Agibank S.A.",lucro:0.65e9,recl:174673},bradesco_fin:{nome:"Banco Bradesco Financiamentos S.A.",lucro:24.652e9,recl:112074,ent:"Banco Bradesco S.A. \u2014 controlador integral (100,00%) do Banco Bradesco Financiamentos S.A.",met:"lucro l\u00edquido recorrente do grupo controlador",doc:"Relat\u00f3rio de An\u00e1lise Econ\u00f4mica e Financeira 4T25, p. 73"},facta:{nome:"Facta Financeira S.A.",lucro:0.45e9,recl:111699},itau_consig:{nome:"Banco Itaú Consignado S.A.",lucro:1.5e9,recl:91607},mercantil:{nome:"Banco Mercantil do Brasil S.A.",lucro:0.4e9,recl:90816},daycoval:{nome:"Banco Daycoval S.A.",lucro:0.9e9,recl:87638},aymore:{nome:"Santander SCFI (ex-Aymor\u00e9 Cr\u00e9dito Fin. e Invest.)",lucro:15.615e9,recl:83842,ent:"Banco Santander (Brasil) S.A. \u2014 controlador integral (100,00%) da Santander SCFI",met:"lucro l\u00edquido gerencial do grupo controlador",doc:"Demonstra\u00e7\u00f5es Financeiras BRGAAP 4T25, p. 67"},crefisa:{nome:"Crefisa S.A. CFI",lucro:0.5e9,recl:81766},votorantim:{nome:"Banco Votorantim S.A.",lucro:0.6e9,recl:69080},c6:{nome:"Banco C6 Consignado S.A.",lucro:0.3e9,recl:68935},banrisul:{nome:"Banrisul S.A.",lucro:1.1e9,recl:61382},digio:{nome:"Banco Digio S.A.",lucro:24.652e9,recl:null,ent:"Banco Bradesco S.A. \u2014 controlador integral (100,00%) do Banco Digio S.A.",met:"lucro l\u00edquido recorrente do grupo controlador",doc:"Relat\u00f3rio de An\u00e1lise Econ\u00f4mica e Financeira 4T25, p. 73"},nubank:{nome:"Nu Pagamentos S.A.",lucro:3.5e9,recl:51836},
 parati:{nome:"Parati CFI S.A.",lucro:0.12e9,recl:455},
 digimais:{nome:"Banco Digimais S.A.",lucro:0.053e9,recl:291},
 brb:{nome:"BRB — Banco de Brasília S.A.",lucro:0.282e9,recl:1753},
@@ -670,9 +660,18 @@ let prevN=0,_st={};
 // `met`/`doc` so existem nos bancos ja conferidos no RI; os demais caem no
 // rotulo generico e estao listados como pendentes em VERIFICACAO-BANCOS.md.
 function metricaLucro(b){ return b.met || "lucro líquido"; }
+// R2: dado que falta e' omitido, nunca substituido por numero plausivel.
+// O lucro pode vir do grupo controlador; a reclamacao, nao -- ela mede a
+// conduta da propria instituicao re.
+function temRecl(b){ return typeof b.recl === "number" && b.recl > 0; }
 function fonteLucro(b){
-  return b.doc ? "Fonte: " + (b.ent || b.nome) + " — " + b.met
-                 + " do exercício de 2025, " + b.doc
+  // usada DENTRO da frase, que ja' nomeou a entidade
+  return b.doc ? "Fonte: " + b.doc
+               : "Fonte: demonstrações do exercício de 2025";
+}
+function fonteLucroLonga(b){
+  // usada em painel e ficha de fontes, onde a entidade nao aparece antes
+  return b.doc ? "Fonte: " + (b.ent || b.nome) + " — " + b.doc
                : "Fonte: demonstrações do exercício de 2025";
 }
 function entidadeLucro(b){ return b.ent || b.nome; }
@@ -749,7 +748,7 @@ function calc(){
     <div class="grid4">
       <div class="mcard"><div class="lbl">Lucro líquido anual</div><div class="val info">${brl(banco.lucro)}</div><div class="sub">Fonte: Balanço CVM 2025</div></div>
       <div class="mcard"><div class="lbl">Lucro por segundo</div><div class="val">${brl(lucroSeg)}</div></div>
-      <div class="mcard"><div class="lbl">Reclamações BACEN</div><div class="val warn">${banco.recl.toLocaleString("pt-BR")}</div><div class="sub">Ranking BACEN 2024</div></div>
+      ${temRecl(banco)?`<div class="mcard"><div class="lbl">Reclamações BACEN</div><div class="val warn">${banco.recl.toLocaleString("pt-BR")}</div><div class="sub">Ranking BACEN 2024</div></div>`:``}
       <div class="mcard"><div class="lbl">Condenação / lucro anual</div><div class="val">${pctStr(valorPedido,banco.lucro)}</div></div>
     </div>`;
   document.getElementById("banco-segundos").innerHTML=`
@@ -847,7 +846,7 @@ function gerarFund(){
     topV_idoso=`\n\nAGRAVANTE — CONDIÇÃO DE IDOSA (Lei 10.741/2003)\nA parte Autora, sendo idosa (60 anos ou mais), tem sua vulnerabilidade econômica agravada. Segundo os Cadernos de Saúde Pública (Fiocruz/SciELO, 2020), idosos aposentados comprometem em média 23,57% da aposentadoria com medicamentos de uso contínuo (equivalente a R$ ${medMed} no presente caso), e 41% já deixaram de adquirir medicamentos por falta de recursos. A condição de idosa atrai a proteção especial do Estatuto do Idoso (Lei 10.741/2003), que veda qualquer forma de discriminação, negligência ou abuso em detrimento do idoso.`;
   }
 
-  return `FUNDAMENTAÇÃO — QUANTUM DOS DANOS MORAIS\n\nA parte Autora, com renda líquida de ${brl(s.salCons)}, teve descontado(s) indevidamente ${s.nC} contrato(s):\n${det}\nTotal descontado: ${brl(s.totalDesc)}.\n\nI — DA CONFIGURAÇÃO DO DANO MORAL\nO valor indevidamente descontado representa ${s.pctDoCons.toFixed(1)}% da renda líquida da parte Autora, equivalendo a ${(s.totalDesc/s.salCons).toFixed(2)} meses de renda. A subtração compulsória de parcela tão significativa do orçamento familiar ultrapassa o mero dissabor cotidiano, caracterizando dano moral passível de indenização.\n\nII — DO QUANTUM — MÉTODO BIFÁSICO\nO valor de ${brl(s.valorPedido)} foi fixado com observância do método bifásico: na 1ª fase, consideraram-se os precedentes do tribunal; na 2ª fase, ponderaram-se as circunstâncias concretas — extensão do dano, capacidade econômica do réu e grau de reprovabilidade da conduta.\n\nIII — DA CAPACIDADE ECONÔMICA DO RÉU\nO ${entidadeLucro(banco)} registrou ${metricaLucro(banco)} de ${brl(banco.lucro)} em 2025 (${fonteLucro(banco)}), equivalendo a ${brl(s.lucroSeg)} por segundo. O valor pretendido representa ${pctStr(s.valorPedido,banco.lucro)} do lucro anual, sendo recuperado em ${fmtSeg(s.seg2)}.\n\nIV — DA PROPORCIONALIDADE\nO dano sofrido (${s.pctDoCons.toFixed(1)}% da renda) equivale proporcionalmente a ${brl(s.juizEquiv)} do salário base de um juiz de 1ª instância no ${s.estadoNome} (Fonte: CNJ — Portal de Transparência 2025).\n\nV — DO DANO COMO SUPERIOR AO MERO DISSABOR E DA AUSÊNCIA DE VALOR ÍNFIMO\n\n1. Comprometimento do mínimo existencial (Fonte: IBGE — POF 2017-2018)\nSegundo o IBGE (Pesquisa de Orçamentos Familiares 2017-2018 — edição mais recente disponível, aguardando publicação da POF 2024-2025), famílias com rendimento de até 2 salários mínimos comprometem 61,2% do orçamento com alimentação (22%) e habitação (39,2%). Somados transporte e saúde, o comprometimento alcança 72,2% da renda em despesas que não podem ser suprimidas. O desconto indevido praticado pelo réu incidiu sobre parcela da renda já integralmente comprometida com necessidades vitais, configurando violação ao mínimo existencial.${topV_idoso}\n\n2. Ausência de valor ínfimo para a parte Autora (Fonte: IBGE — POF 2017-2018)\nO valor indevidamente descontado — ${brl(s.totalDesc)} no total — não configura quantia ínfima para a realidade econômica da parte Autora. Representa ${s.pctDoCons.toFixed(1)}% da renda líquida mensal. O gasto médio mensal com alimentação de famílias nessa faixa de renda é de R$ 328,74 (IBGE/POF 2017-2018), o que significa que o total descontado equivale a ${mesesAlim} meses de gastos alimentares dessa família. Para quem opera no limite do mínimo existencial, nenhum desconto indevido nessa magnitude pode ser classificado como ínfimo sob qualquer critério razoável.\n\n3. Reiteração sistêmica da conduta (Fonte: Banco Central do Brasil — Ranking de Reclamações 2024)\nO ${banco.nome} registrou ${banco.recl.toLocaleString("pt-BR")} reclamações no Banco Central em 2024 (Fonte: Ranking de Reclamações BACEN 2024), evidenciando prática sistêmica que reforça a necessidade de condenação com caráter pedagógico, nos termos do art. 944 do Código Civil.\n\n4. Custo imposto ao erário público (Fonte: CNJ — Justiça em Números 2024)\nO presente processo representa um custo estimado de ${brl(CUSTO_PROCESSO[_st.estado]||2850)} ao Estado de ${s.estadoNome}, conforme dados do CNJ (Relatório Justiça em Números 2024, ano-base 2023). Esse ônus é consequência direta e exclusiva da conduta ilícita do réu.\n\nCONCLUSÃO: O conjunto de dados acima, todos extraídos de fontes oficiais, demonstra que o dano ultrapassa o mero dissabor cotidiano, que o valor descontado não é ínfimo para a realidade da parte Autora, e que a conduta do réu é sistêmica. Requer-se a fixação dos danos morais em ${brl(s.valorPedido)}, acrescidos de correção monetária e juros de mora.\n\nFONTES: IBGE — POF 2017-2018 (edição mais recente; POF 2024-2025 em campo, resultados ainda não publicados) | Cadernos de Saúde Pública — Fiocruz/SciELO (2020) | Banco Central do Brasil — Ranking de Reclamações 2024 | Demonstrações do exercício de 2025 divulgadas pela instituição ré | CNJ — Justiça em Números 2024 (ano-base 2023) | Lei 10.741/2003 — Estatuto do Idoso`;
+  return `FUNDAMENTAÇÃO — QUANTUM DOS DANOS MORAIS\n\nA parte Autora, com renda líquida de ${brl(s.salCons)}, teve descontado(s) indevidamente ${s.nC} contrato(s):\n${det}\nTotal descontado: ${brl(s.totalDesc)}.\n\nI — DA CONFIGURAÇÃO DO DANO MORAL\nO valor indevidamente descontado representa ${s.pctDoCons.toFixed(1)}% da renda líquida da parte Autora, equivalendo a ${(s.totalDesc/s.salCons).toFixed(2)} meses de renda. A subtração compulsória de parcela tão significativa do orçamento familiar ultrapassa o mero dissabor cotidiano, caracterizando dano moral passível de indenização.\n\nII — DO QUANTUM — MÉTODO BIFÁSICO\nO valor de ${brl(s.valorPedido)} foi fixado com observância do método bifásico: na 1ª fase, consideraram-se os precedentes do tribunal; na 2ª fase, ponderaram-se as circunstâncias concretas — extensão do dano, capacidade econômica do réu e grau de reprovabilidade da conduta.\n\nIII — DA CAPACIDADE ECONÔMICA DO RÉU\nO ${entidadeLucro(banco)} registrou ${metricaLucro(banco)} de ${brl(banco.lucro)} em 2025 (${fonteLucro(banco)}), equivalendo a ${brl(s.lucroSeg)} por segundo. O valor pretendido representa ${pctStr(s.valorPedido,banco.lucro)} do lucro anual, sendo recuperado em ${fmtSeg(s.seg2)}.\n\nIV — DA PROPORCIONALIDADE\nO dano sofrido (${s.pctDoCons.toFixed(1)}% da renda) equivale proporcionalmente a ${brl(s.juizEquiv)} do salário base de um juiz de 1ª instância no ${s.estadoNome} (Fonte: CNJ — Portal de Transparência 2025).\n\nV — DO DANO COMO SUPERIOR AO MERO DISSABOR E DA AUSÊNCIA DE VALOR ÍNFIMO\n\n1. Comprometimento do mínimo existencial (Fonte: IBGE — POF 2017-2018)\nSegundo o IBGE (Pesquisa de Orçamentos Familiares 2017-2018 — edição mais recente disponível, aguardando publicação da POF 2024-2025), famílias com rendimento de até 2 salários mínimos comprometem 61,2% do orçamento com alimentação (22%) e habitação (39,2%). Somados transporte e saúde, o comprometimento alcança 72,2% da renda em despesas que não podem ser suprimidas. O desconto indevido praticado pelo réu incidiu sobre parcela da renda já integralmente comprometida com necessidades vitais, configurando violação ao mínimo existencial.${topV_idoso}\n\n2. Ausência de valor ínfimo para a parte Autora (Fonte: IBGE — POF 2017-2018)\nO valor indevidamente descontado — ${brl(s.totalDesc)} no total — não configura quantia ínfima para a realidade econômica da parte Autora. Representa ${s.pctDoCons.toFixed(1)}% da renda líquida mensal. O gasto médio mensal com alimentação de famílias nessa faixa de renda é de R$ 328,74 (IBGE/POF 2017-2018), o que significa que o total descontado equivale a ${mesesAlim} meses de gastos alimentares dessa família. Para quem opera no limite do mínimo existencial, nenhum desconto indevido nessa magnitude pode ser classificado como ínfimo sob qualquer critério razoável.${temRecl(banco)?`\n\n3. Reiteração sistêmica da conduta (Fonte: Banco Central do Brasil — Ranking de Reclamações 2024)\nO ${banco.nome} registrou ${banco.recl.toLocaleString("pt-BR")} reclamações no Banco Central em 2024 (Fonte: Ranking de Reclamações BACEN 2024), evidenciando prática sistêmica que reforça a necessidade de condenação com caráter pedagógico, nos termos do art. 944 do Código Civil.`:``}\n\n4. Custo imposto ao erário público (Fonte: CNJ — Justiça em Números 2024)\nO presente processo representa um custo estimado de ${brl(CUSTO_PROCESSO[_st.estado]||2850)} ao Estado de ${s.estadoNome}, conforme dados do CNJ (Relatório Justiça em Números 2024, ano-base 2023). Esse ônus é consequência direta e exclusiva da conduta ilícita do réu.\n\nCONCLUSÃO: O conjunto de dados acima, todos extraídos de fontes oficiais, demonstra que o dano ultrapassa o mero dissabor cotidiano, que o valor descontado não é ínfimo para a realidade da parte Autora, e que a conduta do réu é sistêmica. Requer-se a fixação dos danos morais em ${brl(s.valorPedido)}, acrescidos de correção monetária e juros de mora.\n\nFONTES: IBGE — POF 2017-2018 (edição mais recente; POF 2024-2025 em campo, resultados ainda não publicados) | Cadernos de Saúde Pública — Fiocruz/SciELO (2020)${temRecl(banco)?` | Banco Central do Brasil — Ranking de Reclamações 2024`:``} | Demonstrações do exercício de 2025 divulgadas pela instituição ré | CNJ — Justiça em Números 2024 (ano-base 2023) | Lei 10.741/2003 — Estatuto do Idoso`;
 }
 
 function gerarPDF(){
@@ -949,7 +948,7 @@ function gerarPDF(){
       y=secH("ANÁLISE ECONÔMICA — CAPACIDADE DO RÉU",y);
       doc.setFillColor(247,249,252);doc.rect(bx,y,hW,SH,"F");doc.setDrawColor(210,220,235);doc.rect(bx,y,hW,SH,"S");
       let by=y+4;
-      [[metricaLucro(banco).charAt(0).toUpperCase()+metricaLucro(banco).slice(1)+" (2025)",brlK(banco.lucro),fonteLucro(banco)],["Lucro por segundo",brl(s.lucroSeg),""],["Condenação / lucro anual",pctStr(s.valorPedido,banco.lucro),""],["Reclamações BACEN 2024",banco.recl.toLocaleString("pt-BR")+" ocorrências","Fonte: Banco Central do Brasil 2024"]].forEach(([k,v,fonte])=>{
+      [[metricaLucro(banco).charAt(0).toUpperCase()+metricaLucro(banco).slice(1)+" (2025)",brlK(banco.lucro),fonteLucroLonga(banco)],["Lucro por segundo",brl(s.lucroSeg),""],["Condenação / lucro anual",pctStr(s.valorPedido,banco.lucro),""]].concat(temRecl(banco)?[["Reclamações BACEN 2024",banco.recl.toLocaleString("pt-BR")+" ocorrências","Fonte: Banco Central do Brasil 2024"]]:[]).forEach(([k,v,fonte])=>{
         sf(5,"normal",[120,130,145]);doc.text(k+":",bx+2,by);sf(6.5,"bold",[35,35,35]);doc.text(v,bx+2,by+3.8);
         if(fonte){sf(4.5,"italic",[160,170,185]);doc.text(fonte,bx+2,by+7);by+=11;}else{by+=9;}
       });
@@ -1063,12 +1062,15 @@ function gerarPDF(){
       txt=`O valor indevidamente descontado (${brl(s.totalDesc)}) não configura quantia ínfima para a realidade econômica da parte Autora. Representa ${s.pctDoCons.toFixed(1)}% da renda líquida mensal. O gasto médio mensal com alimentação de famílias nessa faixa de renda é de R$ 328,74 (IBGE/POF 2017-2018), o que significa que o total descontado equivale a ${mesesAlim} meses de gastos alimentares dessa família. Para quem opera no limite do mínimo existencial, nenhum desconto indevido nessa magnitude pode ser classificado como ínfimo.`;
       y=paragrafo(txt,y,2);
 
-      // V.3
-      y=cabe(22,y);
-      sf(6,"bold",[22,88,155]);doc.text("3. Reiteração sistêmica da conduta",ml,y);y+=5;
-      sf(5.8,"normal",[45,45,45]);
-      txt=`O ${banco.nome} registrou ${banco.recl.toLocaleString("pt-BR")} reclamações no Banco Central em 2024 (Fonte: Ranking BACEN 2024), evidenciando prática sistêmica que reforça a necessidade de condenação com caráter pedagógico e inibitório, nos termos do art. 944 do Código Civil.`;
-      y=paragrafo(txt,y,2);
+      // V.3 — so' entra se houver dado da PROPRIA re. Numero do grupo
+      // controlador nao serve aqui: reclamacao mede conduta, nao capacidade.
+      if(temRecl(banco)){
+        y=cabe(22,y);
+        sf(6,"bold",[22,88,155]);doc.text("3. Reiteração sistêmica da conduta",ml,y);y+=5;
+        sf(5.8,"normal",[45,45,45]);
+        txt=`O ${banco.nome} registrou ${banco.recl.toLocaleString("pt-BR")} reclamações no Banco Central em 2024 (Fonte: Ranking BACEN 2024), evidenciando prática sistêmica que reforça a necessidade de condenação com caráter pedagógico e inibitório, nos termos do art. 944 do Código Civil.`;
+        y=paragrafo(txt,y,2);
+      }
 
       // V.4
       y=cabe(22,y);
@@ -1113,8 +1115,10 @@ function gerarPDF(){
           "Estudo publicado nos Cadernos de Saúde Pública (Fiocruz/SciELO, 2020) com base em entrevistas com idosos aposentados. Dados utilizados: comprometimento médio da aposentadoria com medicamentos de uso contínuo (23,57%); percentual de idosos que já deixaram de adquirir medicamentos por falta de recursos (41%); idosos com aposentadoria como única fonte de renda (62,4%); valor médio da aposentadoria na amostra (1,53 salário mínimo).",y);
       }
 
-      y=fonte("Banco Central do Brasil — Ranking de Reclamações 2024",
-        `Banco Central do Brasil. Ranking de Reclamações — Bancos e Financeiras. 4º trimestre de 2024. Disponível em: https://www.bcb.gov.br/meubc/rankingreclamacoes. Dado utilizado: número de reclamações procedentes do ${banco.nome} no período de referência (${banco.recl.toLocaleString("pt-BR")} ocorrências).`,y);
+      if(temRecl(banco)){
+        y=fonte("Banco Central do Brasil — Ranking de Reclamações 2024",
+          `Banco Central do Brasil. Ranking de Reclamações — Bancos e Financeiras. 4º trimestre de 2024. Disponível em: https://www.bcb.gov.br/meubc/rankingreclamacoes. Dado utilizado: número de reclamações procedentes do ${banco.nome} no período de referência (${banco.recl.toLocaleString("pt-BR")} ocorrências).`,y);
+      }
 
       y=fonte("Resultado do exercício de 2025 — divulgação da própria instituição financeira ré",
         `${entidadeLucro(banco)}. ${fonteLucro(banco).replace("Fonte: ","")}. Dado utilizado: ${metricaLucro(banco)} do exercício (${brlK(banco.lucro)}), equivalente a ${brl(s.lucroSeg)} por segundo de operação.`,y);
@@ -1155,6 +1159,22 @@ function gerarPDF(){
     finally{btn.disabled=false;btn.textContent="📄 Exportar relatório técnico em PDF";}
   },300);
 }
+
+// O menu de bancos e' MONTADO a partir de BANCOS. Antes as <option> eram
+// escritas a mao no HTML: banco adicionado ao objeto nao aparecia no menu, e
+// o defeito e' silencioso -- mesma armadilha das duas fontes de verdade do
+// salario minimo.
+(function(){
+  const sel=document.getElementById("banco");
+  if(!sel) return;
+  Object.keys(BANCOS)
+    .sort((a,b)=>BANCOS[a].nome.localeCompare(BANCOS[b].nome,"pt-BR"))
+    .forEach(k=>{
+      const o=document.createElement("option");
+      o.value=k; o.textContent=BANCOS[k].nome;
+      sel.appendChild(o);
+    });
+})();
 
 // Rotulos do salario minimo saem da constante — nunca escritos a mao na tela
 (function(){
