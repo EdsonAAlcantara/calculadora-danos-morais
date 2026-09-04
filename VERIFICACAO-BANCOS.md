@@ -100,24 +100,59 @@ Corretos: Banestes (−5%) e Paraná Banco (−4%). Valores em R$ bilhões.
 A **Crefisa** — ré dos dois casos de regressão do LexCalc — tinha o maior erro
 percentual da base: o laudo atribuía a ela **três vezes** a capacidade real.
 
-### ⚠️ Itaú Consignado teve prejuízo em 2025
+### Itaú Consignado — decisão do Edson
 
-Segundo caso igual ao do Digio. A regra do grupo resolveria, mas o RI do Itaú
-**não lista** o Banco Itaú Consignado em "Empresas do grupo" — sem confirmação
-institucional do controle, não se aplica.
+O COSIF mostra **prejuízo de R$ 32 milhões** em 2025. Decisão do Edson em
+03/09/2026: **tratar como Itaú**, usando o resultado do Itaú Unibanco Holding.
 
-Ficou com o número real, e `temLucro()` faz o laudo **omitir a seção III**, o
-painel econômico e o argumento em âmbar, em vez de imprimir "recuperado em
-−X segundos" — que se voltaria contra o autor.
+⚠️ **O vínculo é decisão, não documento.** O RI do Itaú **não lista** o Banco
+Itaú Consignado em "Empresas do grupo" (lista Itaú Unibanco S.A., Itaú Veículos,
+Itaubank, Itaucard, Microinvest e Redecard). A peça nomeia a entidade como
+"Itaú Unibanco Holding S.A. — conglomerado do Banco Itaú Consignado S.A.", e o
+documento citado é a fonte do **lucro**, não do controle.
 
-🔴 **Pendente:** confirmar o controle e aplicar a regra do grupo.
+Se um dia aparecer a DF do Banco Itaú Consignado nomeando o controlador, trocar
+a atribuição por ela.
 
-### 🔴 Fora do arquivo BANCOS do COSIF
+### Arquivo Sociedades do COSIF — 03/09/2026
 
-Banese, Banpará, Nubank, Facta e Parati — mais Capital Consig, QI SCD e Via
-Certa. São de outros segmentos (financeira, SCD, instituição de pagamento) e
-ficam em outro arquivo do mesmo repositório, ainda não localizado. Os valores
-desses continuam sem verificação.
+Financeira (CFI), SCD e instituição de pagamento **não estão** no arquivo
+`Bancos`; ficam em `Sociedades` (749 instituições). E o COSIF **abrevia** os
+nomes — "BCO DO EST. DE SE S.A." é o Banese —, o que faz busca por nome falhar:
+o pareamento tem de ser por **CNPJ**.
+
+| Instituição | Estava | É | Erro |
+|---|---|---|---|
+| **Parati CFI** | 0,120 bi | **0,0059 bi** | **+1.934%** |
+| **Facta Financeira** | 0,450 bi | **0,101 bi** | **+345%** |
+| **Nu Pagamentos** | 3,500 bi | **12,687 bi** | −72% |
+| Banese | 0,080 bi | 0,152 bi | −47% |
+| Banpará | 0,150 bi | 0,201 bi | −25% |
+
+**Os 29 bancos da base agora têm procedência declarada.** Nenhum cai mais no
+rótulo genérico.
+
+### Ainda não inseridos (analisados, aguardando decisão)
+
+| Instituição | Lucro 2025 (COSIF) |
+|---|---|
+| Banco Inter | 1,053 bi |
+| Banco Pine | 0,444 bi |
+| QI SCD S.A. | 0,260 bi |
+| Banco Inbursa | 0,147 bi |
+| BancoSeguro | 0,072 bi |
+| Via Certa Financiadora | 0,020 bi |
+| Capital Consig SCD | 0,0023 bi |
+
+⚠️ Para Inbursa e BancoSeguro o grupo econômico **não foi confirmado** — pelo
+lucro próprio são fracos, e o valor de inserir depende do grupo.
+
+### 🟡 Atribuição pela via do BCB, não do RI
+
+Banese, Banpará e Nubank **têm RI público**. Os valores acima vieram do BCB, que
+a regra autoriza como fallback — mas para esses três o ideal é trocar a
+atribuição pela publicação da própria instituição numa próxima passada. O número
+não muda (COSIF = contábil = o que a DF deles mostra); muda a citação.
 
 ---
 
