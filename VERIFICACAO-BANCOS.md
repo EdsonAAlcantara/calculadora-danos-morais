@@ -65,17 +65,59 @@ atribuição indevida — quem lê sabe de quem é o número.
 | Banco do Brasil S.A. | R$ 20,685 bi | lucro líquido ajustado | Sumário do Resultado 4T25 |
 | Banco Santander (Brasil) S.A. | R$ 15,615 bi | lucro líquido gerencial | Demonstrações Financeiras BRGAAP 4T25 |
 
-### 🔴 24 bancos ainda NÃO verificados
+### Varredura COSIF — 03/09/2026
 
-Caixa, Nu Pagamentos, Itaú Consignado, Bradesco Financiamentos, Banrisul, Safra,
-Daycoval, Pan, BMG, Agibank, Votorantim, Crefisa, Facta, Mercantil, Banestes,
-Aymoré, C6 Consignado, BRB, Banpará, Parati, Paraná Banco, Banese, BNP Paribas,
-Digimais.
+Todos os demais foram conferidos contra o **balancete COSIF do BCB** (documento
+4010, exercício 2025), pareados por **CNPJ** — nunca por nome: o pareamento
+difuso casou Bradesco com Bradesco Financiamentos, Banese com o Estado do RS e
+Safra com J.Safra, três "achados" que eram artefato do método, não erro do dado.
 
-**Isso não é formalidade.** O Banco do Brasil estava na tabela com **R$ 27,0 bi** —
-valor que não corresponde a nenhuma métrica publicada por ele: erra **+30%** contra a
-gerencial e **+49%** contra a contábil. Não há base para presumir que os outros 24
-estejam certos.
+É o fallback que a regra autoriza quando a instituição não divulga métrica
+recorrente. Validado com **0,00% de desvio** contra três DFs auditadas.
+
+**Só 2 dos 16 conferíveis estavam certos.**
+
+| Banco | Estava | É | Erro |
+|---|---|---|---|
+| Crefisa | 0,50 bi | 0,16 bi | **+212%** |
+| Safra | 1,00 bi | 4,30 bi | −77% |
+| C6 Consignado | 0,30 bi | 1,05 bi | −71% |
+| Votorantim (BV) | 0,60 bi | 1,86 bi | −68% |
+| Daycoval | 0,90 bi | 1,80 bi | −50% |
+| Mercantil do Brasil | 0,40 bi | 0,75 bi | −47% |
+| BRB | 0,28 bi | 0,51 bi | −45% |
+| Agibank | 0,65 bi | 1,09 bi | −40% |
+| Banrisul | 1,10 bi | 1,60 bi | −31% |
+| BMG | 0,75 bi | 0,56 bi | +34% |
+| Pan | 0,82 bi | 0,62 bi | +32% |
+| Digimais | 0,053 bi | 0,031 bi | +71% |
+| BNP Paribas Brasil | 0,059 bi | 0,077 bi | −24% |
+| Caixa | 16,05 bi | 14,58 bi | +10% |
+| **Itaú Consignado** | 1,50 bi | **−0,032 bi** | **prejuízo** |
+
+Corretos: Banestes (−5%) e Paraná Banco (−4%). Valores em R$ bilhões.
+
+A **Crefisa** — ré dos dois casos de regressão do LexCalc — tinha o maior erro
+percentual da base: o laudo atribuía a ela **três vezes** a capacidade real.
+
+### ⚠️ Itaú Consignado teve prejuízo em 2025
+
+Segundo caso igual ao do Digio. A regra do grupo resolveria, mas o RI do Itaú
+**não lista** o Banco Itaú Consignado em "Empresas do grupo" — sem confirmação
+institucional do controle, não se aplica.
+
+Ficou com o número real, e `temLucro()` faz o laudo **omitir a seção III**, o
+painel econômico e o argumento em âmbar, em vez de imprimir "recuperado em
+−X segundos" — que se voltaria contra o autor.
+
+🔴 **Pendente:** confirmar o controle e aplicar a regra do grupo.
+
+### 🔴 Fora do arquivo BANCOS do COSIF
+
+Banese, Banpará, Nubank, Facta e Parati — mais Capital Consig, QI SCD e Via
+Certa. São de outros segmentos (financeira, SCD, instituição de pagamento) e
+ficam em outro arquivo do mesmo repositório, ainda não localizado. Os valores
+desses continuam sem verificação.
 
 ---
 
