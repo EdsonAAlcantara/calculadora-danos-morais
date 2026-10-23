@@ -698,6 +698,14 @@ function fonteLucroLonga(b){
                : "Fonte: demonstrações do exercício de 2025";
 }
 function entidadeLucro(b){ return b.ent || b.nome; }
+// Titulo da ficha de fontes: diz QUEM publicou o numero. Quem nao tem RI
+// conferido entra pelo balancete COSIF do BACEN (fallback da regra da fonte
+// institucional); quem herda o lucro do grupo cita o controlador, nao a re.
+function origemLucro(b){
+  if(b.doc && b.doc.indexOf("Banco Central do Brasil") === 0) return "balancete COSIF publicado pelo Banco Central do Brasil";
+  if(b.ent) return "divulgação do grupo controlador da instituição ré";
+  return "divulgação da própria instituição financeira ré";
+}
 
 function brl(v){return "R$ "+Math.round(v).toLocaleString("pt-BR");}
 function fmtSeg(s){if(s<=0||!isFinite(s))return "—";if(s<60)return Math.round(s)+" segundo"+(Math.round(s)===1?"":"s");if(s<3600)return (s/60).toFixed(1)+" minutos";if(s<86400)return (s/3600).toFixed(2)+" horas";return (s/86400).toFixed(2)+" dias";}
@@ -769,7 +777,7 @@ function calc(){
   // painel 2
   document.getElementById("banco-dados").innerHTML=`<div class="sec">${banco.nome} — dados financeiros (2025)</div>
     <div class="grid4">
-      <div class="mcard"><div class="lbl">Lucro líquido anual</div><div class="val info">${brl(banco.lucro)}</div><div class="sub">Fonte: Balanço CVM 2025</div></div>
+      <div class="mcard"><div class="lbl">${metricaLucro(banco).charAt(0).toUpperCase()+metricaLucro(banco).slice(1)} (2025)</div><div class="val info">${brl(banco.lucro)}</div><div class="sub">${fonteLucroLonga(banco)}</div></div>
       <div class="mcard"><div class="lbl">Lucro por segundo</div><div class="val">${brl(lucroSeg)}</div></div>
       ${temRank(banco)?`<div class="mcard"><div class="lbl">Ranking BACEN</div><div class="val warn">${banco.rank.pos}º</div><div class="sub">índice ${banco.rank.idx} · 2T26</div></div>`:``}
       <div class="mcard"><div class="lbl">Condenação / lucro anual</div><div class="val">${pctStr(valorPedido,banco.lucro)}</div></div>
@@ -929,7 +937,7 @@ function gerarPDF(){
       doc.setFillColor(22,88,155);doc.rect(0,20,210,3,"F");
       sf(13,"bold",[255,255,255]);doc.text("CALCULADORA DE DANOS MORAIS",W/2,9,{align:"center"});
       sf(6.5,"normal",[150,195,255]);doc.text("Crédito Consignado  ·  Relatório Técnico de Apoio Jurídico  ·  "+hoje,W/2,15,{align:"center"});
-      sf(5,"normal",[178,212,252]);doc.text("Documento elaborado com base em fontes oficiais — IBGE, Banco Central do Brasil, CVM e CNJ",W/2,18.9,{align:"center"});
+      sf(5,"normal",[178,212,252]);doc.text("Documento elaborado com base em fontes oficiais — IBGE, Banco Central do Brasil, CNJ e demonstrações da própria instituição ré",W/2,18.9,{align:"center"});
       let y=27;
 
       y=secH("IDENTIFICAÇÃO DO CASO",y);
@@ -942,7 +950,7 @@ function gerarPDF(){
       if(s.isIdoso){sf(5.5,"bold",[153,60,29]);doc.text("IDOSA (60+ anos) — Lei 10.741/2003",c1+2,y+27);}
       sf(5.5,"bold",[22,88,155]);doc.text("BANCO RÉU",c2+2,y+4.5);
       sf(5,"normal",[120,130,145]);doc.text("Instituição:",c2+2,y+9.5);sf(6,"normal",[35,35,35]);doc.text(doc.splitTextToSize(banco.nome,col-4)[0],c2+2,y+13.5);
-      sf(5,"normal",[120,130,145]);doc.text("Lucro anual (2025):",c2+2,y+18.5);sf(7.5,"bold",[35,35,35]);doc.text(brlK(banco.lucro),c2+2,y+23);
+      sf(5,"normal",[120,130,145]);doc.text(doc.splitTextToSize(metricaLucro(banco).charAt(0).toUpperCase()+metricaLucro(banco).slice(1)+" (2025):",col-4)[0],c2+2,y+18.5);sf(7.5,"bold",[35,35,35]);doc.text(brlK(banco.lucro),c2+2,y+23);
       sf(5.5,"bold",[22,88,155]);doc.text("DANO SOFRIDO",c3+2,y+4.5);
       sf(5,"normal",[120,130,145]);doc.text("Total descontado:",c3+2,y+9.5);sf(8,"bold",[216,90,48]);doc.text(brl(s.totalDesc),c3+2,y+14.5);
       sf(5,"normal",[120,130,145]);doc.text("Impacto na renda:",c3+2,y+19);sf(5.5,"normal",[35,35,35]);doc.text(s.pctDoCons.toFixed(1)+"% ("+( s.totalDesc/s.salCons).toFixed(2)+" meses)",c3+2,y+23);
@@ -1149,8 +1157,8 @@ function gerarPDF(){
           `Banco Central do Brasil. Ranking de Reclamações — Bancos, Financeiras e Instituições de Pagamento. 2º trimestre de 2026. Disponível em: https://www.bcb.gov.br/meubc/rankingreclamacoes. Dado utilizado: posição e índice de ${banco.rank.nome} na categoria “${banco.rank.cat}” (${banco.rank.pos}º lugar, índice ${banco.rank.idx}). O ranking é publicado por conglomerado, não por instituição isolada.`,y);
       }
 
-      y=fonte("Resultado do exercício de 2025 — divulgação da própria instituição financeira ré",
-        `${entidadeLucro(banco)}. ${fonteLucro(banco).replace("Fonte: ","")}. Dado utilizado: ${metricaLucro(banco)} do exercício (${brlK(banco.lucro)}), equivalente a ${brl(s.lucroSeg)} por segundo de operação.`,y);
+      y=fonte("Resultado do exercício de 2025 — "+origemLucro(banco),
+        `${entidadeLucro(banco).replace(/\.$/,"")}. ${fonteLucro(banco).replace("Fonte: ","")}. Dado utilizado: ${metricaLucro(banco)} do exercício (${brlK(banco.lucro)}), equivalente a ${brl(s.lucroSeg)} por segundo de operação.`,y);
 
       y=fonte("CNJ — Relatório Justiça em Números 2024 (ano-base 2023)",
         `Conselho Nacional de Justiça. Relatório Justiça em Números 2024 — ano-base 2023. Brasília: CNJ, 2024. Dados utilizados: (i) subsídios base dos magistrados estaduais — Portal de Transparência CNJ 2025; (ii) custo médio estimado por processo baixado no ${doc.splitTextToSize(s.estadoNome,80)[0]} (${brl(custoProcesso)}), calculado com base na despesa total do tribunal dividida pelos processos baixados no ano.`,y);
@@ -1161,7 +1169,7 @@ function gerarPDF(){
       // Nota metodologica — a caixa passa a ter a altura do texto, medida
       // antes de desenhar. Antes era fixa em 28mm e o texto vazava por baixo.
       sf(5.5,"normal",[80,90,105]);
-      const nota="Este relatório foi gerado pela Calculadora de Danos Morais — Crédito Consignado, ferramenta de apoio técnico-jurídico para parametrização de pedidos de indenização. Os valores calculados baseiam-se exclusivamente em dados de fontes oficiais, conforme referenciado em cada tópico. O relatório constitui documento de apoio técnico e não substitui a análise jurídica profissional do advogado responsável pelo caso. Os dados financeiros do banco réu referem-se ao exercício de 2025 (Balanço CVM). Os dados de reclamações referem-se ao 4º trimestre de 2024 (BACEN). Os dados de custos judiciais referem-se ao ano-base 2023 (CNJ Justiça em Números 2024). Os dados socioeconômicos referem-se à POF 2017-2018 (IBGE).";
+      const nota="Este relatório foi gerado pela Calculadora de Danos Morais — Crédito Consignado, ferramenta de apoio técnico-jurídico para parametrização de pedidos de indenização. Os valores calculados baseiam-se exclusivamente em dados de fontes oficiais, conforme referenciado em cada tópico. O relatório constitui documento de apoio técnico e não substitui a análise jurídica profissional do advogado responsável pelo caso. Os dados financeiros do banco réu referem-se ao exercício de 2025 ("+fonteLucro(banco).replace("Fonte: ","")+")."+(temRank(banco)?" Os dados de reclamações referem-se ao 2º trimestre de 2026 (Ranking de Reclamações do Banco Central do Brasil).":"")+" Os dados de custos judiciais referem-se ao ano-base 2023 (CNJ Justiça em Números 2024). Os dados socioeconômicos referem-se à POF 2017-2018 (IBGE).";
       const notaL=doc.splitTextToSize(nota,tw-4);
       const notaH=10+notaL.length*3.3+3;
       // Disclaimer e nota sao dois blocos independentes: juntos exigiam ~51mm
